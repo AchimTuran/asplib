@@ -343,6 +343,66 @@ ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads
 
     return err;
 }
+
+ASPLIB_ERR CBiQuadFactory::get_constQPeakingBiQuadCoes(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
+{
+  if(!BiQuads || !Coefficients || Gain < 0.0f)
+  {
+    return ASPLIB_ERR_INVALID_INPUT;
+  }
+
+  if(helper_checkBiQuadIdx(BiQuads, BiQuadIdx) != ASPLIB_ERR_NO_ERROR)
+  {
+      // ToDo: throw error!
+      return ASPLIB_ERR_INVALID_INPUT;
+  }
+
+  ASPLIB_CONST_Q_PEAKING_PARAM ConstQPeakingParam;
+  float maxBands = 0.0f;
+  switch (BiQuads->optModule)
+  {
+      case ASPLIB_OPT_NATIVE:
+          maxBands = (float)static_cast<CBiQuad_Native*>(BiQuads->BiQuads)->getMaxBiquads();
+      break;
+
+      default:
+          // ToDo: throw error! Unsupported optModule!
+          return ASPLIB_ERR_INVALID_INPUT;
+      break;
+  }
+
+  float octaveEQ = 1.0f;
+  ConstQPeakingParam.Gain = Gain;
+  ConstQPeakingParam.Q = sqrtf(powf(2.0f, octaveEQ)) / (powf(2.0f, octaveEQ) - 1.0f);
+
+  // calculate center frequency of BiQuadIdx
+  // ToDo: add functions for calculated centers base 2 & 10 (ISO), preferred centers base 2 & 10 (non ISO), calculated centers - contiguous (non-ISO), Preferred centers - contiguous (non-ISO)
+  // ToDo: make maxFrequency variable and dependend from sample frequency
+  // ToDo: make baseFrequency variable
+  float baseFrequency = E_p3;         // 1000Hz
+  float maxFrequency = 20.0f*E_p3;    // 20kHz
+  float bandsFactor = maxBands / 10;
+  float positiveBands = (float)((int)(bandsFactor*log2f(maxFrequency / baseFrequency))); // round down to next complete number
+  float frequencyBandIdx = -maxBands + positiveBands +1 + BiQuadIdx;
+  ConstQPeakingParam.fc = baseFrequency*powf(2.0f, frequencyBandIdx/bandsFactor);
+
+  // get current sample frequency
+  ConstQPeakingParam.fs = 0.0f;
+  switch (BiQuads->optModule)
+  {
+      case ASPLIB_OPT_NATIVE:
+          ConstQPeakingParam.fs = static_cast<CBiQuad_Native*>(BiQuads->BiQuads)->getSampleFrequency();
+      break;
+
+      default:
+          // ToDo: throw error! Unsupported optModule!
+          return ASPLIB_ERR_INVALID_INPUT;
+      break;
+  }
+
+  ConstQPeakingParam.Gain = Gain;
+
+  return helper_calcConstQPeakingParam(&ConstQPeakingParam, Coefficients);
 }
 
 //-------------------------

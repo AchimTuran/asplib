@@ -49,5 +49,6 @@ public:
     // frequency bands are defined in ISO R 266-1997 or ANSI S1.6-1984
     static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain);
     static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx);
+    static ASPLIB_ERR            get_constQPeakingBiQuadCoes(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
 };
 }
