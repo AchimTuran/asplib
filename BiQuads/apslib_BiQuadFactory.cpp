@@ -1,4 +1,3 @@
-#pragma once
 /*
  * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -59,11 +58,23 @@ ASPLIB_ERR CBiQuadFactory::reset_BiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads)
 
 ASPLIB_ERR CBiQuadFactory::destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads)
 {
+    ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
     if(BiQuads && (*BiQuads))
     {
         if((*BiQuads)->BiQuads)
         {
-            delete (*BiQuads)->BiQuads;
+            switch((*BiQuads)->optModule)
+            {
+                case ASPLIB_OPT_NATIVE:
+                    delete ((CBiQuad_Native*)(*BiQuads)->BiQuads);
+                break;
+
+                default:
+                    // ToDo: return some warning code!
+                    // err = ;
+                break;
+            }
+
             (*BiQuads)->BiQuads = NULL;
         }
 
@@ -71,7 +82,7 @@ ASPLIB_ERR CBiQuadFactory::destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads)
         *BiQuads = NULL;
     }
 
-    return ASPLIB_ERR_NO_ERROR;
+    return err;
 }
 
 uint CBiQuadFactory::get_maxBiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads)
