@@ -203,7 +203,7 @@ ASPLIB_ERR CBiQuadFactory::set_BiQuadCoefficients(ASPLIB_BIQUAD_HANDLE *BiQuads,
     }
 
 
-    return ASPLIB_ERR_NO_ERROR;
+    return err;
 }
 
 ASPLIB_ERR CBiQuadFactory::set_BiQuadCoefficients(ASPLIB_BIQUAD_HANDLE *BiQuads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, uint BiQuadIdx, float C0, float D0)
@@ -233,7 +233,7 @@ ASPLIB_ERR CBiQuadFactory::set_BiQuadCoefficients(ASPLIB_BIQUAD_HANDLE *BiQuads,
     }
 
 
-    return ASPLIB_ERR_NO_ERROR;
+    return err;
 }
 
 ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain)
@@ -341,7 +341,8 @@ ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads
         return err;
     }
 
-    return ASPLIB_ERR_NO_ERROR;
+    return err;
+}
 }
 
 //-------------------------
