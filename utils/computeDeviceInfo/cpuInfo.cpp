@@ -25,6 +25,7 @@
 #if defined(TARGET_WINDOWS)
     #include <intrin.h>
 #elif defined(TARGET_LINUX)
+    #include <cpuid.h>
 #else
     #error "Unimplemented cpuInfo platform!"
 #endif
@@ -62,8 +63,15 @@ CPUINFO_ERROR CPUINFO_getVendorName(char **VendorStr)
     {
         return CPUINFO_ERR_INVALID_INPUT;
     }
+    
+#if defined(TARGET_WINDOWS)
     int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
     __cpuid(tempCPUInfo, 0);
+#elif defined(TARGET_LINUX)
+    unsigned int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
+    __get_cpuid(0, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+                &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
 
     // get vendor id
     char vendorID[96];
@@ -112,8 +120,15 @@ CPUINFO_ERROR CPUINFO_getCPUName(char **CPUName)
         return CPUINFO_ERR_INVALID_INPUT;
     }
 
+#if defined(TARGET_WINDOWS)
     int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
     __cpuid(tempCPUInfo, CPUINFO_GET_HIGHEST_EXTENDED_FUNCTION_SUPPORTED);
+#elif defined(TARGET_LINUX)
+    unsigned int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
+    __get_cpuid(CPUINFO_GET_HIGHEST_EXTENDED_FUNCTION_SUPPORTED, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+        &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
+
     if (tempCPUInfo[0] < CPUINFO_PROCESSOR_BRAND_STRING_4)
     {
         char *unsupportedFeatureStr = "Unknown";
@@ -137,7 +152,12 @@ CPUINFO_ERROR CPUINFO_getCPUName(char **CPUName)
     memset(*CPUName, 0, sizeof(char)*48);
     for (int ii = 0; ii < 3; ii++)
     {
+#if defined(TARGET_WINDOWS)
         __cpuid(tempCPUInfo, ii + CPUINFO_PROCESSOR_BRAND_STRING_2);
+#elif defined(TARGET_LINUX)
+        __get_cpuid(ii + CPUINFO_PROCESSOR_BRAND_STRING_2, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+                    &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
         memcpy(*CPUName + ii*16, &tempCPUInfo, sizeof(tempCPUInfo));
     }
 
@@ -153,16 +173,28 @@ CPUINFO_ERROR CPUINFO_getCPUFeatureFlags(uint32_t *CPUFeatureFlags)
 
     *CPUFeatureFlags = 0;
 
+#if defined(TARGET_WINDOWS)
     int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
     __cpuid(tempCPUInfo, 0);
     int maxFuntionID = tempCPUInfo[0];
+#elif defined(TARGET_LINUX)
+    unsigned int tempCPUInfo[4]; // saved in this order EAX, EBX, ECD and EDX
+    __get_cpuid(0, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX], 
+                &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+    unsigned int maxFuntionID = tempCPUInfo[0];
+#endif
 
     if (maxFuntionID < CPUINFO_FEATURE_BITS)
     {
         return CPUINFO_ERR_NOT_SOPPORTED;
     }
 
+#if defined(TARGET_WINDOWS)
     __cpuid(tempCPUInfo, CPUINFO_FEATURE_BITS);
+#elif defined(TARGET_LINUX)
+    __get_cpuid(CPUINFO_FEATURE_BITS, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+                &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
 	
     if (tempCPUInfo[CPUINFO_EDX] & CPUINFO_BITMASK_00000001_EDX_MMX)
     {
@@ -216,11 +248,24 @@ CPUINFO_ERROR CPUINFO_getCPUFeatureFlags(uint32_t *CPUFeatureFlags)
 	
 	
     // EAX=80000001h: Extended Processor Info and Feature Bits
+#if defined(TARGET_WINDOWS)
     __cpuid(tempCPUInfo, CPUINFO_GET_HIGHEST_EXTENDED_FUNCTION_SUPPORTED);
+#elif defined(TARGET_LINUX)
+    __get_cpuid(CPUINFO_GET_HIGHEST_EXTENDED_FUNCTION_SUPPORTED, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+                &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
+
     maxFuntionID = tempCPUInfo[0];
     if (maxFuntionID >= CPUINFO_EXTENDED_FEATURE_BITS)
     {
+        
+#if defined(TARGET_WINDOWS)
         __cpuid(tempCPUInfo, CPUINFO_EXTENDED_FEATURE_BITS);
+#elif defined(TARGET_LINUX)
+        __get_cpuid(CPUINFO_EXTENDED_FEATURE_BITS, &tempCPUInfo[CPUINFO_EAX], &tempCPUInfo[CPUINFO_EBX],
+                    &tempCPUInfo[CPUINFO_ECX], &tempCPUInfo[CPUINFO_EDX]);
+#endif
+
         if (tempCPUInfo[CPUINFO_EDX] & CPUINFO_BITMASK_80000001_EDX_MMXEXT)
         {
 	        *CPUFeatureFlags |= CPUINFO_FEATURE_FLAG_MMXEXT;
