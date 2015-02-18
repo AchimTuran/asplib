@@ -31,7 +31,7 @@ target_link_libraries(asplib ${asplib_LIBRARIES})
 install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES utils/computeDeviceInfo/cpuInfo_types.h
               utils/computeDeviceInfo/cpuInfo.h
-        DESTINATION include/asplib/util)
+        DESTINATION include/asplib/utils)
 
 #IF(NOT WIN32)
   # Pkgconfig
