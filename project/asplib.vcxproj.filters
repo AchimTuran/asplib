@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="BiQuads">
+      <UniqueIdentifier>{603cb8e7-596e-4bb0-9083-0ceff6aeb961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BiQuads\BiQuad_Native">
+      <UniqueIdentifier>{9bcb25cf-1e49-4bb3-99f8-2a28112cea57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BiQuads\BiQuad_SSE">
+      <UniqueIdentifier>{4371b982-9a57-4a72-a3ae-613ece82b3a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\BiQuads\apslib_BiQuadFactory.cpp">
+      <Filter>BiQuads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\BiQuads\asplib_constQpeaking.cpp">
+      <Filter>BiQuads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.cpp">
+      <Filter>BiQuads\BiQuad_Native</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\BiQuads\apslib_BiQuadFactory.h">
+      <Filter>BiQuads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\BiQuads\asplib_constQpeaking.h">
+      <Filter>BiQuads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.h">
+      <Filter>BiQuads\BiQuad_Native</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
