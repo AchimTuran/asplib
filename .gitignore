@@ -185,3 +185,5 @@ FakesAssemblies/
 
 extern documents/
 libs/
+bin/
+asplib_MatlabDll/old matlab scripts
