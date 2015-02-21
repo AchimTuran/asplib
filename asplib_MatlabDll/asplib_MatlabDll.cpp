@@ -57,7 +57,16 @@ void destroy_BiQuads();
 // ---------------------------------------- BiQuad helper functions ----------------------------------------
 void destroy_BiQuads()
 {
-    CBiQuadFactory::destroy_BiQuads(&g_BiQuadHandle);
+    ASPLIB_ERR err = CBiQuadFactory::destroy_BiQuads(&g_BiQuadHandle);
+    if(err == ASPLIB_ERR_NO_ERROR)
+    {
+        mexPrintf("%ssucessful destroyed BiQuads\n", ASPLIB_LOGGIN_TAG);
+    }
+    else
+    {
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Some error occured by destroying BiQuads!\n");
+        mexErrMsgTxt(errStr.c_str());
+    }
 }
 
 // ---------------------------------------- BiQuad functions ----------------------------------------
