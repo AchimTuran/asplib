@@ -59,7 +59,7 @@ ASPLIB_ERR CBiQuadFactory::reset_BiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads)
 
 ASPLIB_ERR CBiQuadFactory::destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads)
 {
-    if(BiQuads)
+    if(BiQuads && (*BiQuads))
     {
         if((*BiQuads)->BiQuads)
         {
