@@ -28,6 +28,7 @@ clear all;
 
 % load asplib_MatlabDll
 addpath(fullfile(pwd,'bin')) %add bin folder to path
+
 dll = 'asplib_Matlab';
 dllHeader = 'asplib_MatlabDll.h';
 
@@ -45,3 +46,4 @@ disp('[asplib] Successful loaded asplib_MatlabDll');
 
 %ToDo: call init with specific parameters
 %calllib('asplib_MatlabDll', 'init', parameters)
+
