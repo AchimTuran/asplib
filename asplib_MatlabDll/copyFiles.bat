@@ -68,8 +68,10 @@ COPY /A %ASPLIB_MATLABDLL_ROOT%\asplib_MatlabDll.h %MATLAB_WORKSPACE%\bin\asplib
 COPY /A %ASPLIB_MATLABDLL_ROOT%\typedefs.h %MATLAB_WORKSPACE%\bin\typedefs.h
 COPY /B %ASPLIB_TARGET_DLL% %MATLAB_WORKSPACE%\bin\asplib_Matlab.dll
 
-COPY /A %ASPLIB_MATLABDLL_ROOT%\load_asplib_MatlabDll.m %MATLAB_WORKSPACE%\load_asplib_MatlabDll.m
-COPY /A %ASPLIB_MATLABDLL_ROOT%\unload_asplib_MatlabDll.m %MATLAB_WORKSPACE%\unload_asplib_MatlabDll.m
+::COPY /A %ASPLIB_MATLABDLL_ROOT%\asplib_load_MatlabDll.m %MATLAB_WORKSPACE%\asplib_load_MatlabDll.m
+::COPY /A %ASPLIB_MATLABDLL_ROOT%\asplib_unload_MatlabDll.m %MATLAB_WORKSPACE%\asplib_unload_MatlabDll.m
+::COPY /A %ASPLIB_MATLABDLL_ROOT%\asplib_processBiQuads.m %MATLAB_WORKSPACE%\asplib_processBiQuads.m
+COPY /A %ASPLIB_MATLABDLL_ROOT%\*.m %MATLAB_WORKSPACE%\*.m
 
 ECHO ----finish copying source files from project path to matlab path----
 GOTO END
