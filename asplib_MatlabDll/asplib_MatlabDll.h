@@ -53,11 +53,15 @@
 extern "C" {
 #endif
 
-DLL_EXPORT RET_ERR create_BiQuads();
+DLL_EXPORT RET_ERR create_BiQuad(uint BiQuadQuantity);
 DLL_EXPORT RET_ERR process_BiQuads(single *Data);
+DLL_EXPORT RET_ERR set_BiQuadGain(uint BiQuadIdx, float Gain);
+DLL_EXPORT RET_ERR set_BiQuadGains(float Gain);
 
 DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize);
 DLL_EXPORT void destroy();
+
+// ToDo: add some error code to string translation function 
 
 #ifdef __cplusplus
 }

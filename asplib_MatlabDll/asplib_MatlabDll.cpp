@@ -26,11 +26,13 @@
 using namespace std;
 
 #include "utils/computeDeviceInfo/cpuInfo.h"
+#include "BiQuads/apslib_BiQuadFactory.h"
 
 // Matlab include files
 #include <mex.h>
 
 #include "asplib_MatlabDll.h"
+using namespace asplib;
 
 // buffers
 single *g_Inbuffers = NULL;
@@ -40,23 +42,33 @@ single **g_Channels = NULL;
 // signal processing parameters
 unsigned int g_MaxChannels = 0;     // max in-/output channels
 unsigned int g_MaxFrameSize = 0;    // max in-/output framelength
-single g_fA = 0.0f;                 // sample frequency
+single g_SampleFrequency = 0.0f;    // sample frequency
+
+// global BiQuad variables
+ASPLIB_BIQUAD_HANDLE *g_BiQuadHandle = NULL;
 
 // matlab <--> C/C++ control variables
 bool g_InitSuccess = false;
 
-// helper function prototypes
+// BiQuad helper function prototypes
 void destroy_BiQuads();
 
 
-// ---------------------------------------- helper functions ----------------------------------------
+// ---------------------------------------- BiQuad helper functions ----------------------------------------
 void destroy_BiQuads()
 {
+    CBiQuadFactory::destroy_BiQuads(&g_BiQuadHandle);
 }
 
 // ---------------------------------------- BiQuad functions ----------------------------------------
-DLL_EXPORT RET_ERR create_BiQuads()
+DLL_EXPORT RET_ERR create_BiQuad(uint BiQuadQuantity)
 {
+    g_BiQuadHandle = CBiQuadFactory::get_BiQuads(BiQuadQuantity, g_SampleFrequency, ASPLIB_OPT_NATIVE);
+
+    if(!g_BiQuadHandle)
+    {
+        return ERR_FATAL_ERROR;
+    }
 
     return ERR_NO_ERROR;
 }
@@ -65,19 +77,62 @@ DLL_EXPORT RET_ERR process_BiQuads(single *Data)
 {
     if(Data == NULL)
     {
-        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error!Input pointers are NULL!\n");
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Input pointers are NULL!\n");
         mexErrMsgTxt(errStr.c_str());
         return ERR_INVALID_INPUT;
+    }
+
+    if(!g_BiQuadHandle && !g_InitSuccess)
+    {
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! asplib_MatlabDll was not initialized!\n");
+        mexErrMsgTxt(errStr.c_str());
+        return ERR_FATAL_ERROR;
+    }
+
+    if(!g_BiQuadHandle)
+    {
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! No BiQuads created! Call create_BiQuads first, before calling process_BiQuads!\n");
+        mexErrMsgTxt(errStr.c_str());
+        return ERR_FATAL_ERROR;
     }
 
     // copy Data to internal buffer
     memcpy(g_Inbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     // process samples
-    memcpy(g_Outbuffers, g_Inbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    CBiQuadFactory::calc_BiQuadSamples(g_BiQuadHandle, g_Inbuffers, g_Inbuffers, g_MaxFrameSize);
+    //memcpy(g_Outbuffers, g_Inbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     // copy from internal output to Data
-    memcpy(Data, g_Outbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    memcpy(g_Outbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+
+    return ERR_NO_ERROR;
+}
+
+DLL_EXPORT RET_ERR set_BiQuadGain(uint BiQuadIdx, float Gain)
+{
+    ASPLIB_CONST_Q_PEAKING_PARAM constQPeakingParam;
+    constQPeakingParam.Gain = Gain;
+
+    if(CBiQuadFactory::set_constQPeakingParams(g_BiQuadHandle, Gain, BiQuadIdx) != ASPLIB_ERR_NO_ERROR)
+    {
+        // ToDo: throw some error!
+        return ERR_INVALID_INPUT;
+    }
+
+    return ERR_NO_ERROR;
+}
+
+DLL_EXPORT RET_ERR set_BiQuadGains(float Gain)
+{
+    ASPLIB_CONST_Q_PEAKING_PARAM constQPeakingParam;
+    constQPeakingParam.Gain = Gain;
+
+    if(CBiQuadFactory::set_constQPeakingParams(g_BiQuadHandle, Gain) != ASPLIB_ERR_NO_ERROR)
+    {
+        // ToDo: throw some error!
+        return ERR_INVALID_INPUT;
+    }
 
     return ERR_NO_ERROR;
 }
@@ -95,7 +150,7 @@ DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFr
     //mexPrintf("%screated asplib_BiQuads\n", ASPLIB_LOGGIN_TAG);
     g_MaxChannels = MaxChannels;
     g_MaxFrameSize = MaxFrameSize;
-    g_fA = SampleFrequency;
+    g_SampleFrequency = SampleFrequency;
 
     // create internal buffers
     g_Inbuffers = new single[g_MaxChannels*g_MaxFrameSize];
@@ -142,6 +197,11 @@ DLL_EXPORT void destroy()
         delete [] g_Outbuffers;
         g_Outbuffers = NULL;
     }
+
+    g_SampleFrequency = 0.0f;
+    g_Channels = 0;
+    g_MaxChannels = 0;
+    g_InitSuccess = false;
 
     destroy_BiQuads();
 }
