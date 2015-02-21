@@ -65,18 +65,19 @@ DLL_EXPORT RET_ERR process_BiQuads(single *Data)
 {
     if(Data == NULL)
     {
-        mexErrMsgTxt("Error! Input pointers are NULL!\n");
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error!Input pointers are NULL!\n");
+        mexErrMsgTxt(errStr.c_str());
         return ERR_INVALID_INPUT;
     }
 
     // copy Data to internal buffer
-    memcpy( g_Inbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    memcpy(g_Inbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     // process samples
     memcpy(g_Outbuffers, g_Inbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     // copy from internal output to Data
-    memcpy( Data, g_Outbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    memcpy(Data, g_Outbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     return ERR_NO_ERROR;
 }
@@ -85,11 +86,13 @@ DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFr
 {
     if (MaxChannels == 0 || MaxFrameSize == 0 || SampleFrequency <= 0.0f)
     {
-        mexErrMsgTxt("Error! Invalid input! MaxFrames == 0 or MaxChannels == 0 or MaxFrameSize == 0 or ProcessingData_fA <= 0.0f\n");
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Invalid input! MaxFrames == 0 or MaxChannels == 0 or MaxFrameSize == 0 or ProcessingData_fA <= 0.0f\n");
+        mexErrMsgTxt(errStr.c_str());
         return ERR_INVALID_INPUT;
     }
 
-    mexPrintf("-=created asplib_BiQuads=-\n");
+    mexPrintf("%sloading asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
+    //mexPrintf("%screated asplib_BiQuads\n", ASPLIB_LOGGIN_TAG);
     g_MaxChannels = MaxChannels;
     g_MaxFrameSize = MaxFrameSize;
     g_fA = SampleFrequency;
@@ -100,10 +103,11 @@ DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFr
     g_Channels = new single*[g_MaxChannels];
     if (g_Inbuffers == NULL || g_Outbuffers == NULL || g_Channels == NULL)
     {
-        mexErrMsgTxt("Error! Could not create internal! Not enough free memory?\n");
-        delete[] g_Inbuffers;
-        delete[] g_Outbuffers;
-        delete[] g_Channels;
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Could not create internal! Not enough free memory?\n");
+        mexErrMsgTxt(errStr.c_str());
+        delete [] g_Inbuffers;
+        delete [] g_Outbuffers;
+        delete [] g_Channels;
         return ERR_FATAL_ERROR;
     }
 
@@ -113,11 +117,13 @@ DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFr
     }
 
     g_InitSuccess = true;
+
+    return ERR_NO_ERROR;
 }
 
 DLL_EXPORT void destroy()
 {
-    mexPrintf("-=unloading asplib_MatlabDll=-\n");
+    mexPrintf("%sunloading asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
 
     if(g_Channels)
     {

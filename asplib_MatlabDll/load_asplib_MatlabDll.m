@@ -32,7 +32,7 @@ dll = 'asplib_Matlab';
 dllHeader = 'asplib_MatlabDll.h';
 
 if (libisloaded('asplib_MatlabDll'))
-	disp('Reloading asplib_MatlabDll');
+	disp('[asplib] Reloading asplib_MatlabDll');
 	calllib('asplib_MatlabDll', 'destroy')
 	unloadlibrary('asplib_MatlabDll');
 end
@@ -41,7 +41,7 @@ end
 %for details of the loadlibrary function see:
 %http://www.mathworks.de/de/help/matlab/ref/loadlibrary.html
 [dllnotfound, dllwarnings] = loadlibrary(dll, dllHeader, 'alias', 'asplib_MatlabDll');
-disp('Successful loaded asplib_MatlabDll');
+disp('[asplib] Successful loaded asplib_MatlabDll');
 
 %ToDo: call init with specific parameters
 %calllib('asplib_MatlabDll', 'init', parameters)

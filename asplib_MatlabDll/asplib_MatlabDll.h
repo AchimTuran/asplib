@@ -35,6 +35,8 @@
 
 #include "typedefs.h"
 
+#define ASPLIB_LOGGIN_TAG "[asplib] "
+
 #include <mex.h>
 
 #ifdef TARGET_WINDOWS

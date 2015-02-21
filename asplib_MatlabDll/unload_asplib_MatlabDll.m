@@ -27,5 +27,5 @@ if (libisloaded('asplib_MatlabDll'))
 	calllib('asplib_MatlabDll', 'destroy')
 	unloadlibrary('asplib_MatlabDll');
 else
-	disp('asplib_MatlabDll was always unloaded');
+	disp('[asplib] asplib_MatlabDll was always unloaded');
 end
