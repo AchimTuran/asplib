@@ -61,7 +61,7 @@ void destroy_BiQuads()
 }
 
 // ---------------------------------------- BiQuad functions ----------------------------------------
-DLL_EXPORT RET_ERR create_BiQuad(uint BiQuadQuantity)
+DLL_EXPORT RET_ERR create_BiQuad(uint32 BiQuadQuantity)
 {
     g_BiQuadHandle = CBiQuadFactory::get_BiQuads(BiQuadQuantity, g_SampleFrequency, ASPLIB_OPT_NATIVE);
 
@@ -73,9 +73,9 @@ DLL_EXPORT RET_ERR create_BiQuad(uint BiQuadQuantity)
     return ERR_NO_ERROR;
 }
 
-DLL_EXPORT RET_ERR process_BiQuads(single *Data)
+DLL_EXPORT RET_ERR process_BiQuads(single *Data, uint32 MaxFrames)
 {
-    if(Data == NULL)
+    if(Data == NULL || !MaxFrames)
     {
         string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Input pointers are NULL!\n");
         mexErrMsgTxt(errStr.c_str());
@@ -109,7 +109,7 @@ DLL_EXPORT RET_ERR process_BiQuads(single *Data)
     return ERR_NO_ERROR;
 }
 
-DLL_EXPORT RET_ERR set_BiQuadGain(uint BiQuadIdx, float Gain)
+DLL_EXPORT RET_ERR set_BiQuadGain(uint32 BiQuadIdx, single Gain)
 {
     ASPLIB_CONST_Q_PEAKING_PARAM constQPeakingParam;
     constQPeakingParam.Gain = Gain;
@@ -123,7 +123,7 @@ DLL_EXPORT RET_ERR set_BiQuadGain(uint BiQuadIdx, float Gain)
     return ERR_NO_ERROR;
 }
 
-DLL_EXPORT RET_ERR set_BiQuadGains(float Gain)
+DLL_EXPORT RET_ERR set_BiQuadGains(single Gain)
 {
     ASPLIB_CONST_Q_PEAKING_PARAM constQPeakingParam;
     constQPeakingParam.Gain = Gain;
