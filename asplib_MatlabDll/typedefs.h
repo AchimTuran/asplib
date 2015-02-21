@@ -22,13 +22,29 @@
  *
  */
 
+#if defined(_WIN32)
+    #if !defined(TARGET_WINDOWS)
+        #define TARGET_WINDOWS
+    #endif
+#endif
 
-
-//#ifndef __TYPEDEFS_H__
-//#define __TYPEDEFS_H__
-
-typedef float single;
+// Matlab type definitions
+// taken from here: http://de.mathworks.com/help/matlab/matlab_external/passing-arguments-to-shared-library-functions.html
+typedef char int8;
+typedef unsigned char uint8;
+typedef short int16;
+typedef unsigned short uint16;
+typedef int int32;
 typedef unsigned int uint32;
-typedef enum DLL_ERROR_CODE{ ERR_NO_ERROR=0, ERR_FATAL_ERROR, ERR_INVALID_INPUT, ERR_NOT_INIT } RET_ERR;
+typedef float single;
 
-//#endif // __TYPEDEFS_H__
+//#if defined(TARGET_WINDOWS)
+//    typedef long int32;
+//    typedef unsigned long uint32;
+//#elif defined(TARGET_LINUX)
+#if defined(TARGET_LINUX)
+    typedef long int64;
+    typedef unsigned long uint64;
+#endif
+
+typedef enum DLL_ERROR_CODE{ ERR_NO_ERROR=0, ERR_FATAL_ERROR, ERR_INVALID_INPUT, ERR_NOT_INIT } RET_ERR;
