@@ -10,12 +10,12 @@
     <Filter Include="BiQuads\BiQuad_SSE">
       <UniqueIdentifier>{4371b982-9a57-4a72-a3ae-613ece82b3a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="interfaces">
+      <UniqueIdentifier>{a471fdc0-9b32-449c-b4ca-d83fd9504bbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BiQuads\apslib_BiQuadFactory.cpp">
-      <Filter>BiQuads</Filter>
-    </ClCompile>
-    <ClCompile Include="..\BiQuads\asplib_constQpeaking.cpp">
       <Filter>BiQuads</Filter>
     </ClCompile>
     <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.cpp">
@@ -26,11 +26,11 @@
     <ClInclude Include="..\BiQuads\apslib_BiQuadFactory.h">
       <Filter>BiQuads</Filter>
     </ClInclude>
-    <ClInclude Include="..\BiQuads\asplib_constQpeaking.h">
-      <Filter>BiQuads</Filter>
-    </ClInclude>
     <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.h">
       <Filter>BiQuads\BiQuad_Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interfaces\asplib_IBaseBiQuad.h">
+      <Filter>interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
