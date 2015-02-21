@@ -155,7 +155,7 @@ DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint3
         return ERR_INVALID_INPUT;
     }
 
-    mexPrintf("%sloading asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
+    mexPrintf("%sinitialize asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
     //mexPrintf("%screated asplib_BiQuads\n", ASPLIB_LOGGIN_TAG);
     g_MaxChannels = MaxChannels;
     g_MaxFrameSize = MaxFrameSize;
@@ -187,7 +187,7 @@ DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint3
 
 DLL_EXPORT void destroy()
 {
-    mexPrintf("%sunloading asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
+    mexPrintf("%sdestroy asplib_MatlabDll\n", ASPLIB_LOGGIN_TAG);
 
     if(g_Channels)
     {
