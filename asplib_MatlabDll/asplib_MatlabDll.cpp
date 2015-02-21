@@ -146,7 +146,7 @@ DLL_EXPORT RET_ERR set_BiQuadGains(single Gain)
     return ERR_NO_ERROR;
 }
 
-DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize)
+DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize)
 {
     if (MaxChannels == 0 || MaxFrameSize == 0 || SampleFrequency <= 0.0f)
     {

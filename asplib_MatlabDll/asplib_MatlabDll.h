@@ -58,7 +58,7 @@ DLL_EXPORT RET_ERR process_BiQuads(single *Data, uint32 MaxFrames);
 DLL_EXPORT RET_ERR set_BiQuadGain(uint32 BiQuadIdx, single Gain);
 DLL_EXPORT RET_ERR set_BiQuadGains(single Gain);
 
-DLL_EXPORT RET_ERR init(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize);
+DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize);
 DLL_EXPORT void destroy();
 
 // ToDo: add some error code to string translation function 
