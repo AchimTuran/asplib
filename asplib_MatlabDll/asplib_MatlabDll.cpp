@@ -105,15 +105,16 @@ DLL_EXPORT RET_ERR process_BiQuads(single *Data, uint32 MaxFrames)
         return ERR_FATAL_ERROR;
     }
 
-    // copy Data to internal buffer
-    memcpy(g_Inbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    //// copy Data to internal buffer
+    //memcpy(g_Inbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     // process samples
-    CBiQuadFactory::calc_BiQuadSamples(g_BiQuadHandle, g_Inbuffers, g_Inbuffers, g_MaxFrameSize);
+    CBiQuadFactory::calc_BiQuadSamples(g_BiQuadHandle, Data, Data, MaxFrames);
+    //CBiQuadFactory::calc_BiQuadSamples(g_BiQuadHandle, g_Inbuffers, g_Outbuffers, g_MaxFrameSize);
     //memcpy(g_Outbuffers, g_Inbuffers, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
-    // copy from internal output to Data
-    memcpy(g_Outbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
+    //// copy from internal output to Data
+    //memcpy(g_Outbuffers, Data, sizeof(single)*g_MaxChannels*g_MaxFrameSize);
 
     return ERR_NO_ERROR;
 }
