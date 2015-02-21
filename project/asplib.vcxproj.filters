@@ -13,6 +13,9 @@
     <Filter Include="interfaces">
       <UniqueIdentifier>{a471fdc0-9b32-449c-b4ca-d83fd9504bbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="constants_typedefs">
+      <UniqueIdentifier>{98704e1f-ab09-4021-b80e-89e7ec0f3922}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BiQuads\apslib_BiQuadFactory.cpp">
@@ -31,6 +34,12 @@
     </ClInclude>
     <ClInclude Include="..\interfaces\asplib_IBaseBiQuad.h">
       <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\constants_typedefs\asplib_typedefs.h">
+      <Filter>constants_typedefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\constants_typedefs\asplib_constants.h">
+      <Filter>constants_typedefs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

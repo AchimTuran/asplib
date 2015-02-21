@@ -25,6 +25,8 @@
   <ItemGroup>
     <ClInclude Include="..\BiQuads\apslib_BiQuadFactory.h" />
     <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.h" />
+    <ClInclude Include="..\constants_typedefs\asplib_constants.h" />
+    <ClInclude Include="..\constants_typedefs\asplib_typedefs.h" />
     <ClInclude Include="..\interfaces\asplib_IBaseBiQuad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -78,18 +80,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)libs\</OutDir>
     <TargetName>$(ProjectName)_x86d</TargetName>
-    <IntDir>$(SolutionDir)bin\build\utils\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>$(ProjectName)_x86d</TargetName>
+    <TargetName>$(ProjectName)_x64d</TargetName>
+    <OutDir>$(SolutionDir)libs\</OutDir>
+    <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)libs\</OutDir>
     <TargetName>$(ProjectName)_x86</TargetName>
-    <IntDir>$(SolutionDir)bin\build\utils\$(ProjectName)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>$(ProjectName)_x86</TargetName>
+    <TargetName>$(ProjectName)_x64</TargetName>
+    <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)libs\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
