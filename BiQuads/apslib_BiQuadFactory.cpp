@@ -74,6 +74,27 @@ ASPLIB_ERR CBiQuadFactory::destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads)
     return ASPLIB_ERR_NO_ERROR;
 }
 
+uint CBiQuadFactory::get_maxBiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads)
+{
+    if(!BiQuads)
+    {
+        // ToDo: show error message
+        return 0;
+    }
+
+    switch(BiQuads->optModule)
+    {
+        case ASPLIB_OPT_NATIVE:
+            return static_cast<CBiQuad_Native*>(BiQuads->BiQuads)->getMaxBiquads();
+        break;
+
+        default:
+            // ToDo: throw error!
+            return 0;
+        break;
+    }
+}
+
 ASPLIB_BIQUAD_HANDLE* CBiQuadFactory::get_BiQuads(uint Quantity, float SampleFrequency, ASPLIB_OPT_MODULE OptModule)
 {
     ASPLIB_BIQUAD_HANDLE *p = new ASPLIB_BIQUAD_HANDLE;
@@ -237,9 +258,9 @@ ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads
     }
 
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
-    for(uint ii = 0; ii < maxBands && err != ASPLIB_ERR_NO_ERROR; ii++)
+    for(uint ii = 0; ii < maxBands && err == ASPLIB_ERR_NO_ERROR; ii++)
     {
-        err = CBiQuadFactory::set_constQPeakingParams(BiQuads, Gain);
+        err = CBiQuadFactory::set_constQPeakingParams(BiQuads, Gain, ii);
     }
 
     return err;
@@ -259,7 +280,6 @@ ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads
         return ASPLIB_ERR_INVALID_INPUT;
     }
 
-    // calculate quality factor
     float maxBands = 0.0f;
     switch (BiQuads->optModule)
     {
@@ -274,7 +294,11 @@ ASPLIB_ERR CBiQuadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads
     }
     
     ASPLIB_CONST_Q_PEAKING_PARAM ConstQPeakingParam;
-    ConstQPeakingParam.Q = sqrtf(powf(2.0f, maxBands)) / (powf(2.0f, maxBands) - 1.0f);
+    // calculate quality factor
+    // ToDo make octaveEQ variabel
+    float octaveEQ = 1.0f;
+    ConstQPeakingParam.Gain = Gain;
+    ConstQPeakingParam.Q = sqrtf(powf(2.0f, octaveEQ)) / (powf(2.0f, octaveEQ) - 1.0f);
 
     // calculate center frequency of BiQuadIdx
     // ToDo: add functions for calculated centers base 2 & 10 (ISO), preferred centers base 2 & 10 (non ISO), calculated centers - contiguous (non-ISO), Preferred centers - contiguous (non-ISO)
@@ -351,7 +375,7 @@ ASPLIB_ERR helper_calcConstQPeakingParam(ASPLIB_CONST_Q_PEAKING_PARAM *ConstQPea
     float eta = 1 - K/(V0*Q) + K*K;
 
 
-    if(Gain >= 0.0f)
+    if(Gain > 0.0f)
     { // boost design equations
         Coefficients->a0 = alpha/d0;
         Coefficients->a1 = beta/d0;

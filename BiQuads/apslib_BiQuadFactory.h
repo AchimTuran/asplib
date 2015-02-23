@@ -37,6 +37,7 @@ public:
     // Handle BiQuads
     static ASPLIB_ERR            reset_BiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads);
     static ASPLIB_ERR            destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads);
+    static uint                  get_maxBiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads);
     static ASPLIB_BIQUAD_HANDLE* get_BiQuads(uint BiQuadQuantity, float SampleFrequency, ASPLIB_OPT_MODULE OptModule);
     static ASPLIB_ERR            calc_BiQuadSample(ASPLIB_BIQUAD_HANDLE *BiQuads, float In, float *Out);
     static ASPLIB_ERR            calc_BiQuadSamples(ASPLIB_BIQUAD_HANDLE *BiQuads, float *In, float *Out, uint FrameSize);
