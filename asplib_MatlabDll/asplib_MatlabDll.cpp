@@ -72,12 +72,25 @@ void destroy_BiQuads()
 // ---------------------------------------- BiQuad functions ----------------------------------------
 DLL_EXPORT RET_ERR create_BiQuad(uint32 BiQuadQuantity)
 {
+    if(g_BiQuadHandle)
+    {
+        const uint maxOldFreqBands = CBiQuadFactory::get_maxBiQuads(g_BiQuadHandle);
+        CBiQuadFactory::destroy_BiQuads(&g_BiQuadHandle);
+
+        mexPrintf("%sdeleted old BiQuad Filter with %i frequency bands\n", ASPLIB_LOGGIN_TAG, maxOldFreqBands);
+    }
+    // ToDo: add support for several optimizations
     g_BiQuadHandle = CBiQuadFactory::get_BiQuads(BiQuadQuantity, g_SampleFrequency, ASPLIB_OPT_NATIVE);
 
     if(!g_BiQuadHandle)
     {
+        // Evaluate get_BiQuads function error
+        string errStr = string(ASPLIB_LOGGIN_TAG) + string("Error! Input pointers are NULL!\n");
+        mexErrMsgTxt(errStr.c_str());
         return ERR_FATAL_ERROR;
     }
+
+    mexPrintf("%ssuccessful created BiQuad Filter with %i frequency bands\n", ASPLIB_LOGGIN_TAG, BiQuadQuantity);
 
     return ERR_NO_ERROR;
 }
