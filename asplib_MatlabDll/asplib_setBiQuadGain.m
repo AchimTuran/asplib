@@ -1,4 +1,4 @@
-% this script loads the asplib_Matlab.dll library
+% this script is used to set a Gain value for one BiQuad
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -24,27 +24,14 @@
 
 
 
-% reset workspace
-clc
-clear all;
-
-% load asplib_MatlabDll
-addpath(fullfile(pwd,'bin')) %add bin folder to path
-
-dll = 'asplib_Matlab';
-dllHeader = 'asplib_MatlabDll.h';
-
-if (libisloaded('asplib_MatlabDll'))
-	disp('[asplib] Reloading asplib_MatlabDll');
-	calllib('asplib_MatlabDll', 'destroy')
-	unloadlibrary('asplib_MatlabDll');
+function asplib_setBiQuadGain(BiQuadIdx, Gain)
+%ASPLIB_SETBIQUADGAIN Summary of this function goes here
+%   Detailed explanation goes here
+    if not(libisloaded('asplib_MatlabDll'))
+		disp('[asplib] asplib_MatlabDll is not loaded! Please run asplib_load_MatlabDll.m first!');
+		return;
+    end
+    
+    % ToDo evaluate err
+    err = calllib('asplib_MatlabDll', 'set_BiQuadGain', uint32(BiQuadIdx), single(Gain));
 end
-
-%hfile = fullfile(matlabroot,'extern','include','matrix.h');
-%for details of the loadlibrary function see:
-%http://www.mathworks.de/de/help/matlab/ref/loadlibrary.html
-[dllnotfound, dllwarnings] = loadlibrary(dll, dllHeader, 'alias', 'asplib_MatlabDll');
-disp('[asplib] Successful loaded asplib_MatlabDll');
-
-%ToDo: call init with specific parameters
-%calllib('asplib_MatlabDll', 'init', parameters)

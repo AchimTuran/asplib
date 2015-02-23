@@ -1,4 +1,4 @@
-% this script loads the asplib_Matlab.dll library
+% this script is used to process created BiQuads
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -23,28 +23,17 @@
 % */
 
 
+function [y] = asplib_processBiQuads(signal)
+%TEST Summary of this function goes here
+%   Detailed explanation goes here
+	if not(libisloaded('asplib_MatlabDll'))
+		disp('[asplib] asplib_MatlabDll is not loaded! Please run asplib_load_MatlabDll.m first!');
+		return;
+	end
 
-% reset workspace
-clc
-clear all;
-
-% load asplib_MatlabDll
-addpath(fullfile(pwd,'bin')) %add bin folder to path
-
-dll = 'asplib_Matlab';
-dllHeader = 'asplib_MatlabDll.h';
-
-if (libisloaded('asplib_MatlabDll'))
-	disp('[asplib] Reloading asplib_MatlabDll');
-	calllib('asplib_MatlabDll', 'destroy')
-	unloadlibrary('asplib_MatlabDll');
+	mSize = uint32(length(signal));
+	pSignal = libpointer('singlePtr', signal);
+	
+	% ToDo evaluate err
+	[err, y] = calllib('asplib_MatlabDll', 'process_BiQuads', pSignal, mSize);
 end
-
-%hfile = fullfile(matlabroot,'extern','include','matrix.h');
-%for details of the loadlibrary function see:
-%http://www.mathworks.de/de/help/matlab/ref/loadlibrary.html
-[dllnotfound, dllwarnings] = loadlibrary(dll, dllHeader, 'alias', 'asplib_MatlabDll');
-disp('[asplib] Successful loaded asplib_MatlabDll');
-
-%ToDo: call init with specific parameters
-%calllib('asplib_MatlabDll', 'init', parameters)
