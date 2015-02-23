@@ -25,15 +25,15 @@
 
 
 //negative exponents
-#define E_m3     10.0e-3f       //m
-#define E_m6     10.0e-6f       //u
-#define E_m9     10.0e-9f       //n
-#define E_m12    10.0e-12f      //p
-#define E_m15    10.0e-15f      //f
+#define E_m3     1.0e-3f       //m
+#define E_m6     1.0e-6f       //u
+#define E_m9     1.0e-9f       //n
+#define E_m12    1.0e-12f      //p
+#define E_m15    1.0e-15f      //f
 
 //positive exponents
-#define E_p3     10.0e3f        //k
-#define E_p6     10.0e6f        //Meg
-#define E_p9     10.0e9f        //Gig
-#define E_p12    10.0e12f       //T
-#define E_p15    10.0e15f       //
+#define E_p3     1.0e3f        //k
+#define E_p6     1.0e6f        //Meg
+#define E_p9     1.0e9f        //Gig
+#define E_p12    1.0e12f       //T
+#define E_p15    1.0e15f       //
