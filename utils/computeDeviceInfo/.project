@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>asplib</name>
+	<name>computeDeviceInfo</name>
 	<comment></comment>
 	<projects>
-		<project>computeDeviceInfo</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
