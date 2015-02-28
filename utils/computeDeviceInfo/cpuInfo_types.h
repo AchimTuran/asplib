@@ -22,7 +22,7 @@
  *
  */
 
-#if defined(TARGET_WINDOWs)
+#if defined(TARGET_WINDOWS)
     typedef unsigned __int32 uint32_t;
 #elif defined(TARGET_LINUX)
     typedef unsigned int uint32_t;
