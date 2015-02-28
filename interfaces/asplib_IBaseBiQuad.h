@@ -29,6 +29,10 @@
 #include "../constants_typedefs/asplib_constants.h"
 #include "../constants_typedefs/asplib_typedefs.h"
 
+#if defined(TARGET_LINUX)
+    #include <stddef.h>
+#endif
+
 namespace asplib
 {
 template<typename T>
