@@ -22,7 +22,13 @@
  *
  */
 
-typedef unsigned __int32 uint32_t;
+#if defined(TARGET_WINDOWs)
+    typedef unsigned __int32 uint32_t;
+#elif defined(TARGET_LINUX)
+    typedef unsigned int uint32_t;
+    typedef int __int32;
+#endif
+
 typedef __int32 CPUINFO_ERROR;
 
 #define CPUINFO_ERR_NO_ERR              0x00000000
