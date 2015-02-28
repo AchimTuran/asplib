@@ -86,8 +86,7 @@ CPUINFO_ERROR CPUINFO_getVendorName(char **VendorStr)
     const uint32_t maxSizeTable = (sizeof(CPUINFO_vendorIDTable) / sizeof(char*) -1)/ 2;
     int strFound = 0;
     for (uint32_t ii=0; ii < maxSizeTable && !strFound; ii++)
-    { 
-        int temp = strcmp(vendorID, &(*CPUINFO_vendorIDTable[8]));
+    {
         if (strcmp(vendorID, &(*CPUINFO_vendorIDTable[ii*2])) == 0)
         {
             size_t strSize = strlen(&(*CPUINFO_vendorIDTable[ii*2 + 1])) + 1;
