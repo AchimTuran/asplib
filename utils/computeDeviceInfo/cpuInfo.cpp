@@ -22,12 +22,11 @@
 
 
 
-#include "cpuInfo.h"
-
 #if defined(TARGET_WINDOWS)
     #include <intrin.h>
 #elif defined(TARGET_LINUX)
     #include <cpuid.h>
+    #include <malloc.h>
 #else
     #error "Unimplemented cpuInfo platform!"
 #endif
@@ -35,6 +34,8 @@
 #include <iostream>
 #include <string.h>
 #include <memory.h>
+
+#include "cpuInfo.h"
 
 const char* CPUINFO_vendorIDTable[] =
 {
