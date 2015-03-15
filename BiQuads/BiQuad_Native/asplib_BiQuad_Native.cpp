@@ -91,6 +91,8 @@ ASPLIB_ERR CBiQuad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coeffi
     filterParam[5] = Coefficients->b2;
     filterParam[6] = 0.0f;
     filterParam[7] = 0.0f;
+
+    return ASPLIB_ERR_NO_ERROR;
 }
 
 // Set all past values (x[k-1], x[k-2], y[k-1] & y[k-2]) to zero.
