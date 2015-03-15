@@ -133,7 +133,7 @@ CPUINFO_ERROR CPUINFO_getCPUName(char **CPUName)
 
     if (tempCPUInfo[0] < CPUINFO_PROCESSOR_BRAND_STRING_4)
     {
-        char *unsupportedFeatureStr = "Unknown";
+        const char *unsupportedFeatureStr = "Unknown";
         *CPUName = (char*)malloc(sizeof(char)*(strlen(unsupportedFeatureStr)+1));
         if (!CPUName)
         {
