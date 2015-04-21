@@ -416,6 +416,34 @@ ASPLIB_ERR CBiQuadFactory::get_constQPeakingBiQuadCoes(ASPLIB_BIQUAD_HANDLE *BiQ
   return helper_calcConstQPeakingParam(&ConstQPeakingParam, Coefficients);
 }
 
+ASPLIB_ERR CBiQuadFactory::get_constQPeakingBiquadCoes(uint SampleFrequency, uint MaxFreqBands, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
+{
+  if(SampleFrequency <= 0 || MaxFreqBands <= 0 || BiquadIdx >= MaxFreqBands || !Coefficients)
+  {
+    return ASPLIB_ERR_INVALID_INPUT;
+  }
+
+  ASPLIB_CONST_Q_PEAKING_PARAM ConstQPeakingParam;
+  float maxBands = (float)MaxFreqBands;
+  float octaveEQ = 1.0f;
+  ConstQPeakingParam.fs = (float)SampleFrequency;
+  ConstQPeakingParam.Gain = Gain;
+  ConstQPeakingParam.Q = sqrtf(powf(2.0f, octaveEQ)) / (powf(2.0f, octaveEQ) - 1.0f);
+  
+  // calculate center frequency of BiQuadIdx
+  // ToDo: add functions for calculated centers base 2 & 10 (ISO), preferred centers base 2 & 10 (non ISO), calculated centers - contiguous (non-ISO), Preferred centers - contiguous (non-ISO)
+  // ToDo: make maxFrequency variable and dependend from sample frequency
+  // ToDo: make baseFrequency variable
+  float baseFrequency = E_p3;         // 1000Hz
+  float maxFrequency = 20.0f*E_p3;    // 20kHz
+  float bandsFactor = maxBands / 10;
+  float positiveBands = (float)((int)(bandsFactor*log2f(maxFrequency / baseFrequency))); // round down to next complete number
+  float frequencyBandIdx = -maxBands + positiveBands +1 + BiquadIdx;
+  ConstQPeakingParam.fc = baseFrequency*powf(2.0f, frequencyBandIdx/bandsFactor);
+
+  return helper_calcConstQPeakingParam(&ConstQPeakingParam, Coefficients);
+}
+
 //-------------------------
 //--- helper functions ----
 //-------------------------

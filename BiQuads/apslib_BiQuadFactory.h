@@ -50,5 +50,6 @@ public:
     static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain);
     static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx);
     static ASPLIB_ERR            get_constQPeakingBiQuadCoes(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
+	static ASPLIB_ERR            get_constQPeakingBiquadCoes(uint SampleFrequency, uint MaxFreqBands, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
 };
 }
