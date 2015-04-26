@@ -1,4 +1,4 @@
-% this script is used to set a Gain value for one BiQuad
+% this script is used to process created Biquads
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -23,15 +23,17 @@
 % */
 
 
-
-function asplib_setBiQuadGain(BiQuadIdx, Gain)
-%ASPLIB_SETBIQUADGAIN Summary of this function goes here
+function [y] = asplib_processBiquads(signal)
+%TEST Summary of this function goes here
 %   Detailed explanation goes here
-    if not(libisloaded('asplib_MatlabDll'))
+	if not(libisloaded('asplib_MatlabDll'))
 		disp('[asplib] asplib_MatlabDll is not loaded! Please run asplib_load_MatlabDll.m first!');
 		return;
-    end
-    
-    % ToDo evaluate err
-    err = calllib('asplib_MatlabDll', 'set_BiQuadGain', uint32(BiQuadIdx), single(Gain));
+	end
+
+	mSize = uint32(length(signal));
+	pSignal = libpointer('singlePtr', signal);
+	
+	% ToDo evaluate err
+	[err, y] = calllib('asplib_MatlabDll', 'process_Biquads', pSignal, mSize);
 end

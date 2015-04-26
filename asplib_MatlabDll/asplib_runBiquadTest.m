@@ -1,4 +1,4 @@
-% this script is used to create and test BiQuads from asplib
+% this script is used to create and test Biquads from asplib
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -35,9 +35,9 @@ FrameSize = 1024*20;
 Channels = 1;
 asplib_init(fA, Channels, FrameSize);
 
-% create BiQuads
+% create Biquads
 MaxFrequencyBands = 10;
-asplib_createBiQuad(MaxFrequencyBands);
+asplib_createBiquad(MaxFrequencyBands);
 
 % create test signal
 x = zeros(1, FrameSize);
@@ -45,13 +45,13 @@ x(1) = 1.0;
 y_cut = zeros(1, FrameSize);
 y_boost = zeros(1, FrameSize);
 
-% set all BiQuad Gain values to -12dB
-asplib_setBiQuadGains(-12);
-y_cut = asplib_processBiQuads(x);
+% set all Biquad Gain values to -12dB
+asplib_setBiquadGains(-12);
+y_cut = asplib_processBiquads(x);
 
-% set all BiQuad Gain values to +12dB
-asplib_setBiQuadGains(12);
-y_boost = asplib_processBiQuads(x);
+% set all Biquad Gain values to +12dB
+asplib_setBiquadGains(12);
+y_boost = asplib_processBiquads(x);
 
 % unload asplib_MatlabDll
 asplib_unload_MatlabDll
@@ -74,7 +74,7 @@ freq = 0:df:df*(length(Y_cut)/2-1);
 figure(1);
 subplot(2,1,1)
 semilogx(freq, Amplitude_cut, 'b', 'Linewidth', 1.5)
-title('Amplitude response of Constant-Q EQ from asplib BiQuads-Module','FontWeight','normal','FontName','Arial','FontSize', 16)
+title('Amplitude response of Constant-Q EQ from asplib Biquads-Module','FontWeight','normal','FontName','Arial','FontSize', 16)
 xlabel('frequency [Hz]');
 ylabel('Amplitude [dB]');
 xlim([0 fA/2])
@@ -89,7 +89,7 @@ hold off;
 
 subplot(2,1,2)
 semilogx(freq, Phase_cut, 'b', 'Linewidth', 1.5)
-title('Phase response of Constant-Q EQ from asplib BiQuads-Module','FontWeight','normal','FontName','Arial','FontSize', 16)
+title('Phase response of Constant-Q EQ from asplib Biquads-Module','FontWeight','normal','FontName','Arial','FontSize', 16)
 xlabel('frequency [Hz]');
 ylabel('Phase [°]');
 xlim([min(freq) max(freq)])

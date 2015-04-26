@@ -1,4 +1,4 @@
-% this script is used to create a BiQuad Filter
+% this script is used to set all Gain values of a Biquad Filter
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -24,8 +24,8 @@
 
 
 
-function asplib_createBiQuad(BiQuadQuantity)
-%ASPLIB_CREATEBIQUADS Summary of this function goes here
+function asplib_setBiquadGains(Gain)
+%ASPLIB_SETBIQUADGAIN Summary of this function goes here
 %   Detailed explanation goes here
     if not(libisloaded('asplib_MatlabDll'))
 		disp('[asplib] asplib_MatlabDll is not loaded! Please run asplib_load_MatlabDll.m first!');
@@ -33,5 +33,5 @@ function asplib_createBiQuad(BiQuadQuantity)
     end
     
     % ToDo evaluate err
-	[ret] = calllib('asplib_MatlabDll', 'create_BiQuad', uint32(BiQuadQuantity));
+    err = calllib('asplib_MatlabDll', 'set_BiquadGains', single(Gain));
 end

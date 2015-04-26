@@ -1,4 +1,4 @@
-% this script is used to set all Gain values of a BiQuad Filter
+% this script is used to set a Gain value for one Biquad
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -24,7 +24,7 @@
 
 
 
-function asplib_setBiQuadGains(Gain)
+function asplib_setBiquadGain(BiquadIdx, Gain)
 %ASPLIB_SETBIQUADGAIN Summary of this function goes here
 %   Detailed explanation goes here
     if not(libisloaded('asplib_MatlabDll'))
@@ -33,5 +33,5 @@ function asplib_setBiQuadGains(Gain)
     end
     
     % ToDo evaluate err
-    err = calllib('asplib_MatlabDll', 'set_BiQuadGains', single(Gain));
+    err = calllib('asplib_MatlabDll', 'set_BiquadGain', uint32(BiquadIdx), single(Gain));
 end

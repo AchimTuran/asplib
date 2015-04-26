@@ -1,4 +1,4 @@
-% this script is used to process created BiQuads
+% this script is used to create a Biquad Filter
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de
@@ -23,17 +23,15 @@
 % */
 
 
-function [y] = asplib_processBiQuads(signal)
-%TEST Summary of this function goes here
+
+function asplib_createBiquad(BiquadAmount)
+%ASPLIB_CREATEBIQUADS Summary of this function goes here
 %   Detailed explanation goes here
-	if not(libisloaded('asplib_MatlabDll'))
+    if not(libisloaded('asplib_MatlabDll'))
 		disp('[asplib] asplib_MatlabDll is not loaded! Please run asplib_load_MatlabDll.m first!');
 		return;
-	end
-
-	mSize = uint32(length(signal));
-	pSignal = libpointer('singlePtr', signal);
-	
-	% ToDo evaluate err
-	[err, y] = calllib('asplib_MatlabDll', 'process_BiQuads', pSignal, mSize);
+    end
+    
+    % ToDo evaluate err
+	[ret] = calllib('asplib_MatlabDll', 'create_Biquad', uint32(BiquadAmount));
 end
