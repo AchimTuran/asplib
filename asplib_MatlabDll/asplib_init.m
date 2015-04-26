@@ -1,4 +1,4 @@
-% this script is used to process created BiQuads
+% this script is used to process created Biquads
 
 %/*
 % * Copyright (C) 2014 Achim Turan, Achim.Turan@o2online.de

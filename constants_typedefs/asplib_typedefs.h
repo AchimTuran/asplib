@@ -43,7 +43,7 @@ typedef enum  ASPLIB_OPT_MODULE
 typedef struct
 {
   ASPLIB_OPT_MODULE  optModule;
-  void               *BiQuads;
+  void               *Biquads;
 }ASPLIB_BIQUAD_HANDLE;
 
 typedef struct

@@ -19,15 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\BiQuads\apslib_BiQuadFactory.cpp" />
-    <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.cpp" />
+    <ClCompile Include="..\BiQuads\apslib_BiquadFactory.cpp" />
+    <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\BiQuads\apslib_BiQuadFactory.h" />
-    <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_BiQuad_Native.h" />
+    <ClInclude Include="..\BiQuads\apslib_BiquadFactory.h" />
+    <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.h" />
     <ClInclude Include="..\constants_typedefs\asplib_constants.h" />
     <ClInclude Include="..\constants_typedefs\asplib_typedefs.h" />
-    <ClInclude Include="..\interfaces\asplib_IBaseBiQuad.h" />
+    <ClInclude Include="..\interfaces\asplib_IBaseBiquad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{258DDAE5-5A27-448F-B652-C06F2F96882E}</ProjectGuid>

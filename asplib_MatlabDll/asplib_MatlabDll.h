@@ -35,7 +35,7 @@
 
 #include "typedefs.h"
 
-#define ASPLIB_LOGGIN_TAG "[asplib] "
+#define ASPLIB_LOGGING_TAG "[asplib] "
 
 #include <mex.h>
 
@@ -53,10 +53,10 @@
 extern "C" {
 #endif
 
-DLL_EXPORT RET_ERR create_BiQuad(uint32 BiQuadQuantity);
-DLL_EXPORT RET_ERR process_BiQuads(single *Data, uint32 MaxFrames);
-DLL_EXPORT RET_ERR set_BiQuadGain(uint32 BiQuadIdx, single Gain);
-DLL_EXPORT RET_ERR set_BiQuadGains(single Gain);
+DLL_EXPORT RET_ERR create_Biquad(uint32 BiquadAmount);
+DLL_EXPORT RET_ERR process_Biquads(single *Data, uint32 MaxFrames);
+DLL_EXPORT RET_ERR set_BiquadGain(uint32 BiquadIdx, single Gain);
+DLL_EXPORT RET_ERR set_BiquadGains(single Gain);
 
 DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize);
 DLL_EXPORT void destroy();

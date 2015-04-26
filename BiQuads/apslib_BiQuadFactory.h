@@ -31,25 +31,25 @@
 
 namespace asplib
 {
-class CBiQuadFactory
+class CBiquadFactory
 {
 public:
-    // Handle BiQuads
-    static ASPLIB_ERR            reset_BiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads);
-    static ASPLIB_ERR            destroy_BiQuads(ASPLIB_BIQUAD_HANDLE **BiQuads);
-    static uint                  get_maxBiQuads(ASPLIB_BIQUAD_HANDLE *BiQuads);
-    static ASPLIB_BIQUAD_HANDLE* get_BiQuads(uint BiQuadQuantity, float SampleFrequency, ASPLIB_OPT_MODULE OptModule);
-    static ASPLIB_ERR            calc_BiQuadSample(ASPLIB_BIQUAD_HANDLE *BiQuads, float In, float *Out);
-    static ASPLIB_ERR            calc_BiQuadSamples(ASPLIB_BIQUAD_HANDLE *BiQuads, float *In, float *Out, uint FrameSize);
+    // Handle Biquads
+    static ASPLIB_ERR            reset_Biquads(ASPLIB_BIQUAD_HANDLE *Biquads);
+    static ASPLIB_ERR            destroy_Biquads(ASPLIB_BIQUAD_HANDLE **Biquads);
+    static uint                  get_maxBiquads(ASPLIB_BIQUAD_HANDLE *Biquads);
+    static ASPLIB_BIQUAD_HANDLE* get_Biquads(uint BiquadQuantity, float SampleFrequency, ASPLIB_OPT_MODULE OptModule);
+    static ASPLIB_ERR            calc_BiquadSample(ASPLIB_BIQUAD_HANDLE *Biquads, float In, float *Out);
+    static ASPLIB_ERR            calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, float *In, float *Out, uint FrameSize);
 
-    // set BiQuad Parameters
-    static ASPLIB_ERR            set_BiQuadCoefficients(ASPLIB_BIQUAD_HANDLE *BiQuads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float C0 = 1.0f, float D0 = 0.0f);
-    static ASPLIB_ERR            set_BiQuadCoefficients(ASPLIB_BIQUAD_HANDLE *BiQuads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, uint BiQuadIdx, float C0 = 1.0f, float D0 = 0.0f);
+    // set Biquad Parameters
+    static ASPLIB_ERR            set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float C0 = 1.0f, float D0 = 0.0f);
+    static ASPLIB_ERR            set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, uint BiquadIdx, float C0 = 1.0f, float D0 = 0.0f);
     // Octave EQs, 1 Octave (9 to 11 bands), 2/3 octave (15 - 17 bands),  1/2 octave (17 to 22 bands), and 1/3 octave (30 - 31 bands)
     // frequency bands are defined in ISO R 266-1997 or ANSI S1.6-1984
-    static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain);
-    static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx);
-    static ASPLIB_ERR            get_constQPeakingBiQuadCoes(ASPLIB_BIQUAD_HANDLE *BiQuads, float Gain, uint BiQuadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
+    static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain);
+    static ASPLIB_ERR            set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint BiquadIdx);
+    static ASPLIB_ERR            get_constQPeakingBiquadCoes(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
 	static ASPLIB_ERR            get_constQPeakingBiquadCoes(uint SampleFrequency, uint MaxFreqBands, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
 };
 }

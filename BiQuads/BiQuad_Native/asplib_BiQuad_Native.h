@@ -29,23 +29,23 @@
 #include "../../constants_typedefs/asplib_constants.h"
 #include "../../constants_typedefs/asplib_typedefs.h"
 
-#include "../../interfaces/asplib_IBaseBiQuad.h"
+#include "../../interfaces/asplib_IBaseBiquad.h"
 
 namespace asplib
 {
-class CBiQuad_Native : public IBaseBiQuad<float>
+class CBiquad_Native : public IBaseBiquad<float>
 {
 public:
     // use this constructor to create a biquad filter with coefficients
-    CBiQuad_Native(uint Quantity, float SampleFrequency);
-    //CBiQuad_Native(float A0, float A1, float A2, float B1, float B2);
-    ~CBiQuad_Native();
+    CBiquad_Native(uint Amount, float SampleFrequency);
+    //CBiquad_Native(float A0, float A1, float A2, float B1, float B2);
+    ~CBiquad_Native();
 
     // Set all past values (y[k-1] & y[k-2]) to zero.
     virtual void resetState();
 
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0);
-    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiQuadIdx);
+    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx);
 
     // calculate one output sample with the following difference equation
     // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])

@@ -25,34 +25,34 @@
 #include <iostream>
 using namespace std;
 
-#include "asplib_BiQuad_Native.h"
+#include "asplib_Biquad_Native.h"
 
 #define MAX_PARAM_PER_BIQUAD  12
 
 namespace asplib
 {
 
-CBiQuad_Native::CBiQuad_Native(uint Quantity, float SampleFrequency) : 
-    IBaseBiQuad<float>(Quantity, SampleFrequency)
+CBiquad_Native::CBiquad_Native(uint Amount, float SampleFrequency) : 
+    IBaseBiquad<float>(Amount, SampleFrequency)
 {
-    if(!Quantity)
+    if(!Amount)
     {
         // ToDo: throw error!
     }
 
-    this->m_parameters = new float[MAX_PARAM_PER_BIQUAD*Quantity];
+    this->m_parameters = new float[MAX_PARAM_PER_BIQUAD*Amount];
     if(!m_parameters)
     {
         // ToDo: throw error!
     }
 
-    for(uint ii = 0; ii < MAX_PARAM_PER_BIQUAD*Quantity; ii++)
+    for(uint ii = 0; ii < MAX_PARAM_PER_BIQUAD*Amount; ii++)
     {
         m_parameters[ii] = 0.0f;
     }
 }
 
-CBiQuad_Native::~CBiQuad_Native()
+CBiquad_Native::~CBiquad_Native()
 {
     if(this->m_parameters)
     {
@@ -61,11 +61,11 @@ CBiQuad_Native::~CBiQuad_Native()
     }
 }
 
-ASPLIB_ERR CBiQuad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0)
+ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0)
 {
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
-    const uint maxQuantity = getMaxBiquads();
-    for(uint ii = 0; ii < maxQuantity && err == ASPLIB_ERR_NO_ERROR; ii++)
+    const uint maxAmount = getMaxBiquads();
+    for(uint ii = 0; ii < maxAmount && err == ASPLIB_ERR_NO_ERROR; ii++)
     {
         err = updateCoefficients(Coefficients, D0, ii);
     }
@@ -73,15 +73,15 @@ ASPLIB_ERR CBiQuad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coeffi
     return err;
 }
 
-ASPLIB_ERR CBiQuad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiQuadIdx)
+ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx)
 {
-    if(BiQuadIdx >= getMaxBiquads() || !Coefficients)
+    if(BiquadIdx >= getMaxBiquads() || !Coefficients)
     {
         // ToDo: throw error!
         return ASPLIB_ERR_INVALID_INPUT;
     }
 
-    float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*BiQuadIdx;
+    float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*BiquadIdx;
 
     filterParam[0] = D0;
     filterParam[1] = Coefficients->a0;
@@ -96,10 +96,10 @@ ASPLIB_ERR CBiQuad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coeffi
 }
 
 // Set all past values (x[k-1], x[k-2], y[k-1] & y[k-2]) to zero.
-void CBiQuad_Native::resetState()
+void CBiquad_Native::resetState()
 {
-    const uint maxBiQuads = getMaxBiquads();
-    for(uint ii = 0; ii < maxBiQuads; ii++)
+    const uint maxBiquads = getMaxBiquads();
+    for(uint ii = 0; ii < maxBiquads; ii++)
     {
         // only destroy the past values of the filter!
         float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*ii + 8;
@@ -112,11 +112,11 @@ void CBiQuad_Native::resetState()
 
 // calculate one output sample with the following difference equation
 // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
-float CBiQuad_Native::calcSample(float In)
+float CBiquad_Native::calcSample(float In)
 {
-    const uint maxBiQuads = getMaxBiquads();
+    const uint maxBiquads = getMaxBiquads();
     float out = In;
-    for(uint ii = 0; ii < maxBiQuads; ii++)
+    for(uint ii = 0; ii < maxBiquads; ii++)
     {
         float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*ii;
 
@@ -140,7 +140,7 @@ float CBiQuad_Native::calcSample(float In)
     return out;
 }
 
-ASPLIB_ERR CBiQuad_Native::calcSamples(float *In, float *Out, uint N)
+ASPLIB_ERR CBiquad_Native::calcSamples(float *In, float *Out, uint N)
 {
     if(!In || !Out || !N)
     {
@@ -149,9 +149,9 @@ ASPLIB_ERR CBiQuad_Native::calcSamples(float *In, float *Out, uint N)
 
     for(uint ii = 0; ii < N; ii++)
     {
-        const uint maxBiQuads = getMaxBiquads();
+        const uint maxBiquads = getMaxBiquads();
         float out = In[ii];
-        for(uint jj = 0; jj < maxBiQuads; jj++)
+        for(uint jj = 0; jj < maxBiquads; jj++)
         {
             float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*jj;
 

@@ -36,19 +36,19 @@
 namespace asplib
 {
 template<typename T>
-class IBaseBiQuad
+class IBaseBiquad
 {
 public:
     // use this constructor to create a biquad filter with coefficients
-    IBaseBiQuad(uint Quantity, float SampleFrequency)
+    IBaseBiquad(uint Amount, float SampleFrequency)
     {
         m_parameters = NULL;
             
-        if(Quantity == 0)
+        if(Amount == 0)
         {
             // ToDo: throw error!
         }
-        m_maxBiQuads = Quantity;
+        m_maxBiquads = Amount;
 
         if(SampleFrequency <= 0.0f)
         {
@@ -57,10 +57,10 @@ public:
         m_sampleFrequency = SampleFrequency;
     }
 
-    virtual ~IBaseBiQuad() {}
+    virtual ~IBaseBiquad() {}
 
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0) = 0;
-    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiQuadIdx) = 0;
+    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx) = 0;
 
     // calculate one output sample with the following difference equation
     // y[k] = d0*x[k] + a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
@@ -71,10 +71,10 @@ public:
     virtual void resetState() = 0;
 
     //--- helper functions ---
-    // get BiQuad quantity
+    // get Biquad quantity
     uint getMaxBiquads()
     {
-        return m_maxBiQuads;
+        return m_maxBiquads;
     }
 
     float getSampleFrequency()
@@ -83,13 +83,13 @@ public:
     }
 
 protected:
-    T *m_parameters;    // array structure for one BiQuad
+    T *m_parameters;    // array structure for one Biquad
                         // [0]=d0,      [1]=a0*c0,  [2]=a1*c0,    [3]=a2*c0
                         // [4]=-b1*c0,  [5]=-b2*c0, [6]=0,        [7]=0
                         // [8]=x[k-1],  [9]=x[k-2], [10]=y[k-1],  [11]=y[k-2]
 
 private:
-    uint m_maxBiQuads;  // maximum BiQuad quantity
+    uint m_maxBiquads;  // maximum Biquad quantity
     float m_sampleFrequency;
 };
 }
