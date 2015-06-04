@@ -188,3 +188,10 @@ libs/
 bin/
 asplib_MatlabDll/old matlab scripts
 /Debug/
+utils/LXC_Logging/
+utils/LXC_Exceptions/
+utils/LXC_Optimizer/
+benchmarks/
+utils/LXC_Signal/
+utils/LXC_System/
+utils/
