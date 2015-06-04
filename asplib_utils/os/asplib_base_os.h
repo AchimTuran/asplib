@@ -23,10 +23,14 @@
  */
 
 #if defined(MSVC) || defined(_WIN32) || defined(_WIN64)
+#if !defined(TARGET_WINDOWS)
   #define TARGET_WINDOWS
-  #include "windows/win_definitions.h"
+#endif
+  #include "windows/windows_definitions.h"
 #elif defined(__gnu_linux__)
+#if !defined(TARGET_WINDOWS)
   #define TARGET_LINUX
+#endif
   #include "linux/linux_definitions.h"
 #else
   #error "Unsupported operating system!"
