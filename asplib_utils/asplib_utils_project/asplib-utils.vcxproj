@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\audioInterfaces\IPortAudio.h" />
     <ClInclude Include="..\buffers\IBufferBase.h" />
     <ClInclude Include="..\buffers\ITBuffer.h" />
     <ClInclude Include="..\buffers\ITFrameBuffer.h" />
@@ -45,12 +46,14 @@
     <ClInclude Include="..\timer\asplib_CPUTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\audioInterfaces\IPortAudio.cpp" />
     <ClCompile Include="..\exceptions\asplib_StringException.cpp" />
     <ClCompile Include="..\logger\asplib_default_logger.cpp" />
     <ClCompile Include="..\logger\ILogger.cpp" />
     <ClCompile Include="..\logger\LoggerFactory.cpp" />
     <ClCompile Include="..\logger\LoggerFile.cpp" />
     <ClCompile Include="..\logger\LoggerStdout.cpp" />
+    <ClCompile Include="..\logger\Logger_types.cpp" />
     <ClCompile Include="..\signals\samplesConverter.cpp" />
     <ClCompile Include="..\timer\asplib_CPUTimer.cpp" />
   </ItemGroup>

@@ -108,6 +108,9 @@
     <ClInclude Include="..\logger\asplib_default_logger.h">
       <Filter>logger</Filter>
     </ClInclude>
+    <ClInclude Include="..\audioInterfaces\IPortAudio.h">
+      <Filter>audioInterfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\exceptions\asplib_StringException.cpp">
@@ -132,6 +135,12 @@
       <Filter>logger</Filter>
     </ClCompile>
     <ClCompile Include="..\logger\asplib_default_logger.cpp">
+      <Filter>logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\audioInterfaces\IPortAudio.cpp">
+      <Filter>audioInterfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="..\logger\Logger_types.cpp">
       <Filter>logger</Filter>
     </ClCompile>
   </ItemGroup>
