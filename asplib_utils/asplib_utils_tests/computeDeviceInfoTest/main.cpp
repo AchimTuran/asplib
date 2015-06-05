@@ -21,9 +21,10 @@
  */
 
 #include <iostream>
+#include <malloc.h>
 using namespace std;
 
-#include "utils/computeDeviceInfo/cpuInfo.h"
+#include "asplib_utils/computeDeviceInfo/cpuInfo.h"
 
 int main()
 {
@@ -40,5 +41,5 @@ int main()
     free(VendorName);
     free(CPUName);
 
-    return 0;
+    return err;
 }

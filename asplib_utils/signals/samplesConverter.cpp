@@ -26,6 +26,7 @@
 
 #include "samplesConverter.h"
 #include <memory>
+#include <string.h>
 
 bool fmtc_PCM_TO_float(unsigned char *InSamples, float *OutSamples, uint16_t BitsPerSample, uint32_t MaxSamples)
 {
@@ -35,7 +36,7 @@ bool fmtc_PCM_TO_float(unsigned char *InSamples, float *OutSamples, uint16_t Bit
   }
 
   // check bytes with >>3 (divide by 8)
-  if(/*BitsPerSample % (1<<3) || */(BitsPerSample>>3) > sizeof(uint32_t))
+  if(/*BitsPerSample % (1<<3) || */(uint32_t)(BitsPerSample>>3) > sizeof(uint32_t))
   {
     return false;
   }

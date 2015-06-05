@@ -89,7 +89,7 @@ ASPLIB_ERR CLoggerFile::LogWrite(const uint32_t TagID, const std::string DateStr
   }
 
   // TODO check errors from fprinf(...) && vfprintf(...)
-  fprintf(m_FilePtr, "%s %s", DateStr.c_str(), get_LoggerTagStr(TagID));
+  fprintf(m_FilePtr, "%s %s", DateStr.c_str(), get_LoggerTagStr(TagID).c_str());
   vfprintf(m_FilePtr, Message.c_str(), VarArgs);
   fprintf(m_FilePtr, "\n");
 

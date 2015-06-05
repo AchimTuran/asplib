@@ -48,7 +48,7 @@ ASPLIB_ERR CLoggerStdout::Close()
 
 ASPLIB_ERR CLoggerStdout::LogWrite(const uint32_t TagID, const std::string DateStr, std::string Message, va_list VarArgs)
 {
-  printf("%s %s", DateStr.c_str(), get_LoggerTagStr(TagID));
+  printf("%s %s", DateStr.c_str(), get_LoggerTagStr(TagID).c_str());
   vprintf(Message.c_str(), VarArgs);
   printf("\n");
 

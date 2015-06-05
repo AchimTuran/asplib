@@ -29,6 +29,7 @@
 #include "Logger_types.h"
 
 #include <string>
+#include <stdarg.h>
 
 namespace asplib
 {
@@ -36,7 +37,7 @@ class ILogger
 {
 public:
   ILogger(loggerTags_t &LoggerTags);
-  ~ILogger();
+  virtual ~ILogger();
 
   ASPLIB_ERR Log(const uint32_t TagID, const std::string Message, ...);
   std::string get_LoggerTagStr(const uint32_t TagID);

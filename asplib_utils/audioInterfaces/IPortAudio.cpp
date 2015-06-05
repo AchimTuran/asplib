@@ -1,6 +1,7 @@
 #include "IPortAudio.h"
 
 #include <iostream>
+#include <string.h>
 using namespace std;
 
 #if defined(TARGET_WINDOWS)
@@ -13,7 +14,7 @@ using namespace std;
   #include <pa_win_waveformat.h>
 #elif defined(TARGET_LINUX)
   #include <pa_linux_alsa.h>
-  #include <pa_jack.h>
+  //#include <pa_jack.h>
 #endif
 
 //----------------------------------------------

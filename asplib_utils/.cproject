@@ -39,6 +39,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/asplib}&quot;"/>
 									<listOptionValue builtIn="false" value="/home/user/libs/portaudio/include"/>
 								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1703929853" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="TARGET_LINUX"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.929908329" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1667720889" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
