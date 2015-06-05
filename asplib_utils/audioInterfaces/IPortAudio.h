@@ -32,6 +32,8 @@
 #include "asplib_utils/os/asplib_base_os.h"
 #include "asplib_utils/exceptions/asplib_StringException.h"
 
+namespace asplib
+{
 // type and structure definitions
 struct sPaDeviceInfo
 {
@@ -129,3 +131,4 @@ private: // private callback functions
   void CreateAvailableDevicesList();
   void ResetValues();
 };
+}

@@ -17,6 +17,8 @@ using namespace std;
   //#include <pa_jack.h>
 #endif
 
+namespace asplib
+{
 //----------------------------------------------
 // PortAudio initializer implementations
 //----------------------------------------------
@@ -613,4 +615,5 @@ void IPortAudio::ResetValues()
 
   memset(&m_OutputParameters, 0, sizeof(PaStreamParameters));
   memset(&m_InputParameters,  0, sizeof(PaStreamParameters));
+}
 }
