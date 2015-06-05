@@ -37,15 +37,17 @@
     #define __ASPLIB_LINE__ __LINE__
   #endif
 
+  #include <stdint.h>
+
   // data typedefs
-  typedef unsigned char   uint8_t;
-  typedef char            int8_t;
-  typedef unsigned short  uint16_t;
-  typedef short           int16_t;
-  typedef unsigned int    uint32_t;
-  typedef int             int32_t;
-  typedef unsigned long   uin64_t;
-  typedef long            int64_t;
+//  typedef unsigned char   uint8_t;
+//  typedef char            int8_t;
+//  typedef unsigned short  uint16_t;
+//  typedef short           int16_t;
+//  typedef unsigned int    uint32_t;
+//  typedef int             int32_t;
+//  typedef unsigned long   uin64_t;
+//  typedef long            int64_t;
 
   // path typedefs
   #define ASPLIB_PATH_SEPERATOR std::string("//")
