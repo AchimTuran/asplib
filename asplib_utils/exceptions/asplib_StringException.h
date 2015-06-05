@@ -30,8 +30,6 @@
 
 namespace asplib
 {
-typedef
-
 class CStringException : public IException<std::string>
 {
 public:
