@@ -48,7 +48,7 @@ ILogger::ILogger(loggerTags_t &LoggerTags)
   int32_t greatesID = -1;
   for(uint32_t ii=0; ii < LoggerTags.size(); ii++)
   {
-    if(LoggerTags[ii].first > greatesID)
+    if((int32_t)LoggerTags[ii].first > greatesID)
     {
       greatesID = LoggerTags[ii].first;
     }
@@ -85,7 +85,7 @@ ASPLIB_ERR ILogger::Log(const uint32_t TagID, const std::string Message, ...)
   }
 
   va_list variadicArgs;
-  va_start(variadicArgs, Message.c_str());
+  va_start(variadicArgs, Message);
   asplibErr = LogWrite(TagID, dateStr, Message, variadicArgs);
   va_end(variadicArgs);
   if(asplibErr != ASPLIB_ERR_NO_ERROR)
