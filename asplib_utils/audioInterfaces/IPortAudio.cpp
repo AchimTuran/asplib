@@ -121,6 +121,18 @@ IPortAudio::~IPortAudio()
 	}
 }
 
+uint32_t IPortAudio::get_AvailableDevices(CPaDeviceInfoVector_t &Devices)
+{
+  Devices.clear();
+
+  for(uint32_t ii = 0; ii < m_DeviceInfos.size(); ii++)
+  {
+    Devices.push_back(m_DeviceInfos[ii]);
+  }
+
+  return Devices.size();
+}
+
 std::string IPortAudio::get_PortAudioErrStr(PaError paErr)
 {
 	return Pa_GetErrorText(paErr);
