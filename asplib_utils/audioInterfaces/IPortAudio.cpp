@@ -337,7 +337,20 @@ PaError IPortAudio::start_Device()
 		return paBadStreamPtr;
 	}
 
-  return Pa_StartStream(m_PaStream);
+  PaError paErr = Pa_StartStream(m_PaStream);
+  if(paErr != paNoError)
+  {
+    return paErr;
+  }
+
+  // wait until the device is started
+  do
+  {
+      paErr = Pa_IsStreamStopped(m_PaStream);
+  }
+  while(paErr > paNoError);
+
+  return paErr;
 }
 
 PaError IPortAudio::stop_Device()
@@ -347,7 +360,20 @@ PaError IPortAudio::stop_Device()
 		return paBadStreamPtr;
 	}
 
-  return Pa_StopStream(m_PaStream);
+  PaError paErr = Pa_StopStream(m_PaStream);
+  if(paErr != paNoError)
+  {
+    return paErr;
+  }
+
+  // wait until the device is stopped
+  do
+  {
+    paErr = Pa_IsStreamActive(m_PaStream);
+  }
+  while(paErr > paNoError);
+
+  return paErr;
 }
 
 int IPortAudio::staticAudioCallback(	const void *inputBuffer, void *outputBuffer,
