@@ -26,8 +26,8 @@
 // this module implements basic biquad filters 
 // for more details see: http://en.wikipedia.org/wiki/Digital_biquad_filter
 
-#include "../../constants_typedefs/asplib_constants.h"
-#include "../../constants_typedefs/asplib_typedefs.h"
+#include "asplib_utils/constants_typedefs/asplib_constants.h"
+#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
 
 #include "../../interfaces/asplib_IBaseBiquad.h"
 

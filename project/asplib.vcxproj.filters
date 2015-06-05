@@ -4,9 +4,6 @@
     <Filter Include="interfaces">
       <UniqueIdentifier>{a471fdc0-9b32-449c-b4ca-d83fd9504bbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="constants_typedefs">
-      <UniqueIdentifier>{98704e1f-ab09-4021-b80e-89e7ec0f3922}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Biquads">
       <UniqueIdentifier>{603cb8e7-596e-4bb0-9083-0ceff6aeb961}</UniqueIdentifier>
     </Filter>
@@ -26,12 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\constants_typedefs\asplib_typedefs.h">
-      <Filter>constants_typedefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\constants_typedefs\asplib_constants.h">
-      <Filter>constants_typedefs</Filter>
-    </ClInclude>
     <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.h">
       <Filter>Biquads\Biquad_Native</Filter>
     </ClInclude>

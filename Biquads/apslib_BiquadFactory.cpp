@@ -28,8 +28,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-#include "../constants_typedefs/asplib_constants.h"
-#include "../constants_typedefs/asplib_typedefs.h"
+#include "asplib_utils/constants_typedefs/asplib_constants.h"
+#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
 
 #include "apslib_BiquadFactory.h"
 #include "Biquad_Native/asplib_Biquad_Native.h"
