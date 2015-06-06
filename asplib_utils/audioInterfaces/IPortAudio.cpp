@@ -81,44 +81,7 @@ IPortAudio::IPortAudio(CPaHostAPIVector_t &UsedHostAPIs)
 IPortAudio::~IPortAudio()
 {
 	stop_Device();
-
-	if(m_OutputParameters.hostApiSpecificStreamInfo)
-	{
-		switch(m_UsedOutputHostAPI)
-		{
-#if defined(TARGET_WINDOWS)
-			case paASIO:
-				if(((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors)
-				{
-					delete [] ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors;
-					((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
-				}
-			break;
-#endif
-		}
-
-		delete m_OutputParameters.hostApiSpecificStreamInfo;
-		m_OutputParameters.hostApiSpecificStreamInfo = NULL;
-	}
-
-	if(m_InputParameters.hostApiSpecificStreamInfo)
-	{
-		switch(m_UsedInputHostAPI)
-		{
-#if defined(TARGET_WINDOWS)
-		  case paASIO:
-				if(((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors)
-				{
-					delete [] ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors;
-					((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
-				}
-			break;
-#endif
-		}
-
-		delete m_InputParameters.hostApiSpecificStreamInfo;
-		m_InputParameters.hostApiSpecificStreamInfo = NULL;
-	}
+  DestroyValues();
 }
 
 uint32_t IPortAudio::get_AvailableDevices(CPaDeviceInfoVector_t &Devices)
@@ -131,6 +94,36 @@ uint32_t IPortAudio::get_AvailableDevices(CPaDeviceInfoVector_t &Devices)
   }
 
   return Devices.size();
+}
+
+long IPortAudio::get_InputFrameSize()
+{
+  return m_InputFrameSize;
+}
+
+long IPortAudio::get_OutputFrameSize()
+{
+  return m_OutputFrameSize;
+}
+
+uint32_t IPortAudio::get_InputChannelAmount()
+{
+  return m_InputParameters.channelCount;
+}
+
+uint32_t IPortAudio::get_OutputChannelAmount()
+{
+  return m_OutputParameters.channelCount;
+}
+
+double IPortAudio::get_InputSampleFrequency()
+{
+  return m_SampleFrequency;
+}
+
+double IPortAudio::get_OutputSampleFrequency()
+{
+  return m_SampleFrequency;
 }
 
 std::string IPortAudio::get_PortAudioErrStr(PaError paErr)
@@ -148,6 +141,18 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
 	{
 		return paNotInitialized;
 	}
+
+  if(m_PaStream)
+  {
+    PaError paErr = stop_Device();
+    if(paErr != paNoError)
+    {
+      return paErr;
+    }
+
+    DestroyValues();
+    ResetValues();
+  }
 
   if(MaxInCh <= 0 && MaxOutCh <= 0)
 	{
@@ -273,8 +278,14 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
 	}
 
 	cout << "---- portaudio device configuration ----" << endl;
-  cout << " Input Host  API: " << Pa_GetHostApiInfo(m_InputDeviceInfo.deviceInfo->hostApi)->name << " device name: " << m_InputDeviceInfo.deviceName << endl;
-  cout << " Output Host API: " << Pa_GetHostApiInfo(m_OutputDeviceInfo.deviceInfo->hostApi)->name << " device name: " << m_OutputDeviceInfo.deviceName << endl;
+  if(m_InputDeviceInfo.deviceInfo)
+  {
+    cout << " Input Host  API: " << Pa_GetHostApiInfo(m_InputDeviceInfo.deviceInfo->hostApi)->name << " device name: " << m_InputDeviceInfo.deviceName << endl;
+  }
+  if(m_OutputDeviceInfo.deviceInfo)
+  {
+    cout << " Output Host API: " << Pa_GetHostApiInfo(m_OutputDeviceInfo.deviceInfo->hostApi)->name << " device name: " << m_OutputDeviceInfo.deviceName << endl;
+  }
 	cout << " maximum input  channels: " << m_InputParameters.channelCount << endl;
   cout << " maximum output channels: " << m_OutputParameters.channelCount << endl;
 	cout << " used audio input  device frame size: " << m_InputFrameSize << endl << endl;
@@ -372,8 +383,8 @@ PaError IPortAudio::stop_Device()
 		return paBadStreamPtr;
 	}
 
-  PaError paErr = Pa_StopStream(m_PaStream);
-  if(paErr != paNoError)
+  PaError paErr = Pa_AbortStream(m_PaStream);
+  if(paErr != paNoError && paErr != paStreamIsStopped)
   {
     return paErr;
   }
@@ -388,17 +399,17 @@ PaError IPortAudio::stop_Device()
   return paErr;
 }
 
-int IPortAudio::staticAudioCallback(	const void *inputBuffer, void *outputBuffer,
-											unsigned long framesPerBuffer,
-											const PaStreamCallbackTimeInfo* timeInfo,
-											PaStreamCallbackFlags statusFlags,
-											void *userData)
+int IPortAudio::staticAudioCallback(const void *inputBuffer, void *outputBuffer,
+											              unsigned long framesPerBuffer,
+											              const PaStreamCallbackTimeInfo* timeInfo,
+											              PaStreamCallbackFlags statusFlags,
+											              void *userData)
 {
 	return static_cast<IPortAudio*>(userData)->AudioCallback(	inputBuffer, outputBuffer,
-																	framesPerBuffer,
-																	timeInfo,
-																	statusFlags,
-																	userData);
+																	                          framesPerBuffer,
+																	                          timeInfo,
+																	                          statusFlags,
+																	                          userData);
 }
 
 PaError IPortAudio::configure_OutputDevice(long FrameSize)
@@ -653,5 +664,46 @@ void IPortAudio::ResetValues()
 
   memset(&m_OutputParameters, 0, sizeof(PaStreamParameters));
   memset(&m_InputParameters,  0, sizeof(PaStreamParameters));
+}
+
+void IPortAudio::DestroyValues()
+{
+  if(m_OutputParameters.hostApiSpecificStreamInfo)
+  {
+    switch(m_UsedOutputHostAPI)
+    {
+#if defined(TARGET_WINDOWS)
+    case paASIO:
+    if(((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors)
+    {
+      delete[]((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors;
+      ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
+    }
+    break;
+#endif
+    }
+
+    delete m_OutputParameters.hostApiSpecificStreamInfo;
+    m_OutputParameters.hostApiSpecificStreamInfo = NULL;
+  }
+
+  if(m_InputParameters.hostApiSpecificStreamInfo)
+  {
+    switch(m_UsedInputHostAPI)
+    {
+#if defined(TARGET_WINDOWS)
+    case paASIO:
+    if(((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors)
+    {
+      delete[]((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors;
+      ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
+    }
+    break;
+#endif
+    }
+
+    delete m_InputParameters.hostApiSpecificStreamInfo;
+    m_InputParameters.hostApiSpecificStreamInfo = NULL;
+  }
 }
 }

@@ -86,6 +86,14 @@ public: // public functions
   virtual ~IPortAudio();
   uint32_t get_AvailableDevices(CPaDeviceInfoVector_t &Devices);
 
+  long      get_InputFrameSize();
+  long      get_OutputFrameSize();
+  uint32_t  get_InputChannelAmount();
+  uint32_t  get_OutputChannelAmount();
+  double    get_InputSampleFrequency();
+  double    get_OutputSampleFrequency();
+
+
 protected: // protected abstract functions
   static std::string get_PortAudioErrStr(PaError paErr);
   PaError configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
@@ -124,10 +132,11 @@ private: // private callback functions
                                  const PaStreamCallbackTimeInfo* timeInfo,
                                  PaStreamCallbackFlags statusFlags,
                                  void *userData);
-
+  volatile bool m_IsRunning;
   PaError configure_InputDevice(long FrameSize);
   PaError configure_OutputDevice(long FrameSize);
   void CreateAvailableDevicesList();
   void ResetValues();
+  void DestroyValues();
 };
 }
