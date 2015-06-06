@@ -24,8 +24,6 @@
 
 
 
-typedef unsigned int uint;
-
 // error definitions
 typedef int ASPLIB_ERR;
 #define ASPLIB_ERR_NO_ERROR         0x00000000
