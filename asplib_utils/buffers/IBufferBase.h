@@ -43,13 +43,10 @@ public:
     m_MaxFrameLength = MaxFrameLength;
     m_MaxFrames = MaxFrames;
     m_Alignment = Alinment;
-
-    Create();
   }
 
   virtual ~IBufferBase()
   {
-    Destroy();
   }
 
   uint32_t get_MaxElementBytes()
@@ -67,7 +64,7 @@ public:
     return m_MaxFrames;
   }
 
-  uint32_t get_Aligment()
+  uint32_t get_Alignment()
   {
     return m_Alignment;
   }

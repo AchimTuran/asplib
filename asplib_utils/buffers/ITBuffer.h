@@ -23,7 +23,7 @@
 
 
 
-#include "asplib_utils/buffers/IBufferBase.h"
+#include "asplib_utils/buffers/TBufferBase.h"
 #include "asplib_utils/os/asplib_base_os.h"
 #include "asplib_utils/exceptions/asplib_StringException.h"
 

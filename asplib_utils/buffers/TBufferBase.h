@@ -39,30 +39,36 @@ public:
   TBufferBase(uint32_t MaxFrameLength, uint32_t MaxFrames, uint32_t Alignment=0) :
     IBufferBase<T>(MaxFrameLength, MaxFrames, Alignment)
   {
+    Create();
+  }
+
+  virtual ~TBufferBase()
+  {
+    Destroy();
   }
 
   virtual void ResetBuffer()
   {
-    memset(m_Buffer, 0, sizeof(T)*m_MaxFrameLength*m_MaxFrames);
+    memset(m_Buffer, 0, sizeof(T)*get_MaxFrameLength()*get_MaxFrames());
   }
 
 private:
   virtual void Create()
   {
-    if(m_Alignment > 0)
+    if(get_Alignment() > 0)
     {
 #if defined(TARGET_WINDOWS)
-      m_Buffer = (T*)_aligned_malloc(sizeof(T)*m_MaxFrameLength*m_MaxFrames, (size_t)m_Alignment);
+      m_Buffer = (T*)_aligned_malloc(sizeof(T)*get_MaxFrameLength()*get_MaxFrames(), (size_t)get_Alignment());
 #elif defined(TARGET_LINUX)
-      m_Buffer = (T*)_mm_malloc(sizeof(T)*m_MaxFrameLength*m_MaxFrames, (size_t)m_Alignment);
+      m_Buffer = (T*)_mm_malloc(sizeof(T)*get_MaxFrameLength()*get_MaxFrames(), (size_t)get_Alignment());
 #else
       //#warning "Unsupported platform requested aligned memory, but this functionailty is not available"
-      m_Buffer = new T[m_MaxFrameLength*m_MaxFrames];
+      m_Buffer = new T[get_MaxFrameLength()*get_MaxFrames()];
 #endif
     }
     else
     {
-      m_Buffer = new T[m_MaxFrameLength*m_MaxFrames];
+      m_Buffer = new T[get_MaxFrameLength()*get_MaxFrames()];
     }
 
     if(!m_Buffer)
@@ -77,7 +83,7 @@ private:
   {
     if(m_Buffer)
     {
-      if(m_Alignment > 0)
+      if(get_Alignment() > 0)
       {
   #if defined(TARGET_WINDOWS)
         _aligned_free(m_Buffer);

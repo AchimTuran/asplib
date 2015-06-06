@@ -36,7 +36,7 @@ public:
   TRingBuffer(uint32_t MaxSize, uint32_t Delay=0, uint Alignment=0) :
     ITBuffer<T>(MaxSize, 1, Alignment=0)
   {
-    if(Delay >= get_MaxFrameLength())
+    if(Delay >= get_MaxSize())
     {
       throw ASPLIB_STRING_EXCEPTION_HANDLER("Invalid input! Delay >= MaxSize!");
     }
@@ -45,7 +45,7 @@ public:
     m_Delay = Delay;
     if(m_Delay > 0)
     {
-      m_ReadIdx = m_MaxSize - m_Delay;
+      m_ReadIdx = get_MaxSize() - m_Delay;
     }
     else
     {
@@ -55,12 +55,10 @@ public:
     // Read & Write pointers
     m_WritePtr = NULL;
     m_ReadPtr  = NULL;
-
-    create();
   }
 
   // reads SamplesToRead samples from internal buffer and stores it in OutData
-  uint32_t read(T *Data, uitt_32_t SamplesToRead)
+  uint32_t read(T *Data, uint32_t SamplesToRead)
   {
     if(!Data || SamplesToRead < 0)
     {
@@ -77,10 +75,10 @@ public:
       samplesRead = m_CurrentStoredSamples;
     }
 
-    int32_t samplesToBoundary = get_MaxFrameLength() - m_ReadIdx - samplesRead;
+    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_ReadIdx - samplesRead;
     if(samplesToBoundary >= 0)
     { // read data from m_Buffer without crossing the boundary boerder
-      memcpy(OutData, m_Buffer + m_ReadIdx, sizeof(T)*samplesRead);
+      memcpy(Data, m_Buffer + m_ReadIdx, sizeof(T)*samplesRead);
       if(samplesToBoundary != 0)
       {
         m_ReadIdx += samplesRead;
@@ -94,11 +92,11 @@ public:
     {
       // samplesToBoundary < 0 --> add operation results to subtraction
       int32_t copySamples = samplesRead + samplesToBoundary;
-      memcpy(OutData, m_Buffer + m_ReadIdx, sizeof(T)*copySamples);
+      memcpy(Data, m_Buffer + m_ReadIdx, sizeof(T)*copySamples);
 
       // store the rest of the samples
       int32_t leftSamples = samplesRead - copySamples;
-      memcpy(OutData + copySamples, m_Buffer, sizeof(T)*leftSamples);
+      memcpy(Data + copySamples, m_Buffer, sizeof(T)*leftSamples);
       m_ReadIdx = leftSamples;
     }
 
@@ -109,17 +107,17 @@ public:
   }
 
   // writes SamplesToWrite from to InData the internal buffer
-  int32_t write(T *InData, int SamplesToWrite)
+  uint32_t write(T *InData, uint32_t SamplesToWrite)
   {
     if(!InData || SamplesToWrite < 0)
     {
-      throw STRING_EXCEPTION_HANDLER("Invalid Pointer or SamplesToWrite < 0!");
+      throw ASPLIB_STRING_EXCEPTION_HANDLER("Invalid Pointer or SamplesToWrite < 0!");
     }
 
     int32_t samplesWrite = 0;
     // calculate samples that can be written without crossing m_Buffer boundary
-    int freeSamples = m_MaxSize - m_CurrentStoredSamples;
-    if(SamplesToWrite <= freeSamples)
+    int32_t freeSamples = (int32_t)get_MaxSize() - m_CurrentStoredSamples;
+    if((int32_t)SamplesToWrite <= freeSamples)
     {
       samplesWrite = SamplesToWrite;
     }
@@ -128,7 +126,7 @@ public:
       samplesWrite = freeSamples;
     }
 
-    int32_t samplesToBoundary = m_MaxSize - m_WriteIdx - samplesWrite;
+    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_WriteIdx - samplesWrite;
     if(samplesToBoundary >= 0)
     { // write data without crossing the buffer boundary
       memcpy(m_Buffer + m_WriteIdx, InData, sizeof(T)*samplesWrite);
@@ -149,7 +147,7 @@ public:
 
       // store the rest of the samples
       int32_t leftSamples = samplesWrite - copySamples;
-      memcpy(m_Buffer, InData + copySamples, sizeof(T)*restSamples);
+      memcpy(m_Buffer, InData + copySamples, sizeof(T)*leftSamples);
       m_WriteIdx = leftSamples;
     }
 
@@ -171,7 +169,7 @@ public:
     m_CurrentStoredSamples = 0;
   }
 
-  int write_Zeros(uitn32_t Zeros)
+  int32_t write_Zeros(uint32_t Zeros)
   {
     int zerosWrite = 0;
     // calculate samples m_Buffer boundary
@@ -185,7 +183,7 @@ public:
       zerosWrite = freeSamples;
     }
 
-    int32_t samplesToBoundary = m_MaxSize - m_WriteIdx - zerosWrite;
+    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_WriteIdx - zerosWrite;
     if(samplesToBoundary >= 0)
     { // write 0 without crossing boundary
       memset(m_WritePtr, 0, sizeof(T)*zerosWrite);
@@ -216,13 +214,13 @@ public:
   }
 
   // get maximum ring buffer size
-  int get_MaxSize()    { return get_MaxFrameLength(); }
+  uint32_t get_MaxSize()    { return get_MaxFrameLength(); }
 
 
   // returns the current free space of the ring buffer
-  int32_t get_FreeSamples()   { return m_MaxSize - m_CurrentStoredSamples; }
+  uint32_t get_FreeSamples()   { return get_MaxSize() - m_CurrentStoredSamples; }
   // get current stored samples
-  int32_t get_StoredSamples() { return m_CurrentStoredSamples; }
+  uint32_t get_StoredSamples() { return m_CurrentStoredSamples; }
 
 private:
   volatile uint32_t m_CurrentStoredSamples;
