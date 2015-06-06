@@ -63,7 +63,6 @@ struct sPaDeviceInfo
 };
 
 typedef std::vector<sPaDeviceInfo> CPaDeviceInfoVector_t;
-typedef unsigned int uint;
 typedef std::vector<PaHostApiTypeId> CPaHostAPIVector_t;
 
 #define LOG_TAG_PORTAUDIO "[PortAudio] "
@@ -89,7 +88,7 @@ public: // public functions
 
 protected: // protected abstract functions
   static std::string get_PortAudioErrStr(PaError paErr);
-  PaError configure_Device( uint MaxInCh, uint MaxOutCh,
+  PaError configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
                             uint32_t SampleFrequency,
                             PaDeviceIndex InDeviceID = paNoDevice, PaDeviceIndex OutDeviceID = paNoDevice,
                             PaSampleFormat Format = 0,
