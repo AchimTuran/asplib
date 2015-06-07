@@ -40,6 +40,7 @@ struct sPaDeviceInfo
   PaDeviceInfo *deviceInfo;
   PaDeviceIndex paDeviceIdx;
   std::string deviceName;
+  std::string hostAPI;
 
   sPaDeviceInfo(const PaDeviceInfo *DeviceInfo, PaDeviceIndex DeviceIdx) :
     deviceInfo((PaDeviceInfo*)DeviceInfo),
@@ -48,10 +49,12 @@ struct sPaDeviceInfo
     if(!DeviceInfo)
     {
       deviceName = "UKNOWN";
+      hostAPI = "UKNOWN";
     }
     else
     {
       deviceName = deviceInfo->name;
+      hostAPI = Pa_GetHostApiInfo(deviceInfo->hostApi)->name;
     }
   }
   sPaDeviceInfo()
@@ -59,6 +62,7 @@ struct sPaDeviceInfo
     deviceInfo = NULL;
     paDeviceIdx = paNoDevice;
     deviceName = "";
+    hostAPI = "";
   }
 };
 
