@@ -24,7 +24,7 @@ endif()
 #set(asplib_INCLUDE_DIRS ${TINYXML_INCLUDE_DIR} "${CMAKE_INSTALL_PREFIX}/include/kodi")
 #set(asplib_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} ${TINYXML_LIBRARIES})
 
-set(SOURCES utils/computeDeviceInfo/cpuInfo.cpp
+set(SOURCES asplib_utils/computeDeviceInfo/cpuInfo.cpp
             Biquads/Biquad_Native/asplib_Biquad_Native.cpp
             Biquads/apslib_BiquadFactory.cpp)
 
@@ -34,8 +34,8 @@ set(HEADERS interfaces/asplib_IBaseBiquad.h
             asplib_utils/os/asplib_base_os.h
             asplib_utils/os/windows/windows_definitions.h
             asplib_utils/os/linux/linux_definitions.h
-            utils/computeDeviceInfo/cpuInfo_types.h
-            utils/computeDeviceInfo/cpuInfo.h
+            asplib_utils/computeDeviceInfo/cpuInfo_types.h
+            asplib_utils/computeDeviceInfo/cpuInfo.h
             Biquads/apslib_BiquadFactory.h
             Biquads/Biquad_Native/asplib_Biquad_Native.h)
 
