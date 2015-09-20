@@ -17,10 +17,26 @@ if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+  set(CMAKE_CXX_FLAGS "-DTARGET_LINUX")
+endif()
+
 #set(asplib_INCLUDE_DIRS ${TINYXML_INCLUDE_DIR} "${CMAKE_INSTALL_PREFIX}/include/kodi")
 #set(asplib_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} ${TINYXML_LIBRARIES})
 
-set(SOURCES utils/computeDeviceInfo/cpuInfo.cpp)
+set(SOURCES utils/computeDeviceInfo/cpuInfo.cpp
+            Biquads/Biquad_Native/asplib_Biquad_Native.cpp
+            Biquads/apslib_BiquadFactory.cpp)
+
+set(HEADERS interfaces/asplib_IBaseBiquad.h
+            constants_typedefs/asplib_constants.h
+            constants_typedefs/asplib_typedefs.h
+            utils/computeDeviceInfo/cpuInfo_types.h
+            utils/computeDeviceInfo/cpuInfo.h
+            Biquads/apslib_BiquadFactory.h
+            Biquads/Biquad_Native/asplib_Biquad_Native.h)
+
+
 #include_directories(${TINYXML_INCLUDE_DIR} ${KODI_INCLUDE_DIR})
 
 add_library(asplib ${SOURCES} ${PLAT_SOURCES})
@@ -29,9 +45,17 @@ target_link_libraries(asplib ${asplib_LIBRARIES})
 #                                              SOVERSION ${asplib_VERSION_MAJOR}.0)
 
 install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES interfaces/asplib_IBaseBiquad.h
+        DESTINATION include/asplib/interfaces)
+install(FILES constants_typedefs/asplib_constants.h
+              constants_typedefs/asplib_typedefs.h
+        DESTINATION include/asplib/constants_typedefs)
 install(FILES utils/computeDeviceInfo/cpuInfo_types.h
               utils/computeDeviceInfo/cpuInfo.h
         DESTINATION include/asplib/utils)
+install(FILES Biquads/apslib_BiquadFactory.h
+              Biquads/Biquad_Native/asplib_Biquad_Native.h
+        DESTINATION include/asplib/Biquads)
 
 #IF(NOT WIN32)
   # Pkgconfig
