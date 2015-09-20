@@ -28,6 +28,7 @@
 
 #include "asplib_utils/constants_typedefs/asplib_constants.h"
 #include "asplib_utils/constants_typedefs/asplib_typedefs.h"
+#include "asplib_utils/os/asplib_base_os.h"
 
 #if defined(TARGET_LINUX)
     #include <stddef.h>
@@ -40,7 +41,7 @@ class IBaseBiquad
 {
 public:
     // use this constructor to create a biquad filter with coefficients
-    IBaseBiquad(uint Amount, float SampleFrequency)
+    IBaseBiquad(uint32_t Amount, float SampleFrequency)
     {
         m_parameters = NULL;
             
@@ -60,19 +61,19 @@ public:
     virtual ~IBaseBiquad() {}
 
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0) = 0;
-    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx) = 0;
+    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint32_t BiquadIdx) = 0;
 
     // calculate one output sample with the following difference equation
     // y[k] = d0*x[k] + a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
     virtual float calcSample(float In) = 0;
-    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint N) = 0;
+    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint32_t N) = 0;
 
     // Set all past values (x[k-1], x[k-2], y[k-1] and y[k-2]) to zero.
     virtual void resetState() = 0;
 
     //--- helper functions ---
     // get Biquad quantity
-    uint getMaxBiquads()
+    uint32_t getMaxBiquads()
     {
         return m_maxBiquads;
     }
@@ -89,7 +90,7 @@ protected:
                         // [8]=x[k-1],  [9]=x[k-2], [10]=y[k-1],  [11]=y[k-2]
 
 private:
-    uint m_maxBiquads;  // maximum Biquad quantity
+    uint32_t m_maxBiquads;  // maximum Biquad quantity
     float m_sampleFrequency;
 };
 }

@@ -32,21 +32,21 @@ using namespace std;
 namespace asplib
 {
 
-CBiquad_Native::CBiquad_Native(uint Amount, float SampleFrequency) : 
+CBiquad_Native::CBiquad_Native(uint32_t Amount, float SampleFrequency) : 
     IBaseBiquad<float>(Amount, SampleFrequency)
 {
-    if(!Amount)
+    if (!Amount)
     {
         // ToDo: throw error!
     }
 
     this->m_parameters = new float[MAX_PARAM_PER_BIQUAD*Amount];
-    if(!m_parameters)
+    if (!m_parameters)
     {
         // ToDo: throw error!
     }
 
-    for(uint ii = 0; ii < MAX_PARAM_PER_BIQUAD*Amount; ii++)
+    for (uint32_t ii = 0; ii < MAX_PARAM_PER_BIQUAD*Amount; ii++)
     {
         m_parameters[ii] = 0.0f;
     }
@@ -54,7 +54,7 @@ CBiquad_Native::CBiquad_Native(uint Amount, float SampleFrequency) :
 
 CBiquad_Native::~CBiquad_Native()
 {
-    if(this->m_parameters)
+    if (this->m_parameters)
     {
         delete this->m_parameters;
         this->m_parameters = NULL;
@@ -64,8 +64,8 @@ CBiquad_Native::~CBiquad_Native()
 ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0)
 {
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
-    const uint maxAmount = getMaxBiquads();
-    for(uint ii = 0; ii < maxAmount && err == ASPLIB_ERR_NO_ERROR; ii++)
+    const uint32_t maxAmount = getMaxBiquads();
+    for (uint32_t ii = 0; ii < maxAmount && err == ASPLIB_ERR_NO_ERROR; ii++)
     {
         err = updateCoefficients(Coefficients, D0, ii);
     }
@@ -73,9 +73,9 @@ ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coeffi
     return err;
 }
 
-ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx)
+ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint32_t BiquadIdx)
 {
-    if(BiquadIdx >= getMaxBiquads() || !Coefficients)
+    if (BiquadIdx >= getMaxBiquads() || !Coefficients)
     {
         // ToDo: throw error!
         return ASPLIB_ERR_INVALID_INPUT;
@@ -98,12 +98,12 @@ ASPLIB_ERR CBiquad_Native::updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coeffi
 // Set all past values (x[k-1], x[k-2], y[k-1] & y[k-2]) to zero.
 void CBiquad_Native::resetState()
 {
-    const uint maxBiquads = getMaxBiquads();
-    for(uint ii = 0; ii < maxBiquads; ii++)
+    const uint32_t maxBiquads = getMaxBiquads();
+    for (uint32_t ii = 0; ii < maxBiquads; ii++)
     {
         // only destroy the past values of the filter!
         float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*ii + 8;
-        for (uint kk = 0; kk < 4; ii++)
+        for (uint32_t kk = 0; kk < 4; ii++)
         {
             filterParam[kk] = 0.0f;
         }
@@ -114,9 +114,9 @@ void CBiquad_Native::resetState()
 // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
 float CBiquad_Native::calcSample(float In)
 {
-    const uint maxBiquads = getMaxBiquads();
+    const uint32_t maxBiquads = getMaxBiquads();
     float out = In;
-    for(uint ii = 0; ii < maxBiquads; ii++)
+    for (uint32_t ii = 0; ii < maxBiquads; ii++)
     {
         float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*ii;
 
@@ -140,18 +140,18 @@ float CBiquad_Native::calcSample(float In)
     return out;
 }
 
-ASPLIB_ERR CBiquad_Native::calcSamples(float *In, float *Out, uint N)
+ASPLIB_ERR CBiquad_Native::calcSamples(float *In, float *Out, uint32_t N)
 {
-    if(!In || !Out || !N)
+    if (!In || !Out || !N)
     {
         return ASPLIB_ERR_INVALID_INPUT;
     }
 
-    for(uint ii = 0; ii < N; ii++)
+    for (uint32_t ii = 0; ii < N; ii++)
     {
-        const uint maxBiquads = getMaxBiquads();
+        const uint32_t maxBiquads = getMaxBiquads();
         float out = In[ii];
-        for(uint jj = 0; jj < maxBiquads; jj++)
+        for (uint32_t jj = 0; jj < maxBiquads; jj++)
         {
             float *filterParam = m_parameters + MAX_PARAM_PER_BIQUAD*jj;
 

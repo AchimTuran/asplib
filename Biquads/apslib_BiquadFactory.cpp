@@ -41,7 +41,7 @@ namespace asplib
 {
 // helper function prototypes
 ASPLIB_ERR helper_calcConstQPeakingParam(ASPLIB_CONST_Q_PEAKING_PARAM *ConstQPeakingParam, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients);
-ASPLIB_ERR helper_checkBiquadIdx(ASPLIB_BIQUAD_HANDLE *Biquads, uint BiQaudIdx);
+ASPLIB_ERR helper_checkBiquadIdx(ASPLIB_BIQUAD_HANDLE *Biquads, uint32_t BiQaudIdx);
 
 
 // Handle Biquads
@@ -85,7 +85,7 @@ ASPLIB_ERR CBiquadFactory::destroy_Biquads(ASPLIB_BIQUAD_HANDLE **Biquads)
     return err;
 }
 
-uint CBiquadFactory::get_maxBiquads(ASPLIB_BIQUAD_HANDLE *Biquads)
+uint32_t CBiquadFactory::get_maxBiquads(ASPLIB_BIQUAD_HANDLE *Biquads)
 {
     if(!Biquads)
     {
@@ -106,7 +106,7 @@ uint CBiquadFactory::get_maxBiquads(ASPLIB_BIQUAD_HANDLE *Biquads)
     }
 }
 
-ASPLIB_BIQUAD_HANDLE* CBiquadFactory::get_Biquads(uint Amount, float SampleFrequency, ASPLIB_OPT_MODULE OptModule)
+ASPLIB_BIQUAD_HANDLE* CBiquadFactory::get_Biquads(uint32_t Amount, float SampleFrequency, ASPLIB_OPT_MODULE OptModule)
 {
     ASPLIB_BIQUAD_HANDLE *p = new ASPLIB_BIQUAD_HANDLE;
     if(!p)
@@ -164,7 +164,7 @@ ASPLIB_ERR CBiquadFactory::calc_BiquadSample(ASPLIB_BIQUAD_HANDLE *Biquads, floa
     return ASPLIB_ERR_NO_ERROR;
 }
 
-ASPLIB_ERR CBiquadFactory::calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, float *In, float *Out, uint FrameSize)
+ASPLIB_ERR CBiquadFactory::calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, float *In, float *Out, uint32_t FrameSize)
 {
     if(!Biquads)
     {
@@ -217,7 +217,7 @@ ASPLIB_ERR CBiquadFactory::set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads,
     return err;
 }
 
-ASPLIB_ERR CBiquadFactory::set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, uint BiquadIdx, float C0, float D0)
+ASPLIB_ERR CBiquadFactory::set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, uint32_t BiquadIdx, float C0, float D0)
 {
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
 
@@ -255,7 +255,7 @@ ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads
         return ASPLIB_ERR_INVALID_INPUT;
     }
 
-    uint maxBands = 0;
+    uint32_t maxBands = 0;
     switch(Biquads->optModule)
     {
         case ASPLIB_OPT_NATIVE:
@@ -269,7 +269,7 @@ ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads
     }
 
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
-    for(uint ii = 0; ii < maxBands && err == ASPLIB_ERR_NO_ERROR; ii++)
+    for (uint32_t ii = 0; ii < maxBands && err == ASPLIB_ERR_NO_ERROR; ii++)
     {
         err = CBiquadFactory::set_constQPeakingParams(Biquads, Gain, ii);
     }
@@ -277,7 +277,7 @@ ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads
     return err;
 }
 
-ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint BiquadIdx)
+ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint32_t BiquadIdx)
 {
     if(!Biquads)
     {
@@ -355,7 +355,7 @@ ASPLIB_ERR CBiquadFactory::set_constQPeakingParams(ASPLIB_BIQUAD_HANDLE *Biquads
     return err;
 }
 
-ASPLIB_ERR CBiquadFactory::get_constQPeakingBiquadCoes(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
+ASPLIB_ERR CBiquadFactory::get_constQPeakingBiquadCoes(ASPLIB_BIQUAD_HANDLE *Biquads, float Gain, uint32_t BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
 {
   if(!Biquads || !Coefficients || Gain < 0.0f)
   {
@@ -416,7 +416,7 @@ ASPLIB_ERR CBiquadFactory::get_constQPeakingBiquadCoes(ASPLIB_BIQUAD_HANDLE *Biq
   return helper_calcConstQPeakingParam(&ConstQPeakingParam, Coefficients);
 }
 
-ASPLIB_ERR CBiquadFactory::get_constQPeakingBiquadCoes(uint SampleFrequency, uint MaxFreqBands, float Gain, uint BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
+ASPLIB_ERR CBiquadFactory::get_constQPeakingBiquadCoes(uint32_t SampleFrequency, uint32_t MaxFreqBands, float Gain, uint32_t BiquadIdx, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients)
 {
   if(SampleFrequency <= 0 || MaxFreqBands <= 0 || BiquadIdx >= MaxFreqBands || !Coefficients)
   {
@@ -497,7 +497,7 @@ ASPLIB_ERR helper_calcConstQPeakingParam(ASPLIB_CONST_Q_PEAKING_PARAM *ConstQPea
     return ASPLIB_ERR_NO_ERROR;
 }
 
-ASPLIB_ERR helper_checkBiquadIdx(ASPLIB_BIQUAD_HANDLE *Biquads, uint BiQaudIdx)
+ASPLIB_ERR helper_checkBiquadIdx(ASPLIB_BIQUAD_HANDLE *Biquads, uint32_t BiQaudIdx)
 {
     if(!Biquads)
     {

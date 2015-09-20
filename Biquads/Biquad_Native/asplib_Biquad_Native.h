@@ -37,7 +37,7 @@ class CBiquad_Native : public IBaseBiquad<float>
 {
 public:
     // use this constructor to create a biquad filter with coefficients
-    CBiquad_Native(uint Amount, float SampleFrequency);
+    CBiquad_Native(uint32_t Amount, float SampleFrequency);
     //CBiquad_Native(float A0, float A1, float A2, float B1, float B2);
     ~CBiquad_Native();
 
@@ -45,13 +45,13 @@ public:
     virtual void resetState();
 
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0);
-    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint BiquadIdx);
+    virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint32_t BiquadIdx);
 
     // calculate one output sample with the following difference equation
     // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
     virtual float calcSample(float In);
     // calculate output samples with the following difference equation
     // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
-    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint N);
+    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint32_t N);
 };
 };
