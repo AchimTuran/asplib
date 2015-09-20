@@ -29,8 +29,11 @@ set(SOURCES utils/computeDeviceInfo/cpuInfo.cpp
             Biquads/apslib_BiquadFactory.cpp)
 
 set(HEADERS interfaces/asplib_IBaseBiquad.h
-            constants_typedefs/asplib_constants.h
-            constants_typedefs/asplib_typedefs.h
+            asplib_utils/constants_typedefs/asplib_constants.h
+            asplib_utils/constants_typedefs/asplib_typedefs.h
+			asplib_utils/os/asplib_base_os.h
+			asplib_utils/os/windows/windows_definitions.h
+			asplib_utils/os/linux/linux_definitions.h
             utils/computeDeviceInfo/cpuInfo_types.h
             utils/computeDeviceInfo/cpuInfo.h
             Biquads/apslib_BiquadFactory.h
