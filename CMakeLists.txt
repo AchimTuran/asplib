@@ -55,6 +55,25 @@ target_link_libraries(asplib ${asplib_LIBRARIES})
 #                                              SOVERSION ${asplib_VERSION_MAJOR}.0)
 
 install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/interfaces/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/interfaces
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/constants_typedefs/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/constants_typedefs
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/windows/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/windows/ 
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/linux/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/linux/
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/computeDeviceInfo/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/computeDeviceInfo/
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Biquads/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/Biquads/ 
+        FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/Biquads/Biquad_Native/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/Biquads/Biquad_Native/
+        FILES_MATCHING PATTERN "*.h")
+
+
 # install(FILES interfaces/asplib_IBaseBiquad.h
               # asplib_utils/constants_typedefs/asplib_constants.h
               # asplib_utils/constants_typedefs/asplib_typedefs.h
