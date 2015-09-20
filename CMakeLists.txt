@@ -28,6 +28,9 @@ endif()
 #set(asplib_INCLUDE_DIRS ${TINYXML_INCLUDE_DIR} "${CMAKE_INSTALL_PREFIX}/include/kodi")
 #set(asplib_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} ${TINYXML_LIBRARIES})
 
+include_directories(${PROJECT_SOURCE_DIR}
+                    ${PROJECT_SOURCE_DIR}/Biquads)
+
 set(SOURCES asplib_utils/computeDeviceInfo/cpuInfo.cpp
             Biquads/Biquad_Native/asplib_Biquad_Native.cpp
             Biquads/apslib_BiquadFactory.cpp)
