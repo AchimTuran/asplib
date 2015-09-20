@@ -15,6 +15,8 @@ set(asplib_VERSION_PATCH 0)
 
 if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+else
+  add_definitions(-DWIN32 -D_LIB)
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
