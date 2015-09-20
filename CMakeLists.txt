@@ -58,7 +58,7 @@ install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/interfaces/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/interfaces
         FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/constants_typedefs/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/constants_typedefs
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/constants_typedefs/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/constants_typedefs
         FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/
         FILES_MATCHING PATTERN "*.h")
