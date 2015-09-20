@@ -48,6 +48,33 @@ target_link_libraries(asplib ${asplib_LIBRARIES})
 #                                              SOVERSION ${asplib_VERSION_MAJOR}.0)
 
 install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+# install(FILES interfaces/asplib_IBaseBiquad.h
+              # asplib_utils/constants_typedefs/asplib_constants.h
+              # asplib_utils/constants_typedefs/asplib_typedefs.h
+      
+              # DESTINATION include/asplib/asplib_utils/constants_typedefs/)
+      
+      # asplib_utils/os/asplib_base_os.h
+      # asplib_utils/os/windows/windows_definitions.h
+      # asplib_utils/os/linux/linux_definitions.h
+      # utils/computeDeviceInfo/cpuInfo_types.h
+      # utils/computeDeviceInfo/cpuInfo.h
+      # Biquads/apslib_BiquadFactory.h
+            # Biquads/Biquad_Native/asplib_Biquad_Native.h
+      # )
+
+# install(FILES interfaces/asplib_IBaseBiquad.h
+        # DESTINATION include/asplib/interfaces)
+# install(FILES constants_typedefs/asplib_constants.h
+              # constants_typedefs/asplib_typedefs.h
+        # DESTINATION include/asplib/constants_typedefs)
+# install(FILES utils/computeDeviceInfo/cpuInfo_types.h
+              # utils/computeDeviceInfo/cpuInfo.h
+        # DESTINATION include/asplib/utils)
+# install(FILES Biquads/apslib_BiquadFactory.h
+              # Biquads/Biquad_Native/asplib_Biquad_Native.h
+        # DESTINATION include/asplib/Biquads)
+        
 install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib)
 
 #IF(NOT WIN32)
