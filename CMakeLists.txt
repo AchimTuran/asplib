@@ -28,6 +28,10 @@ endif()
 #set(asplib_INCLUDE_DIRS ${TINYXML_INCLUDE_DIR} "${CMAKE_INSTALL_PREFIX}/include/kodi")
 #set(asplib_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} ${TINYXML_LIBRARIES})
 
+if (NOT WIN32)
+  add_definitions(-fPIC -g -O2)
+endif()
+
 include_directories(${PROJECT_SOURCE_DIR}
                     ${PROJECT_SOURCE_DIR}/Biquads)
 
