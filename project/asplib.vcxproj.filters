@@ -52,6 +52,75 @@
     <Filter Include="asplib_utils\os\windows">
       <UniqueIdentifier>{989fe493-c2e8-4039-b0e7-e4988dc00c97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="asplib_utils\fft">
+      <UniqueIdentifier>{2e4b5ba7-f38b-48bd-a4f4-9b62cb9dfb93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\fft\KissFFT">
+      <UniqueIdentifier>{e55ba9cb-38bb-4cf1-a933-f3045adf3c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\fft\fftWindowing">
+      <UniqueIdentifier>{fa6ae2be-5c19-412d-af73-f76ec67605a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor">
+      <UniqueIdentifier>{1f97d523-c27b-49f6-ad89-ea65d7f4d0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\FFTSmoother">
+      <UniqueIdentifier>{2c2c2567-3deb-4dd4-914d-c6b68800c595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\FFTSmoother\dlbeerSmoother">
+      <UniqueIdentifier>{54fd42af-088f-48e8-ae6c-fbc549dcb09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\base">
+      <UniqueIdentifier>{875c7961-f20a-4838-99eb-8349ef447237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\base\autoFactory">
+      <UniqueIdentifier>{7cbfa8ce-0d3e-46e0-b7de-560051b7fd96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IIRFilter">
+      <UniqueIdentifier>{93a78aee-9ab5-46ca-8cd8-c68eab62f425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\fft\common">
+      <UniqueIdentifier>{ca4edf44-3194-412a-81a7-60b5a45ad32c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\FFTSmoother\common">
+      <UniqueIdentifier>{b266d613-559a-4898-94f7-2936b0d79493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\AxisScaler">
+      <UniqueIdentifier>{cba739e8-59ff-4f2f-b0c2-a9d751263408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\Remapper">
+      <UniqueIdentifier>{6c45d654-a666-4c3b-8c82-a136fec6b98c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="asplib_utils\base\extendedStructs">
+      <UniqueIdentifier>{3e0f8800-fa7d-4b17-b929-b15d577e2773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\Remapper\common">
+      <UniqueIdentifier>{387e4b05-02f8-496c-80f1-9fefd43c647e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\Remapper\GammaCorrectorRemapper">
+      <UniqueIdentifier>{4b1115cf-b801-438e-a1e7-62f16438e60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\AxisScaler\common">
+      <UniqueIdentifier>{72a6e0cd-e5ec-427e-82f6-8da4746681af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\AxisScaler\Log10Scaler">
+      <UniqueIdentifier>{ad7406aa-c784-48d0-91f8-7b7b28262ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\SpectrumCalculation">
+      <UniqueIdentifier>{8f0ae200-ffc8-4548-b2c2-07f09153af94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\SpectrumCalculation\SquareSpectrumCalculation">
+      <UniqueIdentifier>{9f5b7eaa-db81-459a-be1b-2e6383c6f6de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\SpectrumCalculation\SquareRootSpectrumCalculation">
+      <UniqueIdentifier>{0cfd5d61-eb10-4276-adbe-2964e36e88c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\SpectrumCalculation\PhaseCalculation">
+      <UniqueIdentifier>{0a04484c-b4cc-4255-9139-2e2532242083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SpectrumVisProcessor\SpectrumCalculation\common">
+      <UniqueIdentifier>{d0cda5ef-907c-482f-95f8-c02502d3e643}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.cpp">
@@ -92,6 +161,42 @@
     </ClCompile>
     <ClCompile Include="..\asplib_utils\computeDeviceInfo\cpuInfo.cpp">
       <Filter>asplib_utils\computeDeviceInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\asplib_utils\fft\fftWindowing\fftWindowingFactory.cpp">
+      <Filter>asplib_utils\fft\fftWindowing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\asplib_utils\fft\fftWindowing\fftWindowFunctions.cpp">
+      <Filter>asplib_utils\fft\fftWindowing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\asplib_utils\fft\asplib_FFTFactory.cpp">
+      <Filter>asplib_utils\fft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherFactory.cpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessor.cpp">
+      <Filter>SpectrumVisProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructContainer.cpp">
+      <Filter>asplib_utils\base\extendedStructs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructs.cpp">
+      <Filter>asplib_utils\base\extendedStructs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessorConfigurator.cpp">
+      <Filter>SpectrumVisProcessor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerFactory.cpp">
+      <Filter>SpectrumVisProcessor\AxisScaler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperFactory.cpp">
+      <Filter>SpectrumVisProcessor\Remapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SpectrumVisProcessor\SpectrumCalculation\asplib_SpectrumCalculationFactory.cpp">
+      <Filter>SpectrumVisProcessor\SpectrumCalculation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\interfaces\asplib_ProcessFactory.cpp">
+      <Filter>interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,18 +269,6 @@
     <ClInclude Include="..\asplib_utils\computeDeviceInfo\cpuInfo_types.h">
       <Filter>asplib_utils\computeDeviceInfo</Filter>
     </ClInclude>
-    <ClInclude Include="..\asplib_utils\buffers\IBufferBase.h">
-      <Filter>asplib_utils\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\asplib_utils\buffers\ITBuffer.h">
-      <Filter>asplib_utils\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\asplib_utils\buffers\ITFrameBuffer.h">
-      <Filter>asplib_utils\buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\asplib_utils\buffers\TBufferBase.h">
-      <Filter>asplib_utils\buffers</Filter>
-    </ClInclude>
     <ClInclude Include="..\asplib_utils\buffers\TFrameBuffer.h">
       <Filter>asplib_utils\buffers</Filter>
     </ClInclude>
@@ -184,6 +277,141 @@
     </ClInclude>
     <ClInclude Include="..\asplib_utils\buffers\TRingBuffer.h">
       <Filter>asplib_utils\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\fftWindowing\fftWindowingFactory.h">
+      <Filter>asplib_utils\fft\fftWindowing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\fftWindowing\fftWindowFunctions.h">
+      <Filter>asplib_utils\fft\fftWindowing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interfaces\asplib_IFFT.h">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_TRKissFFT.hpp">
+      <Filter>asplib_utils\fft\KissFFT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_TKissFFT.hpp">
+      <Filter>asplib_utils\fft\KissFFT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_TdlbeerSmoother.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother\dlbeerSmoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherFactory.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\asplib_FFTFactory.hpp">
+      <Filter>asplib_utils\fft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_dlbeerSmootherOptions.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother\dlbeerSmoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_TFeedbackSmoother.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother\dlbeerSmoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\base\autoFactory\asplib_TAutoFactory.hpp">
+      <Filter>asplib_utils\base\autoFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\base\autoFactory\asplib_TProductStatistics.hpp">
+      <Filter>asplib_utils\base\autoFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IIRFilter\TFirstOrderFeedback.hpp">
+      <Filter>IIRFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\common\asplib_TZeroCpyConverter.hpp">
+      <Filter>asplib_utils\fft\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessor.hpp">
+      <Filter>SpectrumVisProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\KissFFTProducts.hpp">
+      <Filter>asplib_utils\fft\KissFFT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\common\FFTSmootherProducts.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_dataFmtDefines.hpp">
+      <Filter>asplib_utils\constants_typedefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\buffers\asplib_bufferTypes.hpp">
+      <Filter>asplib_utils\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\buffers\TBaseFrameBuffer.h">
+      <Filter>asplib_utils\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\buffers\TBaseBuffer.h">
+      <Filter>asplib_utils\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessorConfigurator.hpp">
+      <Filter>SpectrumVisProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructContainer.hpp">
+      <Filter>asplib_utils\base\extendedStructs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructs.hpp">
+      <Filter>asplib_utils\base\extendedStructs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerFactory.hpp">
+      <Filter>SpectrumVisProcessor\AxisScaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\common\RemapperProducts.hpp">
+      <Filter>SpectrumVisProcessor\Remapper\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\GammaCorrectorRemapper\asplib_TGammaCorrector.hpp">
+      <Filter>SpectrumVisProcessor\Remapper\GammaCorrectorRemapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperFactory.hpp">
+      <Filter>SpectrumVisProcessor\Remapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\common\AxisScalerProducts.hpp">
+      <Filter>SpectrumVisProcessor\AxisScaler\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\Log10Scaler\asplib_TLog10Scaler.hpp">
+      <Filter>SpectrumVisProcessor\AxisScaler\Log10Scaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interfaces\asplib_IProcess.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\asplib_SpectrumCalculationFactory.hpp">
+      <Filter>SpectrumVisProcessor\SpectrumCalculation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\common\SpectrumCalculationProducts.hpp">
+      <Filter>SpectrumVisProcessor\SpectrumCalculation\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\SquareRootSpectrumCalculation\asplib_TSquareRoot.hpp">
+      <Filter>SpectrumVisProcessor\SpectrumCalculation\SquareRootSpectrumCalculation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\SquareSpectrumCalculation\asplib_TSquare.hpp">
+      <Filter>SpectrumVisProcessor\SpectrumCalculation\SquareSpectrumCalculation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interfaces\asplib_ProcessFactory.hpp">
+      <Filter>interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\GammaCorrectorRemapper\asplib_TGammaCorrectorOptions.hpp">
+      <Filter>SpectrumVisProcessor\Remapper\GammaCorrectorRemapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\Log10Scaler\asplib_TLog10ScalerOptions.hpp">
+      <Filter>SpectrumVisProcessor\AxisScaler\Log10Scaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\asplib_FFTOptions.hpp">
+      <Filter>asplib_utils\fft</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_KissFFTRealOptions.hpp">
+      <Filter>asplib_utils\fft\KissFFT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_KissFFTCpxOptions.hpp">
+      <Filter>asplib_utils\fft\KissFFT</Filter>
+    </ClInclude>
+    <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_ExtendedStructIDs.hpp">
+      <Filter>asplib_utils\constants_typedefs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerOptions.hpp">
+      <Filter>SpectrumVisProcessor\AxisScaler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherOptions.hpp">
+      <Filter>SpectrumVisProcessor\FFTSmoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperOptions.hpp">
+      <Filter>SpectrumVisProcessor\Remapper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

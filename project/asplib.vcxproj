@@ -20,8 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\asplib_utils\audioInterfaces\IPortAudio.cpp" />
+    <ClCompile Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructs.cpp" />
+    <ClCompile Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructContainer.cpp" />
     <ClCompile Include="..\asplib_utils\computeDeviceInfo\cpuInfo.cpp" />
     <ClCompile Include="..\asplib_utils\exceptions\asplib_StringException.cpp" />
+    <ClCompile Include="..\asplib_utils\fft\asplib_FFTFactory.cpp" />
+    <ClCompile Include="..\asplib_utils\fft\fftWindowing\fftWindowFunctions.cpp" />
+    <ClCompile Include="..\asplib_utils\fft\fftWindowing\fftWindowingFactory.cpp" />
     <ClCompile Include="..\asplib_utils\logger\asplib_default_logger.cpp" />
     <ClCompile Include="..\asplib_utils\logger\ILogger.cpp" />
     <ClCompile Include="..\asplib_utils\logger\LoggerFactory.cpp" />
@@ -32,22 +37,44 @@
     <ClCompile Include="..\asplib_utils\timer\asplib_CPUTimer.cpp" />
     <ClCompile Include="..\BiQuads\apslib_BiquadFactory.cpp" />
     <ClCompile Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.cpp" />
+    <ClCompile Include="..\interfaces\asplib_ProcessFactory.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessor.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessorConfigurator.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerFactory.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherFactory.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperFactory.cpp" />
+    <ClCompile Include="..\SpectrumVisProcessor\SpectrumCalculation\asplib_SpectrumCalculationFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\asplib_utils\audioInterfaces\IPortAudio.h" />
-    <ClInclude Include="..\asplib_utils\buffers\IBufferBase.h" />
-    <ClInclude Include="..\asplib_utils\buffers\ITBuffer.h" />
-    <ClInclude Include="..\asplib_utils\buffers\ITFrameBuffer.h" />
-    <ClInclude Include="..\asplib_utils\buffers\TBufferBase.h" />
+    <ClInclude Include="..\asplib_utils\base\autoFactory\asplib_TAutoFactory.hpp" />
+    <ClInclude Include="..\asplib_utils\base\autoFactory\asplib_TProductStatistics.hpp" />
+    <ClInclude Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructs.hpp" />
+    <ClInclude Include="..\asplib_utils\base\extendedStructs\asplib_ExtendedStructContainer.hpp" />
+    <ClInclude Include="..\asplib_utils\buffers\asplib_bufferTypes.hpp" />
+    <ClInclude Include="..\asplib_utils\buffers\TBaseFrameBuffer.h" />
+    <ClInclude Include="..\asplib_utils\buffers\TBaseBuffer.h" />
     <ClInclude Include="..\asplib_utils\buffers\TFrameBuffer.h" />
     <ClInclude Include="..\asplib_utils\buffers\TFrameRingBuffer.h" />
     <ClInclude Include="..\asplib_utils\buffers\TRingBuffer.h" />
     <ClInclude Include="..\asplib_utils\computeDeviceInfo\cpuInfo.h" />
     <ClInclude Include="..\asplib_utils\computeDeviceInfo\cpuInfo_types.h" />
     <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_constants.h" />
+    <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_dataFmtDefines.hpp" />
+    <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_ExtendedStructIDs.hpp" />
     <ClInclude Include="..\asplib_utils\constants_typedefs\asplib_typedefs.h" />
     <ClInclude Include="..\asplib_utils\exceptions\asplib_IException.h" />
     <ClInclude Include="..\asplib_utils\exceptions\asplib_StringException.h" />
+    <ClInclude Include="..\asplib_utils\fft\asplib_FFTFactory.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\asplib_FFTOptions.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\common\asplib_TZeroCpyConverter.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\fftWindowing\fftWindowFunctions.h" />
+    <ClInclude Include="..\asplib_utils\fft\fftWindowing\fftWindowingFactory.h" />
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_KissFFTCpxOptions.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_KissFFTRealOptions.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_TRKissFFT.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\asplib_TKissFFT.hpp" />
+    <ClInclude Include="..\asplib_utils\fft\KissFFT\KissFFTProducts.hpp" />
     <ClInclude Include="..\asplib_utils\logger\asplib_default_logger.h" />
     <ClInclude Include="..\asplib_utils\logger\ILogger.h" />
     <ClInclude Include="..\asplib_utils\logger\LoggerFactory.h" />
@@ -63,7 +90,33 @@
     <ClInclude Include="..\asplib_utils\timer\asplib_CPUTimer.h" />
     <ClInclude Include="..\BiQuads\apslib_BiquadFactory.h" />
     <ClInclude Include="..\BiQuads\BiQuad_Native\asplib_Biquad_Native.h" />
+    <ClInclude Include="..\IIRFilter\TFirstOrderFeedback.hpp" />
     <ClInclude Include="..\interfaces\asplib_IBaseBiquad.h" />
+    <ClInclude Include="..\interfaces\asplib_IFFT.h" />
+    <ClInclude Include="..\interfaces\asplib_IProcess.hpp" />
+    <ClInclude Include="..\interfaces\asplib_ProcessFactory.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessor.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\asplib_SpectrumVisProcessorConfigurator.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerFactory.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\asplib_AxisScalerOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\common\AxisScalerProducts.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\Log10Scaler\asplib_TLog10Scaler.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\AxisScaler\Log10Scaler\asplib_TLog10ScalerOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherFactory.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\asplib_FFTSmootherOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\common\FFTSmootherProducts.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_dlbeerSmootherOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_TdlbeerSmoother.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\FFTSmoother\dlbeerSmoother\asplib_TFeedbackSmoother.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperFactory.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\asplib_RemapperOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\common\RemapperProducts.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\GammaCorrectorRemapper\asplib_TGammaCorrector.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\Remapper\GammaCorrectorRemapper\asplib_TGammaCorrectorOptions.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\asplib_SpectrumCalculationFactory.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\common\SpectrumCalculationProducts.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\SquareRootSpectrumCalculation\asplib_TSquareRoot.hpp" />
+    <ClInclude Include="..\SpectrumVisProcessor\SpectrumCalculation\SquareSpectrumCalculation\asplib_TSquare.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{258DDAE5-5A27-448F-B652-C06F2F96882E}</ProjectGuid>
@@ -117,21 +170,25 @@
     <OutDir>$(SolutionDir)libs\</OutDir>
     <TargetName>$(ProjectName)_x86d</TargetName>
     <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Libs\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)_x64d</TargetName>
     <OutDir>$(SolutionDir)libs\</OutDir>
     <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Libs\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)libs\</OutDir>
     <TargetName>$(ProjectName)_x86</TargetName>
     <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>$(SolutionDir)Libs\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>$(ProjectName)_x64</TargetName>
     <IntDir>$(SolutionDir)bin\build\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)libs\</OutDir>
+    <IncludePath>$(SolutionDir)Libs\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -141,7 +198,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;TARGET_WINDOWS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libs\portaudio\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,7 +213,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;TARGET_WINDOWS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libs\portaudio\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -172,7 +229,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;TARGET_WINDOWS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libs\portaudio\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,7 +247,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;TARGET_WINDOWS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)Libs\portaudio\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
