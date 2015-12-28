@@ -25,53 +25,56 @@
 
 #include "asplib_utils/os/asplib_base_os.h"
 #include "asplib_utils/exceptions/asplib_StringException.h"
-#include "ITFrameBuffer.h"
+
+#include "asplib_utils/buffers/TBaseFrameBuffer.h"
+
 
 namespace asplib
 {
 template<typename T>
-class TFrameRingBuffer : ITFrameBuffer<T>
+class TFrameRingBuffer : public TBaseFrameBuffer<T>
 {
-  public:
-    TFrameRingBuffer(int MaxFrameLength, int MaxFrames, uint Alignment=0) :
-      ITFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
+public:
+  TFrameRingBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint32_t Alignment = 0) :
+    TBaseFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
+  {
+    this->m_IsEmpty = true;
+    this->m_CurrentFrame = this->get_MaxFrames();
+  }
+
+  inline T* get_Frame(uint32_t Frame)
+  {
+    if (Frame >= this->get_MaxFrames() || this->m_IsEmpty)
     {
-      m_IsEmpty = true;
-      m_CurrentFrame = get_MaxFrames();
+      return NULL;
     }
 
-    T* get_Frame(uint32_t Frame)
+    int32_t tempFrame = this->m_CurrentFrame - (int32_t)Frame;
+    if(tempFrame < 0)
     {
-      if(Frame >= get_MaxFrames() || m_IsEmpty)
-      {
-        return NULL;
-      }
-
-      int32_t tempFrame = m_CurrentFrame - (int32_t)Frame;
-      if(tempFrame < 0)
-      {
-        tempFrame = m_CurrentFrame + get_MaxFrames() - (int32_t)Frame;
-      }
-
-      return m_Buffer + tempFrame*get_MaxFrameLength();
+      tempFrame = this->m_CurrentFrame + this->get_MaxFrames() - (int32_t)Frame;
     }
 
-    T* get_NextFrame()
+    return this->m_Buffer + tempFrame*this->get_MaxFrameLength();
+  }
+
+  inline T* get_NextFrame()
+  {
+    this->m_CurrentFrame++;
+    if (this->m_CurrentFrame >= this->m_MaxFrames)
     {
-      m_CurrentFrame++;
-      if(m_CurrentFrame >= m_MaxFrames)
-      {
-        m_CurrentFrame = 0;
-      }
-
-      if(m_IsEmpty)
-      {
-        m_IsEmpty = false;
-      }
-
-      return m_Buffer + m_CurrentFrame*m_MaxFrameLength;
+      this->m_CurrentFrame = 0;
     }
 
-    bool      m_IsEmpty;
+    if (this->m_IsEmpty)
+    {
+      this->m_IsEmpty = false;
+    }
+
+    return this->m_Buffer + this->m_CurrentFrame*this->m_MaxFrameLength;
+  }
+
+private:
+  bool      m_IsEmpty;
 };
 }
