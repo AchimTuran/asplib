@@ -50,7 +50,7 @@ typedef enum
 }ASPLIB_ERR;
 
 
-typedef enum  ASPLIB_OPT_MODULE 
+typedef enum 
 {
   ASPLIB_OPT_MIN = -1,
   ASPLIB_OPT_NATIVE,
@@ -66,7 +66,7 @@ typedef enum  ASPLIB_OPT_MODULE
   ASPLIB_OPT_ARM_VFP,
   ASLPIB_OPT_NEON,
   ASPLIB_OPT_MAX
-};
+}ASPLIB_OPT_MODULE;
 
 typedef struct
 {
