@@ -47,4 +47,10 @@ typedef float single;
     typedef unsigned long uint64;
 #endif
 
-typedef enum DLL_ERROR_CODE{ ERR_NO_ERROR=0, ERR_FATAL_ERROR, ERR_INVALID_INPUT, ERR_NOT_INIT } RET_ERR;
+typedef enum DLL_ERROR_CODE
+{
+  ERR_INVALID_INPUT = -3, 
+  ERR_FATAL_ERROR   = -2,
+  ERR_NOT_INIT      = -1,
+  ERR_NO_ERROR=0  
+}RET_ERR;

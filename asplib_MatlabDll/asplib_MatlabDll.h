@@ -61,6 +61,10 @@ DLL_EXPORT RET_ERR set_BiquadGains(single Gain);
 DLL_EXPORT RET_ERR init_asplib(single SampleFrequency, uint32 MaxChannels, uint32 MaxFrameSize);
 DLL_EXPORT void destroy();
 
+DLL_EXPORT RET_ERR create_SpectrumVisProcessor(uint32 FrameSize);
+DLL_EXPORT RET_ERR process_SpectrumVisProcessor(single *Signal);
+DLL_EXPORT RET_ERR destroy_SpectrumVisProcessor();
+
 // ToDo: add some error code to string translation function 
 
 #ifdef __cplusplus
