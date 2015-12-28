@@ -117,7 +117,7 @@ uint32_t IPortAudio::get_AvailableDevices(CPaDeviceInfoVector_t &Devices)
     Devices.push_back(m_DeviceInfos[ii]);
   }
 
-  return Devices.size();
+  return (uint32_t)Devices.size();
 }
 
 long IPortAudio::get_InputFrameSize()
