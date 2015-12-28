@@ -38,6 +38,9 @@
   #endif
 
   #include <stdint.h>
+  #include <stdio.h>
+  #include <string.h>
+  #include <math.h>
 
   // data typedefs
 //  typedef unsigned char   uint8_t;
