@@ -24,6 +24,9 @@
 
 
 
+#include "asplib_utils/constants_typedefs/asplib_ExtendedStructIDs.hpp"
+
+
 // error definitions
 typedef enum
 {
