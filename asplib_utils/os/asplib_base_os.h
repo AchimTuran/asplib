@@ -28,7 +28,7 @@
 #endif
   #include "windows/windows_definitions.h"
 #elif defined(__gnu_linux__)
-#if !defined(TARGET_WINDOWS)
+#if !defined(TARGET_LINUX)
   #define TARGET_LINUX
 #endif
   #include "linux/linux_definitions.h"
