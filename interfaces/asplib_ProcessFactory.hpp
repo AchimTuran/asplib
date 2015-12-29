@@ -111,7 +111,7 @@ public:
 
   private:
     const IProcess::ProcessTypes_t m_HiddenProductID;   // force initialization for m_HiddenProductID
-    static const FactoryCallbacks_t m_Callbacks;
+    static FactoryCallbacks_t m_Callbacks;
   };
 
   
@@ -149,7 +149,7 @@ template<class TFactory, IProcess::ProcessTypes_t ID>
 const IProcess::ProcessTypes_t CProcessFactoryCallbacks::TRegisterFactory<TFactory, ID>::FactoryID = CProcessFactoryCallbacks::RegisterFactory(ID, TFactory::Name, &CProcessFactoryCallbacks::TRegisterFactory<TFactory, ID>::m_Callbacks);
 
 template<class TFactory, IProcess::ProcessTypes_t ID>
-typename const CProcessFactoryCallbacks::FactoryCallbacks_t CProcessFactoryCallbacks::TRegisterFactory<TFactory, ID>::m_Callbacks =
+typename CProcessFactoryCallbacks::FactoryCallbacks_t CProcessFactoryCallbacks::TRegisterFactory<TFactory, ID>::m_Callbacks =
 {
   TFactory::Create,
   TFactory::Destroy,

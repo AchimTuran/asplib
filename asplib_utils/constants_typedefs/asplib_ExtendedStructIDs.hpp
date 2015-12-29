@@ -41,5 +41,5 @@ typedef enum
   ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
 
   ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-};
+}asplibExtendedStructIDs_t;
 }

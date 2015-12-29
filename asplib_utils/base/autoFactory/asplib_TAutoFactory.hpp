@@ -91,7 +91,7 @@ public:
 
   private:
     const  TypeID                    m_HiddenProductID; // force initialization for m_HiddenProductID
-    static const ProductCallbacks_t  m_Callbacks;
+    static ProductCallbacks_t  m_Callbacks;
   };
 
 
@@ -201,7 +201,7 @@ const TFmt TAutoFactory<ProductInterface, TypeID, TFmt, MetaData>::TRegisterProd
 
 template <class ProductInterface, typename TypeID, typename TFmt, class MetaData>
 template<class Product, TypeID ID, TFmt TFmtIn, TFmt TFmtOut>
-typename const TAutoFactory<ProductInterface, TypeID, TFmt, MetaData>::ProductCallbacks_t
+typename TAutoFactory<ProductInterface, TypeID, TFmt, MetaData>::ProductCallbacks_t
 TAutoFactory<ProductInterface, TypeID, TFmt, MetaData>::TRegisterProduct<Product, ID, TFmtIn, TFmtOut>::m_Callbacks =
 {
   TAutoFactory<ProductInterface, TypeID, TFmt, MetaData>::TRegisterProduct<Product, ID, TFmtIn, TFmtOut>::Create,
