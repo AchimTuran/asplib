@@ -1,11 +1,5 @@
-project(asplib)
-
 cmake_minimum_required(VERSION 2.6)
-enable_language(CXX)
-
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
-
-include(UseMultiArch.cmake)
+project(asplib CXX)
 
 set(asplib_NAME asplib)
 set(asplib_DESCRIPTION "asplib (Achim's Signal Processing LIBrary), is a small and lightweight C++ library for digital signal processing.")
@@ -13,114 +7,109 @@ set(asplib_VERSION_MAJOR ${APP_VERSION_MAJOR})
 set(asplib_VERSION_MINOR ${APP_VERSION_MINOR})
 set(asplib_VERSION_PATCH 0)
 
+include(UseMultiArch.cmake)
+
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+include_directories(${CMAKE_MODULE_PATH})
+
+# Enable pic
 if(NOT WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  set(CMAKE_CXX_FLAGS "-DTARGET_LINUX")
+    set(CMAKE_CXX_FLAGS "-DTARGET_LINUX")
 endif()
-
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-  set(CMAKE_CXX_FLAGS "-DTARGET_WINDOWS")
+    set(CMAKE_CXX_FLAGS "-DTARGET_WINDOWS")
 endif()
 
-#set(asplib_INCLUDE_DIRS ${TINYXML_INCLUDE_DIR} "${CMAKE_INSTALL_PREFIX}/include/kodi")
-#set(asplib_LIBRARIES ${CMAKE_THREAD_LIBS_INIT} ${TINYXML_LIBRARIES})
+if (NOT WIN32)
+  add_definitions(-g -O2)
+endif()
 
-include_directories(${PROJECT_SOURCE_DIR}
-                    ${PROJECT_SOURCE_DIR}/Biquads)
+# Find and include KissFFT
+find_package(KissFFT REQUIRED)
+include_directories(${KISSFFT_INCLUDE_DIR})
 
-set(SOURCES asplib_utils/computeDeviceInfo/cpuInfo.cpp
-            Biquads/Biquad_Native/asplib_Biquad_Native.cpp
-            Biquads/apslib_BiquadFactory.cpp)
+set(ASPLIB_SOURCES SpectrumVisProcessor/asplib_SpectrumVisProcessorConfigurator.cpp
+                   SpectrumVisProcessor/asplib_SpectrumVisProcessor.cpp
+                   SpectrumVisProcessor/Remapper/asplib_RemapperFactory.cpp
+                   SpectrumVisProcessor/FFTSmoother/asplib_FFTSmootherFactory.cpp
+                   SpectrumVisProcessor/AxisScaler/asplib_AxisScalerFactory.cpp
+                   asplib_utils/base/extendedStructs/asplib_ExtendedStructContainer.cpp
+                   asplib_utils/exceptions/asplib_StringException.cpp
+                   asplib_utils/fft/asplib_FFTFactory.cpp
+                   asplib_utils/fft/fftWindowing/fftWindowingFactory.cpp
+                   asplib_utils/fft/fftWindowing/fftWindowFunctions.cpp)
 
-set(HEADERS interfaces/asplib_IBaseBiquad.h
-            asplib_utils/constants_typedefs/asplib_constants.h
-            asplib_utils/constants_typedefs/asplib_typedefs.h
-            asplib_utils/os/asplib_base_os.h
-            asplib_utils/os/windows/windows_definitions.h
-            asplib_utils/os/linux/linux_definitions.h
-            asplib_utils/computeDeviceInfo/cpuInfo_types.h
-            asplib_utils/computeDeviceInfo/cpuInfo.h
-            Biquads/apslib_BiquadFactory.h
-            Biquads/Biquad_Native/asplib_Biquad_Native.h)
+file(GLOB_RECURSE ASPLIB_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.h" "*.hpp")
+				   
+# set(ASPLIB_HEADERS asplib_utils/constants_typedefs/asplib_constants.h
+                   # asplib_utils/constants_typedefs/asplib_typedefs.h
+                   # asplib_utils/constants_typedefs/asplib_dataFmtDefines.hpp
+                   # asplib_utils/os/asplib_base_os.h
+                   # asplib_utils/os/windows/windows_definitions.h
+                   # asplib_utils/os/linux/linux_definitions.h
+                   # SpectrumVisProcessor/asplib_SpectrumVisProcessorConfigurator.hpp
+                   # SpectrumVisProcessor/asplib_SpectrumVisProcessor.hpp
+                   # SpectrumVisProcessor/Remapper/asplib_RemapperFactory.hpp
+                   # SpectrumVisProcessor/Remapper/GammaCorrectorRemapper/asplib_TGammaCorrector.hpp
+                   # SpectrumVisProcessor/Remapper/common/RemapperProducts.hpp
+                   # SpectrumVisProcessor/FFTSmoother/asplib_FFTSmootherFactory.hpp
+                   # SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TFeedbackSmoother.hpp
+                   # SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TdlbeerSmoother.hpp
+                   # SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp
+                   # SpectrumVisProcessor/FFTSmoother/common/FFTSmootherProducts.hpp
+                   # SpectrumVisProcessor/AxisScaler/asplib_AxisScalerFactory.hpp
+                   # SpectrumVisProcessor/AxisScaler/Log10Scaler/asplib_TLog10Scaler.hpp
+                   # SpectrumVisProcessor/AxisScaler/common/AxisScalerProducts.hpp
+                   # IIRFilter/TFirstOrderFeedback.hpp
+                   # interfaces/asplib_IProcess.hpp
+                   # interfaces/asplib_IFFT.h
+                   # asplib_utils/base/autoFactory/asplib_TAutoFactory.hpp
+                   # asplib_utils/base/autoFactory/asplib_TProductStatistics.hpp
+                   # asplib_utils/base/extendedStructs/asplib_ExtendedStructContainer.hpp
+                   # asplib_utils/base/extendedStructs/asplib_ExtendedStructs.hpp
+                   # asplib_utils/buffers/asplib_bufferTypes.hpp
+                   # asplib_utils/buffers/IBufferBase.h
+                   # asplib_utils/buffers/ITBuffer.h
+                   # asplib_utils/buffers/TBaseBuffer.h
+                   # asplib_utils/buffers/TBaseFrameBuffer.h
+                   # asplib_utils/buffers/TFrameBuffer.h
+                   # asplib_utils/buffers/TFrameRingBuffer.h
+                   # asplib_utils/buffers/TRingBuffer.h
+                   # asplib_utils/exceptions/asplib_StringException.h
+                   # asplib_utils/exceptions/asplib_IException.h
+                   # asplib_utils/fft/asplib_FFTFactory.hpp
+                   # asplib_utils/fft/KissFFT/asplib_TKissFFT.hpp
+                   # asplib_utils/fft/KissFFT/asplib_TRKissFFT.hpp
+                   # asplib_utils/fft/KissFFT/KissFFTProducts.hpp
+                   # asplib_utils/fft/fftWindowing/fftWindowingFactory.h
+                   # asplib_utils/fft/fftWindowing/fftWindowFunctions.h
+                   # asplib_utils/fft/common/asplib_TZeroCpyConverter.hpp)
 
+# Configure asplibConfig.cmake.in
+set(ASPLIB_LIBRARY_DIR  "${CMAKE_INSTALL_PREFIX}/lib")
+set(ASPLIB_INCLUDE_DIR  "${CMAKE_INSTALL_PREFIX}/include/asplib")
+set(ASPLIB_LIBRARIES    "${KISSFFT_LIBRARY}")
+set(ASPLIB_INCLUDE_DIRS "${KISSFFT_INCLUDE_DIR}")
+configure_file(asplibConfig.cmake.in "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/asplibConfig.cmake" @ONLY)
 
-#include_directories(${TINYXML_INCLUDE_DIR} ${KODI_INCLUDE_DIR})
+add_library(asplib STATIC ${ASPLIB_SOURCES} ${ASPLIB_HEADERS})
+install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR} EXPORT asplib)
 
-add_library(asplib ${SOURCES} ${PLAT_SOURCES})
-target_link_libraries(asplib ${asplib_LIBRARIES})
-#set_target_properties(asplib PROPERTIES VERSION ${asplib_VERSION_MAJOR}.${asplib_VERSION_MINOR}.${asplib_VERSION_PATCH}
-#                                              SOVERSION ${asplib_VERSION_MAJOR}.0)
+# Install all header files
+foreach ( HEADER ${ASPLIB_HEADERS} )
+    get_filename_component( DIR ${HEADER} DIRECTORY )
+    install( FILES ${HEADER} DESTINATION "${ASPLIB_INCLUDE_DIR}/${DIR}/asplib/" )
+endforeach()
 
-install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/interfaces/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/interfaces
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/constants_typedefs/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/constants_typedefs
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/windows/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/windows/ 
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/os/linux/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/os/linux/
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/asplib_utils/computeDeviceInfo/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/asplib_utils/computeDeviceInfo/
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/Biquads/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/Biquads/ 
-        FILES_MATCHING PATTERN "*.h")
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/Biquads/Biquad_Native/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib/Biquads/Biquad_Native/
-        FILES_MATCHING PATTERN "*.h")
-
-
-# install(FILES interfaces/asplib_IBaseBiquad.h
-              # asplib_utils/constants_typedefs/asplib_constants.h
-              # asplib_utils/constants_typedefs/asplib_typedefs.h
-      
-              # DESTINATION include/asplib/asplib_utils/constants_typedefs/)
-      
-      # asplib_utils/os/asplib_base_os.h
-      # asplib_utils/os/windows/windows_definitions.h
-      # asplib_utils/os/linux/linux_definitions.h
-      # utils/computeDeviceInfo/cpuInfo_types.h
-      # utils/computeDeviceInfo/cpuInfo.h
-      # Biquads/apslib_BiquadFactory.h
-            # Biquads/Biquad_Native/asplib_Biquad_Native.h
-      # )
-
-# install(FILES interfaces/asplib_IBaseBiquad.h
-        # DESTINATION include/asplib/interfaces)
-# install(FILES constants_typedefs/asplib_constants.h
-              # constants_typedefs/asplib_typedefs.h
-        # DESTINATION include/asplib/constants_typedefs)
-# install(FILES utils/computeDeviceInfo/cpuInfo_types.h
-              # utils/computeDeviceInfo/cpuInfo.h
-        # DESTINATION include/asplib/utils)
-# install(FILES Biquads/apslib_BiquadFactory.h
-              # Biquads/Biquad_Native/asplib_Biquad_Native.h
-        # DESTINATION include/asplib/Biquads)
-        
-#install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/asplib)
-
-#IF(NOT WIN32)
-  # Pkgconfig
-  #include(PkgConfigHandler.cmake)
-  #configure_pc_file(kodiutilities kodiutilities.pc.in
-  #                              kodiutilities.pc
-  #                               ${CMAKE_INSTALL_PREFIX}
-  #                               ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
-  #                               ${CMAKE_INSTALL_PREFIX}/include)
-
-#  install(FILES ${CMAKE_BINARY_DIR}/kodiutilities.pc
-#          DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/pkgconfig)
-#ENDIF(NOT WIN32)
-
-# config mode
-#configure_file (kodiutilities-config.cmake.in
-#                kodiutilities-config.cmake @ONLY)
-#install(FILES ${CMAKE_BINARY_DIR}/kodiutilities-config.cmake
-#       DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/kodiutilities)
-
-# Quell warnings with in-tree builds
-#set(KODI_BUILD_DIR ${KODI_BUILD_DIR})
+# Install asplibConfig.cmake
+if(WIN32 AND NOT CYGWIN)
+    set(DEF_INSTALL_CMAKE_DIR asplib)
+else()
+    set(DEF_INSTALL_CMAKE_DIR lib/asplib)
+endif()
+set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH "Installation directory for CMake files")
+install(FILES "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/asplibConfig.cmake" DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)

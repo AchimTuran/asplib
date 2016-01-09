@@ -1,0 +1,13 @@
+# It defines the following variables
+#   ASPLIB_INCLUDE_DIR,  the path where asplib headers are located
+#   ASPLIB_INCLUDE_DIRS, the paths where dependency headers are located
+#   ASPLIB_LIBRARY_DIR,  folder in which the asplib library is located
+#   ASPLIB_LIBRARY,      library to link against to use asplib
+#   ASPLIB_LIBRARIES,    libraries used by asplib to link against
+
+set(ASPLIB_INCLUDE_DIR  "@ASPLIB_INCLUDE_DIR@")
+set(ASPLIB_INCLUDE_DIRS "@ASPLIB_INCLUDE_DIRS@")
+set(ASPLIB_LIBRARY_DIR  "@ASPLIB_LIBRARY_DIR@")
+set(ASPLIB_LIBRARIES    "@ASPLIB_LIBRARIES@")
+
+find_library(ASPLIB_LIBRARY "@PROJECT_NAME@" HINTS ${ASPLIB_LIBRARY_DIR})
