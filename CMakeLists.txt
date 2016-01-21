@@ -102,7 +102,7 @@ install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR} EXPORT asplib)
 # Install all header files
 foreach ( HEADER ${ASPLIB_HEADERS} )
     get_filename_component( DIR ${HEADER} DIRECTORY )
-    install( FILES ${HEADER} DESTINATION "${ASPLIB_INCLUDE_DIR}/${DIR}/asplib/" )
+    install( FILES ${HEADER} DESTINATION "${ASPLIB_INCLUDE_DIR}/${DIR}" )
 endforeach()
 
 # Install asplibConfig.cmake
