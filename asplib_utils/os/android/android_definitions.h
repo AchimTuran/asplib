@@ -24,9 +24,9 @@
 
 
 
-#if defined(TARGET_WINDOWS)
+#if defined(TARGET_ANDROID)
   #ifndef __ASPLIB_FUNCTION__
-    #define __ASPLIB_FUNCTION__ __FUNCTION__
+    #define __ASPLIB_FUNCTION__ __func__
   #endif
   #ifndef __ASPLIB_FILE__
     #define __ASPLIB_FILE__ __FILE__
@@ -36,19 +36,22 @@
   #endif
 
   #include <stdint.h>
+  #include <stdio.h>
+  #include <string.h>
+  #include <math.h>
 
   // data typedefs
-  //typedef unsigned char   uint8_t;
-  //typedef char            int8_t;
-  //typedef unsigned short  uint16_t;
-  //typedef short           int16_t;
-  //typedef unsigned int    uint32_t;
-  //typedef int             int32_t;
-  //typedef unsigned long   uin64_t;
-  //typedef long            int64_t;
+  //  typedef unsigned char   uint8_t;
+  //  typedef char            int8_t;
+  //  typedef unsigned short  uint16_t;
+  //  typedef short           int16_t;
+  //  typedef unsigned int    uint32_t;
+  //  typedef int             int32_t;
+  //  typedef unsigned long   uin64_t;
+  //  typedef long            int64_t;
 
   // path typedefs
-  #define ASPLIB_PATH_SEPERATOR '\\'
+  #define ASPLIB_PATH_SEPERATOR '/'
 #else
-  #error "Configuring TARGET_WINDOWS failed!"
+  #error "Configuring TARGET_ANDROID failed!"
 #endif

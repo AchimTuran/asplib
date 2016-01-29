@@ -195,3 +195,5 @@ benchmarks/
 utils/LXC_Signal/
 utils/LXC_System/
 utils/
+
+build/

@@ -10,12 +10,16 @@ Projects using asplib
 * [adsp.xconvolver](https://github.com/AchimTuran/adsp.xconvolver) (Convolution Engine AudioDSP-Addon for Kodi with several platform optimizations)
 * [adsp.parametric.eq](https://github.com/AchimTuran/adsp.parametric.eq) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
 
+How to build aslpib
+-------
+- Under Windows add system variable "MATLAB_PATH" to build Matlab dll.
+
 Features
 -------
 * all needed functions for [BiQuad-Filter](http://en.wikipedia.org/wiki/Digital_biquad_filter) calculation
 * constant Q peaking filter coefficient calculation
 * Native (C++-Classes), SSE2, SSE3 and AVX-optimizations
-* Easy and well design API
+* Easy and well designed API
 
 Planned Features
 -------
