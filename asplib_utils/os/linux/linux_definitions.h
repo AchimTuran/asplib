@@ -25,8 +25,6 @@
 
 
 #if defined(TARGET_LINUX)
-  #include <string>
-
 	#ifndef __ASPLIB_FUNCTION__
 		#define __ASPLIB_FUNCTION__ __func__
 	#endif
@@ -53,7 +51,7 @@
 //  typedef long            int64_t;
 
   // path typedefs
-  #define ASPLIB_PATH_SEPERATOR std::string("//")
+  #define ASPLIB_PATH_SEPERATOR '/'
 #else
   #error "Configuring TARGET_LINUX failed!"
 #endif
