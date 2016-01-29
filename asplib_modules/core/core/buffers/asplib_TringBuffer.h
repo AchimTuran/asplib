@@ -25,83 +25,85 @@
 
 #include "asplib_utils/os/asplib_base_os.h"
 #include "asplib_utils/exceptions/asplib_StringException.h"
-#include "ITBuffer.h"
+
+#include "asplib_utils/buffers/TBaseBuffer.h"
+
 
 namespace asplib
 {
 template<typename T>
-class TRingBuffer : public ITBuffer<T>
+class TRingBuffer : public TBaseBuffer<T>
 {
 public:
-  TRingBuffer(uint32_t MaxSize, uint32_t Delay=0, uint Alignment=0) :
-    ITBuffer<T>(MaxSize, 1, Alignment=0)
+  TRingBuffer(uint32_t MaxSize, uint32_t Delay=0, uint32_t Alignment=0) :
+    TBaseBuffer<T>(MaxSize, 1, Alignment = 0)
   {
-    if(Delay >= get_MaxSize())
+    if(Delay >= this->get_MaxSize())
     {
       throw ASPLIB_STRING_EXCEPTION_HANDLER("Invalid input! Delay >= MaxSize!");
     }
-    m_WriteIdx = 0;
-    m_CurrentStoredSamples = 0;
-    m_Delay = Delay;
-    if(m_Delay > 0)
+    this->m_WriteIdx = 0;
+    this->m_CurrentStoredSamples = 0;
+    this->m_Delay = Delay;
+    if(this->m_Delay > 0)
     {
-      m_ReadIdx = get_MaxSize() - m_Delay;
+      this->m_ReadIdx = this->get_MaxSize() - this->m_Delay;
     }
     else
     {
-      m_ReadIdx = 0;
+      this->m_ReadIdx = 0;
     }
 
     // Read & Write pointers
-    m_WritePtr = NULL;
-    m_ReadPtr  = NULL;
+    this->m_WritePtr = NULL;
+    this->m_ReadPtr = NULL;
   }
 
   // reads SamplesToRead samples from internal buffer and stores it in OutData
   uint32_t read(T *Data, uint32_t SamplesToRead)
   {
-    if(!Data || SamplesToRead < 0)
+    if(!Data)
     {
       return 0;
     }
 
     int32_t samplesRead = 0;
-    if(SamplesToRead <= m_CurrentStoredSamples)
+    if (SamplesToRead <= this->m_CurrentStoredSamples)
     {
       samplesRead = SamplesToRead;
     }
     else
     {
-      samplesRead = m_CurrentStoredSamples;
+      samplesRead = this->m_CurrentStoredSamples;
     }
 
-    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_ReadIdx - samplesRead;
+    int32_t samplesToBoundary = (int32_t)this->get_MaxSize() - this->m_ReadIdx - samplesRead;
     if(samplesToBoundary >= 0)
     { // read data from m_Buffer without crossing the boundary boerder
-      memcpy(Data, m_Buffer + m_ReadIdx, sizeof(T)*samplesRead);
+      memcpy(Data, this->m_Buffer + this->m_ReadIdx, sizeof(T)*samplesRead);
       if(samplesToBoundary != 0)
       {
-        m_ReadIdx += samplesRead;
+        this->m_ReadIdx += samplesRead;
       }
       else
       { // set index to buffer start
-        m_ReadIdx = 0;
+        this->m_ReadIdx = 0;
       }
     }
     else
     {
       // samplesToBoundary < 0 --> add operation results to subtraction
       int32_t copySamples = samplesRead + samplesToBoundary;
-      memcpy(Data, m_Buffer + m_ReadIdx, sizeof(T)*copySamples);
+      memcpy(Data, this->m_Buffer + this->m_ReadIdx, sizeof(T)*copySamples);
 
       // store the rest of the samples
       int32_t leftSamples = samplesRead - copySamples;
-      memcpy(Data + copySamples, m_Buffer, sizeof(T)*leftSamples);
-      m_ReadIdx = leftSamples;
+      memcpy(Data + copySamples, this->m_Buffer, sizeof(T)*leftSamples);
+      this->m_ReadIdx = leftSamples;
     }
 
     // read samples from ring buffer
-    m_CurrentStoredSamples -= samplesRead;
+    this->m_CurrentStoredSamples -= samplesRead;
 
     return samplesRead;
   }
@@ -109,14 +111,14 @@ public:
   // writes SamplesToWrite from to InData the internal buffer
   uint32_t write(T *InData, uint32_t SamplesToWrite)
   {
-    if(!InData || SamplesToWrite < 0)
+    if(!InData)
     {
       throw ASPLIB_STRING_EXCEPTION_HANDLER("Invalid Pointer or SamplesToWrite < 0!");
     }
 
     int32_t samplesWrite = 0;
     // calculate samples that can be written without crossing m_Buffer boundary
-    int32_t freeSamples = (int32_t)get_MaxSize() - m_CurrentStoredSamples;
+    int32_t freeSamples = (int32_t)this->get_MaxSize() - this->m_CurrentStoredSamples;
     if((int32_t)SamplesToWrite <= freeSamples)
     {
       samplesWrite = SamplesToWrite;
@@ -126,33 +128,33 @@ public:
       samplesWrite = freeSamples;
     }
 
-    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_WriteIdx - samplesWrite;
+    int32_t samplesToBoundary = (int32_t)this->get_MaxSize() - this->m_WriteIdx - samplesWrite;
     if(samplesToBoundary >= 0)
     { // write data without crossing the buffer boundary
-      memcpy(m_Buffer + m_WriteIdx, InData, sizeof(T)*samplesWrite);
+      memcpy(this->m_Buffer + this->m_WriteIdx, InData, sizeof(T)*samplesWrite);
       if(samplesToBoundary != 0)
       {
-        m_WriteIdx += samplesWrite;
+        this->m_WriteIdx += samplesWrite;
       }
       else
       { // set m_WriteIdx to buffer start
-        m_WriteIdx = 0;
+        this->m_WriteIdx = 0;
       }
     }
     else
     {
       // samplesToBoundary < 0 --> add operation results to subtraction
       int32_t copySamples = samplesWrite + samplesToBoundary;
-      memcpy(m_Buffer + m_WriteIdx, InData, sizeof(T)*copySamples);
+      memcpy(this->m_Buffer + this->m_WriteIdx, InData, sizeof(T)*copySamples);
 
       // store the rest of the samples
       int32_t leftSamples = samplesWrite - copySamples;
-      memcpy(m_Buffer, InData + copySamples, sizeof(T)*leftSamples);
-      m_WriteIdx = leftSamples;
+      memcpy(this->m_Buffer, InData + copySamples, sizeof(T)*leftSamples);
+      this->m_WriteIdx = leftSamples;
     }
 
     // write samples to ring buffer
-    m_CurrentStoredSamples += samplesWrite;
+    this->m_CurrentStoredSamples += samplesWrite;
 
     return samplesWrite;
   }
@@ -160,20 +162,20 @@ public:
   // Set pointers to start of m_Buffer
   void reset_Pointers()
   {
-    m_WriteIdx = 0;
-    m_ReadIdx = 0;
+    this->m_WriteIdx = 0;
+    this->m_ReadIdx = 0;
 
-    m_WritePtr = m_Buffer;
-    m_ReadPtr  = m_Buffer;
+    this->m_WritePtr  = this->m_Buffer;
+    this->m_ReadPtr   = this->m_Buffer;
 
-    m_CurrentStoredSamples = 0;
+    this->m_CurrentStoredSamples = 0;
   }
 
   int32_t write_Zeros(uint32_t Zeros)
   {
     int zerosWrite = 0;
     // calculate samples m_Buffer boundary
-    int freeSamples = m_MaxSize - m_CurrentStoredSamples;
+    int freeSamples = this->m_MaxSize - this->m_CurrentStoredSamples;
     if(Zeros <= freeSamples)
     {
       zerosWrite = Zeros;
@@ -183,44 +185,44 @@ public:
       zerosWrite = freeSamples;
     }
 
-    int32_t samplesToBoundary = (int32_t)get_MaxSize() - m_WriteIdx - zerosWrite;
+    int32_t samplesToBoundary = (int32_t)this->get_MaxSize() - this->m_WriteIdx - zerosWrite;
     if(samplesToBoundary >= 0)
     { // write 0 without crossing boundary
-      memset(m_WritePtr, 0, sizeof(T)*zerosWrite);
+      memset(this->m_WritePtr, 0, sizeof(T)*zerosWrite);
       if(samplesToBoundary != 0)
       {
         m_WriteIdx += zerosWrite;
       }
       else
       {
-        m_WriteIdx = 0;
+        this->m_WriteIdx = 0;
       }
     }
     else
     {
       // samplesToBoundary < 0 --> add operation results to subtraction
       int32_t copySamples = zerosWrite + samplesToBoundary;
-      memcpy(m_WritePtr, 0, sizeof(T)*copySamples);
+      memcpy(this->m_WritePtr, 0, sizeof(T)*copySamples);
 
       // write zeros to m_WriteIdx
-      m_WriteIdx = zerosWrite - copySamples;
-      memset(m_WritePtr + copySamples, 0, sizeof(T)*m_WriteIdx);
+      this->m_WriteIdx = zerosWrite - copySamples;
+      memset(this->m_WritePtr + copySamples, 0, sizeof(T)*this->m_WriteIdx);
     }
 
-    m_CurrentStoredSamples += zerosWrite;
-    m_WritePtr = m_Buffer + m_WriteIdx;
+    this->m_CurrentStoredSamples += zerosWrite;
+    this->m_WritePtr = this->m_Buffer + this->m_WriteIdx;
 
     return zerosWrite;
   }
 
   // get maximum ring buffer size
-  uint32_t get_MaxSize()    { return get_MaxFrameLength(); }
+  inline uint32_t get_MaxSize()    { return this->get_MaxFrameLength(); }
 
 
   // returns the current free space of the ring buffer
-  uint32_t get_FreeSamples()   { return get_MaxSize() - m_CurrentStoredSamples; }
+  inline uint32_t get_FreeSamples()   { return this->get_MaxSize() - this->m_CurrentStoredSamples; }
   // get current stored samples
-  uint32_t get_StoredSamples() { return m_CurrentStoredSamples; }
+  inline uint32_t get_StoredSamples() { return this->m_CurrentStoredSamples; }
 
 private:
   volatile uint32_t m_CurrentStoredSamples;

@@ -1,6 +1,7 @@
 #pragma once
 
-/* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+/*
+ * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)
@@ -25,53 +26,47 @@
 
 #include "asplib_utils/os/asplib_base_os.h"
 #include "asplib_utils/exceptions/asplib_StringException.h"
-#include "ITFrameBuffer.h"
+
+#include "asplib_utils/buffers/TBaseFrameBuffer.h"
+
 
 namespace asplib
 {
 template<typename T>
-class TFrameRingBuffer : ITFrameBuffer<T>
+class TFrameBuffer : public TBaseFrameBuffer<T>
 {
-  public:
-    TFrameRingBuffer(int MaxFrameLength, int MaxFrames, uint Alignment=0) :
-      ITFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
+public:
+  TFrameBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint16_t Alignment=0) :
+    TBaseFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
+  {
+    this->m_CurrentFrame = 0;
+  }
+
+  inline T *get_Frame(uint32_t Frame)
+  {
+    if (Frame >= this->get_MaxFrames())
     {
-      m_IsEmpty = true;
-      m_CurrentFrame = get_MaxFrames();
+      return NULL;
     }
 
-    T* get_Frame(uint32_t Frame)
+    return this->m_Buffer + Frame*this->get_MaxFrameLength();
+  }
+
+  inline T *get_NextFrame()
+  {
+    uint32_t returnFrame = this->m_CurrentFrame;
+    this->m_CurrentFrame++;
+    if (this->m_CurrentFrame >= this->get_MaxFrames())
     {
-      if(Frame >= get_MaxFrames() || m_IsEmpty)
-      {
-        return NULL;
-      }
-
-      int32_t tempFrame = m_CurrentFrame - (int32_t)Frame;
-      if(tempFrame < 0)
-      {
-        tempFrame = m_CurrentFrame + get_MaxFrames() - (int32_t)Frame;
-      }
-
-      return m_Buffer + tempFrame*get_MaxFrameLength();
+      this->m_CurrentFrame = 0;
     }
 
-    T* get_NextFrame()
-    {
-      m_CurrentFrame++;
-      if(m_CurrentFrame >= m_MaxFrames)
-      {
-        m_CurrentFrame = 0;
-      }
+    return this->m_Buffer + returnFrame*this->get_MaxFrameLength();
+  }
 
-      if(m_IsEmpty)
-      {
-        m_IsEmpty = false;
-      }
-
-      return m_Buffer + m_CurrentFrame*m_MaxFrameLength;
-    }
-
-    bool      m_IsEmpty;
+  inline void  reset_CurrentFrameIdx()
+  {
+    this->m_CurrentFrame = 0;
+  }
 };
 }
