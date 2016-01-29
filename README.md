@@ -1,3 +1,6 @@
+Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=master)](https://travis-ci.org/AchimTuran/adsp.biquad.filters)
+
+
 asplib (Achim's Signal Processing LIBrary)
 -------
 Is a small and lightweight C++ library for digital signal processing.
