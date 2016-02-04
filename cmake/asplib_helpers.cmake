@@ -1,6 +1,14 @@
 function(asplib_source_group FILE_LIST)
   foreach(_FILE ${FILE_LIST})
+    get_filename_component(${_FILE} ${_FILE} ABSOLUTE)
+    file(RELATIVE_PATH relFile ${CMAKE_CURRENT_SOURCE_DIR} ${_FILE})
     get_filename_component(FILEDIRECTORY ${_FILE} DIRECTORY)
+    #message(STATUS "FILEDIRECTORY=${FILEDIRECTORY}")
+    file(RELATIVE_PATH FILEDIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} ${FILEDIRECTORY})
+    #message(STATUS "REL_FILEDIRECTORY=${FILEDIRECTORY}")
+    
+
+    #message(STATUS "_FILE=${_FILE}")
     string(REPLACE "/" "\\" FILE_FILEGROUP ${FILEDIRECTORY})
     get_filename_component(FILENAME ${_FILE} NAME)
     
@@ -17,3 +25,38 @@ function(asplib_install_with_folder FILE_LIST FOLDER)
   endforeach()
 endfunction()
 
+macro(asplib_include_modules ModulesPath ModuleRequests)
+  if(DEFINED ASPLIB_INITIAL_MODULES)
+    message(FATAL_ERROR "asplib has already include modules! Calling asplib_include_modules twice is not allowed!")
+  endif()
+  
+  get_filename_component(_modules_path "${ModulesPath}" ABSOLUTE)
+  message(STATUS "Processing modules in ${_modules_path}")
+  file(GLOB _asplib_modules RELATIVE "${_modules_path}" "${_modules_path}/*")
+
+  if(NOT _asplib_modules)
+    message(FATAL_ERROR "The path: ${_modules_path} does not contain asplib modules!")
+  endif()
+  
+  list(SORT _asplib_modules)  
+  foreach(_requestedModule ${ModuleRequests})
+    set(ModuleFound FALSE)
+    foreach(_asplibModule ${_asplib_modules})
+      get_filename_component(_modpath "${_modules_path}/${_asplibModule}" ABSOLUTE)
+      #message(STATUS "_requestedModule=${_requestedModule}  _asplibModule=${_asplibModule}  _modpath=${_modpath}")
+      
+      if(${_requestedModule} STREQUAL ${_asplibModule})
+        if(EXISTS "${_modpath}/CMakeLists.txt")
+          message(STATUS "Adding ${_requestedModule} module")
+          add_subdirectory("${_modpath}")
+          set(ModuleFound TRUE)
+        endif()
+      endif()
+    endforeach()
+    
+    if(NOT ModuleFound)
+      message(FATAL_ERROR "The asplib module: ${_requestedModule} was not found!")
+    endif()
+    
+  endforeach()
+endmacro()

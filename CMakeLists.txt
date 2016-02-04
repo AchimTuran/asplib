@@ -1,18 +1,39 @@
+# make sure CMAKE_PREFIX_PATH is set
+if(NOT CMAKE_PREFIX_PATH)
+  set(CMAKE_PREFIX_PATH "E:/Kodi/adsp_addons/asplib_depends")
+  list(APPEND CMAKE_PREFIX_PATH "E:/Kodi/adsp_addons/asplib_depends/include")
+  list(APPEND CMAKE_PREFIX_PATH "E:/Kodi/adsp_addons/asplib_depends/lib")
+else()
+  file(TO_CMAKE_PATH "${CMAKE_PREFIX_PATH}" CMAKE_PREFIX_PATH)
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/depends")
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/depends/include")
+  list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/depends/lib")
+endif()
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
+
+foreach(path ${CMAKE_PREFIX_PATH})
+  message(STATUS "path=${path}")
+endforeach()
+
+
 project(asplib)
 
 cmake_minimum_required(VERSION 2.6)
 enable_language(CXX)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
-
 include(cmake/UseMultiArch.cmake)
 include(cmake/asplib_helpers.cmake)
+
+if(NOT ${ASPLIB_BUILD_COUNT})
+  set(ASPLIB_BUILD_COUNT 0)
+endif()
 
 set(asplib_NAME asplib)
 set(asplib_DESCRIPTION "asplib (Achim's Signal Processing LIBrary), is a small and lightweight C++ library for digital signal processing.")
 set(asplib_VERSION_MAJOR 0)
 set(asplib_VERSION_MINOR 2)
-set(asplib_VERSION_PATCH 0)
+set(asplib_VERSION_PATCH ${ASPLIB_BUILD_COUNT})
 
 if(NOT WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
@@ -32,40 +53,16 @@ if (NOT WIN32)
   add_definitions(-fPIC -g -O2)
 endif()
 
-set(asplib_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}
-                        ${PROJECT_SOURCE_DIR}/Biquads)
+add_subdirectory(asplib_modules)
 
-include_directories(${asplib_INCLUDE_DIRS})
-
-set(SOURCES Biquads/Biquad_Native/asplib_Biquad_Native.cpp
-            Biquads/apslib_BiquadFactory.cpp)
-          
-set(HEADERS interfaces/asplib_IBaseBiquad.h
-            Biquads/apslib_BiquadFactory.h
-            Biquads/Biquad_Native/asplib_Biquad_Native.h
-            asplib_utils/constants_typedefs/asplib_constants.h
-            asplib_utils/constants_typedefs/asplib_typedefs.h
-            asplib_utils/os/asplib_base_os.h
-            asplib_utils/os/windows/windows_definitions.h
-            asplib_utils/os/linux/linux_definitions.h)
-            
-asplib_source_group("${SOURCES}")
-asplib_source_group("${HEADERS}")
-
-add_library(asplib ${SOURCES} ${HEADERS})
-target_link_libraries(asplib ${asplib_LIBRARIES})
-set_target_properties(asplib PROPERTIES VERSION ${asplib_VERSION_MAJOR}.${asplib_VERSION_MINOR}.${asplib_VERSION_PATCH}
-                                                SOVERSION ${asplib_VERSION_MAJOR}.0)
-
-
-install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+#install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 asplib_install_with_folder("${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
         
 IF(NOT WIN32)
   # Pkgconfig
   include(cmake/PkgConfigHandler.cmake)
-  configure_pc_file(asplib asplib.pc.in
+  configure_pc_file(asplib cmake/asplib.pc.in
                            asplib.pc
                            ${CMAKE_INSTALL_PREFIX}
                            ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
@@ -76,7 +73,7 @@ IF(NOT WIN32)
 ENDIF(NOT WIN32)
 
 # config mode
-configure_file(asplib-config.cmake.in
+configure_file(cmake/asplib-config.cmake.in
                asplib-config.cmake @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
