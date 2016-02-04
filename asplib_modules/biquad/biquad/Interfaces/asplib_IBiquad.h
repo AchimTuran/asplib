@@ -26,9 +26,10 @@
 // this module implements basic biquad filters 
 // for more details see: http://en.wikipedia.org/wiki/Digital_biquad_filter
 
-#include "asplib_utils/constants_typedefs/asplib_constants.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
-#include "asplib_utils/os/asplib_base_os.h"
+#include "Core/os/asplib_os.h"
+#include "core/Constants_Typedefs/asplib_Constants.h"
+#include "core/Constants_Typedefs/asplib_Typedefs.h"
+
 
 #if defined(TARGET_LINUX)
     #include <stddef.h>
@@ -37,11 +38,11 @@
 namespace asplib
 {
 template<typename T>
-class IBaseBiquad
+class IBiquad
 {
 public:
     // use this constructor to create a biquad filter with coefficients
-    IBaseBiquad(uint32_t Amount, float SampleFrequency)
+    IBiquad(uint32_t Amount, float SampleFrequency)
     {
         m_parameters = NULL;
             
@@ -58,7 +59,7 @@ public:
         m_sampleFrequency = SampleFrequency;
     }
 
-    virtual ~IBaseBiquad() {}
+    virtual ~IBiquad() {}
 
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0) = 0;
     virtual ASPLIB_ERR updateCoefficients(ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float D0, uint32_t BiquadIdx) = 0;
