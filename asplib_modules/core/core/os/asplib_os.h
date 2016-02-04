@@ -29,43 +29,43 @@
   #if !defined(TARGET_WINDOWS)
     #define TARGET_WINDOWS
   #endif
-  #include "windows/windows_definitions.h"
+  #include "core/os/windows/windows_definitions.h"
 // --- TARGET_LINUX -----------------------------------------------------------
 #elif defined(TARGET_LINUX) || defined(__gnu_linux__) || defined(__linux__)
   #if !defined(TARGET_LINUX)
     #define TARGET_LINUX
   #endif
-  #include "linux/linux_definitions.h"
+  #include "core/os/linux/linux_definitions.h"
 // --- TARGET_ANDROID ---------------------------------------------------------
 #elif defined(TARGET_ANDROID)       // TODO: add platform compiler flags
   #if !defined(TARGET_ANDROID)
     #define TARGET_ANDROID
   #endif
-  #include "android/android_definitions.h"
+  #include "core/os/android/android_definitions.h"
 // --- TARGET_FREEBSD ---------------------------------------------------------
 #elif defined(TARGET_FREEBSD)       // TODO: add platform compiler flags
   #if !defined(TARGET_FREEBSD)
     #define TARGET_FREEBSD
   #endif
-  #include "freebsd/freebsd_definitions.h"
+  #include "core/os/freebsd/freebsd_definitions.h"
 // --- TARGET_DARWIN_OSX ------------------------------------------------------
 #elif defined(TARGET_DARWIN_OSX)    // TODO: add platform compiler flags  
   #if !defined(TARGET_DARWIN_OSX)
     #define TARGET_DARWIN_OSX
   #endif
-  #include "darwin_osx/darwin_osx_definitions.h"
+  #include "core/os/darwin_osx/darwin_osx_definitions.h"
 // --- TARGET_DARWIN_IOS ------------------------------------------------------
 #elif defined(TARGET_DARWIN_IOS)    // TODO: add platform compiler flags
   #if !defined(TARGET_DARWIN_IOS)
     #define TARGET_DARWIN_IOS
   #endif
-  #include "darwin_ios/darwin_ios_definitions.h"
+  #include "core/os/darwin_ios/darwin_ios_definitions.h"
 // --- TARGET_RASPBERRY_PI ----------------------------------------------------
 #elif defined(TARGET_RASPBERRY_PI)  // TODO: add platform compiler flags
   #if !defined(TARGET_RASPBERRY_PI)
     #define TARGET_RASPBERRY_PI
   #endif
-  #include "raspberry_pi/raspberry_pi_definitions.h"
+  #include "core/os/raspberry_pi/raspberry_pi_definitions.h"
 #else
   #error "Unsupported operating system!"
 #endif
