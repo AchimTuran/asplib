@@ -22,9 +22,15 @@
 
 
 
-#include <asplib_utils/exceptions/asplib_StringException.h>
+#include "Core/os/asplib_os.h"
+
+#include "core/Exceptions/asplib_StringException.h"
+
 #include <string>
+
 using namespace std;
+
+
 namespace asplib
 {
 CStringException::CStringException(string ExceptionMessage, string Filename, string FunctionName, int LineNumber, string ModuleName) :

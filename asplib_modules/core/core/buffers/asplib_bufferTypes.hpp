@@ -23,14 +23,13 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
+#include "Core/os/asplib_os.h"
+#include "core/Constants_Typedefs/asplib_Typedefs.h"
 
-#include "asplib_utils/constants_typedefs/asplib_dataFmtDefines.hpp"
-//#include "asplib_utils/buffers/TBuffer.h"
-#include "asplib_utils/buffers/TFrameBuffer.h"
-#include "asplib_utils/buffers/TFrameRingBuffer.h"
-#include "asplib_utils/buffers/TRingBuffer.h"
+#include "core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
+#include "core/Buffers/asplib_TFrameBuffer.h"
+#include "core/Buffers/asplib_TFrameRingBuffer.h"
+#include "core/Buffers/asplib_TRingBuffer.h"
 
 
 namespace asplib

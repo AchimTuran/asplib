@@ -25,7 +25,7 @@
 #include <iostream>
 using namespace std;
 
-#include "asplib_Biquad_Native.h"
+#include "asplib_BiquadNative.h"
 
 #define MAX_PARAM_PER_BIQUAD  12
 
@@ -33,7 +33,7 @@ namespace asplib
 {
 
 CBiquad_Native::CBiquad_Native(uint32_t Amount, float SampleFrequency) : 
-    IBaseBiquad<float>(Amount, SampleFrequency)
+    IBiquad<float>(Amount, SampleFrequency)
 {
     if (!Amount)
     {

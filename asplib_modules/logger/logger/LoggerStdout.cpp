@@ -23,7 +23,7 @@
 
 
 #include "LoggerStdout.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/Exceptions/asplib_StringException.h"
 
 #include <string>
 #include <stdio.h>

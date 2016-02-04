@@ -23,8 +23,9 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/os/asplib_os.h"
+
+#include "core/Exceptions/asplib_StringException.h"
 
 #if defined(TARGET_WINDOWS) || defined(TARGET_LINUX)
   #include <xmmintrin.h>
