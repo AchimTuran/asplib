@@ -22,3 +22,5 @@ add_library(asplib_SpectrumVisProcessor STATIC ${ASPLIB_SPECTRUM_VIS_PROCESSOR_S
 set_property(TARGET asplib_SpectrumVisProcessor PROPERTY FOLDER "modules")
 
 target_link_libraries(asplib_SpectrumVisProcessor asplib_Core asplib_FFT)
+
+add_subdirectory(tests)

@@ -1,3 +1,5 @@
+find_package(portaudio REQUIRED)
+
 file (GLOB_RECURSE ASPLIB_AUDIO_INTERFACES_SOURCES
       "AudioInterfaces/*.c"
       "AudioInterfaces/*.cpp")
