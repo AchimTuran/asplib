@@ -1,0 +1,5 @@
+0.0.2
+- Support for Android, OS X, iOS, freebsd and Raspberry Pi
+
+0.0.1
+- Initial release with basic CMake support, biquad filters, MatlabDll, audioInterface for PortAudio, buffer classes, exception handling, computeDeviceInfo, os headers for windows and linux and a small logger module
