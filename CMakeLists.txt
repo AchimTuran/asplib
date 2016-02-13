@@ -1,3 +1,7 @@
+# TODO solve 'Enable C++ exceptions' to 'NO' and I got warning: warning C4530: C++ exception handler used, 
+#             but unwind semantics are not enabled. Specify /EHsc'
+# Solution: http://stackoverflow.com/questions/552695/how-can-i-switch-off-exception-handling-in-msvc
+
 # make sure CMAKE_PREFIX_PATH is set
 if(NOT CMAKE_PREFIX_PATH)
   set(CMAKE_PREFIX_PATH "E:/Kodi/adsp_addons/asplib_depends")
