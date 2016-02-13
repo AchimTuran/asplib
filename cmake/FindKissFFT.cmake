@@ -11,7 +11,7 @@ if(PKG_CONFIG_FOUND)
 endif()
 
 if(NOT KISS_FFT_FOUND)
-  message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+  #message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
   find_path(KISS_FFT_INCLUDE_DIRS   "kissfft.hh"
                                     "kiss_fft.h"
                                     "_kiss_fft_guts.h"
@@ -29,5 +29,5 @@ find_package_handle_standard_args(KissFFT DEFAULT_MSG KISS_FFT_INCLUDE_DIRS KISS
 
 mark_as_advanced(KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES)
 
-message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
-message(STATUS "KISS_FFT_LIBRARIES=${KISS_FFT_LIBRARIES}")
+#message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
+#message(STATUS "KISS_FFT_LIBRARIES=${KISS_FFT_LIBRARIES}")

@@ -2,8 +2,6 @@ asplib_require_module(Core)
 
 find_package(KissFFT REQUIRED)
 
-message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/FFT
                     ${asplib_Core_INCLUDE_DIRS}

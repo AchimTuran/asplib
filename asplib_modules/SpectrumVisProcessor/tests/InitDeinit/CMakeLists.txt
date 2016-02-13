@@ -32,8 +32,8 @@ add_executable(asplib_TestSpectrumVisProcessor_InitDeinit ${ASPLIB_TEST_INIT_DEI
                                                           ${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS})
 
 #KissFFT_LIBRARY_DIRS
-message(STATUS "KissFFT_LIBRARIES=${KissFFT_LIBRARIES}")
-message(STATUS "KissFFT_LIBRARY_DIRS=${KissFFT_LIBRARY_DIRS}")
+#message(STATUS "KissFFT_LIBRARIES=${KissFFT_LIBRARIES}")
+#message(STATUS "KissFFT_LIBRARY_DIRS=${KissFFT_LIBRARY_DIRS}")
 target_link_libraries(asplib_TestSpectrumVisProcessor_InitDeinit asplib_Core asplib_FFT asplib_SpectrumVisProcessor ${KissFFT_LIBRARIES})
 
 set_property(TARGET asplib_TestSpectrumVisProcessor_InitDeinit PROPERTY FOLDER "tests")
