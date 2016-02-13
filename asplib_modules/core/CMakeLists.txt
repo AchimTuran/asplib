@@ -21,3 +21,5 @@ set_property(TARGET asplib_Core PROPERTY FOLDER "modules")
 # export include directories
 set(asplib_Core_INCLUDE_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}
                               CACHE INTERNAL "asplib_Core: Include Directories" FORCE)
+                              
+set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Core" CACHE INTERNAL "")

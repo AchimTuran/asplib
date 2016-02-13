@@ -16,6 +16,10 @@ foreach(path ${CMAKE_PREFIX_PATH})
   message(STATUS "path=${path}")
 endforeach()
 
+if(NOT ASPLIB_MODULES_TO_BUILD)
+  set(ASPLIB_MODULES_TO_BUILD "all")
+endif()
+
 
 project(asplib)
 

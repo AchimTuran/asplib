@@ -1,3 +1,5 @@
+asplib_require_module(Core)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 file (GLOB_RECURSE ASPLIB_COMPUTE_DEVICE_INFO_SOURCES
@@ -19,3 +21,5 @@ add_library(asplib_ComputeDeviceInfo STATIC ${ASPLIB_COMPUTE_DEVICE_INFO_SOURCES
 set_property(TARGET asplib_ComputeDeviceInfo PROPERTY FOLDER "modules")
 
 target_link_libraries(asplib_ComputeDeviceInfo asplib_Core)
+
+set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};ComputeDeviceInfo" CACHE INTERNAL "")

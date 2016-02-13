@@ -25,6 +25,16 @@ function(asplib_install_with_folder FILE_LIST FOLDER)
   endforeach()
 endfunction()
 
+
+macro(asplib_require_module Module)
+  list(FIND ASPLIB_SUPPORTED_COMPONENTS "${Module}" _modFound)
+
+  if(_modFound EQUAL -1)
+    set(asplib_required_modules "${asplib_required_modules};${Module}" CACHE INTERNAL "Temporary variable to store needed module dependencies")
+  endif()
+endmacro()
+
+
 macro(asplib_include_modules ModulesPath ModuleRequests)
   if(DEFINED ASPLIB_INITIAL_MODULES)
     message(FATAL_ERROR "asplib has already include modules! Calling asplib_include_modules twice is not allowed!")
@@ -35,12 +45,11 @@ macro(asplib_include_modules ModulesPath ModuleRequests)
   file(GLOB _asplib_modules RELATIVE "${_modules_path}" "${_modules_path}/*")
 
   if(NOT _asplib_modules)
-    message(FATAL_ERROR "The path: ${_modules_path} does not contain asplib modules!")
+    message(FATAL_ERROR "The path: ${_modules_path} does not contain any asplib modules!")
   endif()
   
   list(SORT _asplib_modules)  
   foreach(_requestedModule ${ModuleRequests})
-    set(ModuleFound FALSE)
     foreach(_asplibModule ${_asplib_modules})
       get_filename_component(_modpath "${_modules_path}/${_asplibModule}" ABSOLUTE)
       #message(STATUS "_requestedModule=${_requestedModule}  _asplibModule=${_asplibModule}  _modpath=${_modpath}")
@@ -49,14 +58,10 @@ macro(asplib_include_modules ModulesPath ModuleRequests)
         if(EXISTS "${_modpath}/CMakeLists.txt")
           message(STATUS "Adding ${_requestedModule} module")
           add_subdirectory("${_modpath}")
-          set(ModuleFound TRUE)
+        else()
+          message(FATAL_ERROR "The asplib module: ${_requestedModule} was not found!")
         endif()
       endif()
-    endforeach()
-    
-    if(NOT ModuleFound)
-      message(FATAL_ERROR "The asplib module: ${_requestedModule} was not found!")
-    endif()
-    
+    endforeach()    
   endforeach()
 endmacro()

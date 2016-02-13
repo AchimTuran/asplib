@@ -1,3 +1,5 @@
+asplib_require_module(Core)
+
 find_package(KissFFT REQUIRED)
 
 message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
@@ -29,3 +31,5 @@ target_link_libraries(asplib_FFT asplib_Core)
 
 set(asplib_FFT_INCLUDE_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}
                               CACHE INTERNAL "asplib_Core: Include Directories" FORCE)
+
+set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};FFT" CACHE INTERNAL "")

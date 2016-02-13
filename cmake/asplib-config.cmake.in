@@ -15,6 +15,12 @@ set (asplib_LIBRARY_DIRS "@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 set (asplib_LINKER_FLAGS "@asplib_LINKER_FLAGS@")
 set (asplib_CONFIG_VARS "@asplib_CONFIG_VARS@")
 
+set(_asplib_supported_components "@ASPLIB_SUPPORTED_COMPONENTS@")
+
+foreach(_comp ${_asplib_supported_components})
+  message(STATUS "_comp=${comp}")
+endforeach()
+
 # libraries come from the build tree where this file was generated
 if(WIN32)
   set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/asplib.lib")
@@ -26,5 +32,5 @@ mark_as_advanced (asplib_LIBRARY)
 
 # add the library as a target, so that other things in the project including
 # this file may depend on it and get rebuild if this library changes.
-add_library (asplib UNKNOWN IMPORTED)
-set_property (TARGET asplib PROPERTY IMPORTED_LOCATION "${asplib_LIBRARY}")
+add_library(asplib UNKNOWN IMPORTED)
+set_property(TARGET asplib PROPERTY IMPORTED_LOCATION "${asplib_LIBRARY}")

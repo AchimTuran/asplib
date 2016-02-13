@@ -1,3 +1,5 @@
+asplib_require_module(Core)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${asplib_Core_INCLUDE_DIRS})
 
@@ -21,3 +23,5 @@ set_property(TARGET asplib_Biquad PROPERTY FOLDER "modules")
 
 # add asplib_Core as dependency
 target_link_libraries(asplib_Biquad asplib_Core)
+
+set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Biquad" CACHE INTERNAL "")

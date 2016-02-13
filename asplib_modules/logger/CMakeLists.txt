@@ -1,3 +1,5 @@
+asplib_require_module(Core)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${asplib_Core_INCLUDE_DIRS})
 
@@ -16,3 +18,5 @@ add_library(asplib_Logger STATIC ${ASPLIB_LOGGER_SOURCES} ${ASPLIB_LOGGER_HEADER
 set_property(TARGET asplib_Logger PROPERTY FOLDER "modules")
 
 target_link_libraries(asplib_Logger asplib_Core)
+
+set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Logger" CACHE INTERNAL "")
