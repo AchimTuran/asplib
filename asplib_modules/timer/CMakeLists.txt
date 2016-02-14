@@ -24,3 +24,7 @@ set_property(TARGET asplib_Timer PROPERTY FOLDER "modules")
 target_link_libraries(asplib_Timer asplib_Core)
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Timer" CACHE INTERNAL "")
+
+# install all specific module files
+asplib_install_module("Timer" "${ASPLIB_TIMER_HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS asplib_Timer DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

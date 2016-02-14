@@ -20,3 +20,7 @@ add_library(asplib_AudioInterfaces STATIC ${ASPLIB_AUDIO_INTERFACES_SOURCES} ${A
 set_property(TARGET asplib_AudioInterfaces PROPERTY FOLDER "modules")
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};AudioInterfaces" CACHE INTERNAL "abc")
+
+# install all specific module files
+asplib_install_module("AudioInterfaces" "${ASPLIB_AUDIO_INTERFACES_HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS asplib_AudioInterfaces DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

@@ -18,7 +18,7 @@ if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" S
   file(GLOB _asplib_modules RELATIVE "${_modules_path}" "${_modules_path}/*")
   foreach(_mod ${_asplib_modules})
     if(EXISTS "${_modules_path}/${_mod}/CMakeLists.txt")
-      # only add modules folders, which include a CMakeLists.txt and add them to ASPLIB_MODULES
+      # only add modules folders to ASPLIB_MODULES, which include a CMakeLists.txt
       get_filename_component(_module_name ${_mod} NAME)
 
       list(APPEND ASPLIB_MODULES ${_module_name})

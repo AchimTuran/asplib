@@ -23,3 +23,7 @@ set(asplib_Core_INCLUDE_DIRS  ${CMAKE_CURRENT_SOURCE_DIR}
                               CACHE INTERNAL "asplib_Core: Include Directories" FORCE)
                               
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Core" CACHE INTERNAL "")
+
+# install all specific module files
+asplib_install_module("Core" "${ASPLIB_CORE_HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS asplib_Core DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

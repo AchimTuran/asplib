@@ -26,3 +26,7 @@ target_link_libraries(asplib_SpectrumVisProcessor asplib_Core asplib_FFT)
 add_subdirectory(tests)
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};SpectrumVisProcessor" CACHE INTERNAL "")
+
+# install all specific module files
+asplib_install_module("SpectrumVisProcessor" "${ASPLIB_SPECTRUM_VIS_PROCESSOR_HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS asplib_SpectrumVisProcessor DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

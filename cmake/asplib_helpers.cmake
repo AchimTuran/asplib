@@ -16,10 +16,22 @@ function(asplib_source_group FILE_LIST)
   endforeach()
 endfunction(asplib_source_group)
 
+
 function(asplib_install_with_folder FILE_LIST FOLDER)
   foreach(_FILE ${FILE_LIST})
     get_filename_component(HEADERDIR ${_FILE} DIRECTORY)
     install(FILES ${PROJECT_SOURCE_DIR}/${_FILE} DESTINATION ${FOLDER}/${HEADERDIR})
+  endforeach()
+endfunction()
+
+
+function(asplib_install_module MODULE_NAME FILE_LIST FOLDER)
+  foreach(_FILE ${FILE_LIST})
+    # remove absolute path to this module
+    string(REPLACE "${PROJECT_SOURCE_DIR}/asplib_modules/${MODULE_NAME}/" "" _FILE "${_FILE}")
+    get_filename_component(HEADERDIR ${_FILE} DIRECTORY)
+        
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_FILE} DESTINATION ${FOLDER}/${HEADERDIR})
   endforeach()
 endfunction()
 

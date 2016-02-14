@@ -25,3 +25,7 @@ set_property(TARGET asplib_Biquad PROPERTY FOLDER "modules")
 target_link_libraries(asplib_Biquad asplib_Core)
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Biquad" CACHE INTERNAL "")
+
+# install all specific module files
+asplib_install_module("Biquad" "${ASPLIB_BIQUAD_HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS asplib_Biquad DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
