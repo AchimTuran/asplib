@@ -37,6 +37,16 @@
 #include <iostream>
 using namespace std;
 
+#if defined(TARGET_ANDROID)
+  float log2f(float f);
+  const double inv_LOG2 = 1.0/log(2.0);
+
+  float log2f(float f)
+  {
+    return (float)(log((double)f) * inv_LOG2);
+  }
+#endif
+
 namespace asplib
 {
 // helper function prototypes
