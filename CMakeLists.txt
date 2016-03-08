@@ -33,7 +33,8 @@ if (NOT WIN32)
 endif()
 
 set(asplib_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}
-                        ${PROJECT_SOURCE_DIR}/Biquads)
+                        ${PROJECT_SOURCE_DIR}/Biquads
+                        ${CMAKE_INSTALL_PREFIX}/include/asplib)
 
 include_directories(${asplib_INCLUDE_DIRS})
 
