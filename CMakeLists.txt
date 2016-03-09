@@ -47,8 +47,13 @@ set(HEADERS interfaces/asplib_IBaseBiquad.h
             asplib_utils/constants_typedefs/asplib_constants.h
             asplib_utils/constants_typedefs/asplib_typedefs.h
             asplib_utils/os/asplib_base_os.h
-            asplib_utils/os/windows/windows_definitions.h
-            asplib_utils/os/linux/linux_definitions.h)
+            asplib_utils/os/android/android_definitions.h
+            asplib_utils/os/darwin_ios/darwin_ios_definitions.h
+            asplib_utils/os/darwin_osx/darwin_osx_definitions.h
+            asplib_utils/os/freebsd/freebsd_definitions.h
+            asplib_utils/os/linux/linux_definitions.h
+            asplib_utils/os/raspberry_pi/raspberry_pi_definitions.h
+            asplib_utils/os/windows/windows_definitions.h)
             
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
