@@ -5,7 +5,7 @@ find_package(KissFFT REQUIRED)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/FFT
                     ${asplib_Core_INCLUDE_DIRS}
-                    ${KissFFT_INCLUDE_DIRS})
+                    ${KISS_FFT_INCLUDE_DIRS})
                     
 file (GLOB_RECURSE ASPLIB_FFT_SOURCES
       "FFT/*.c"

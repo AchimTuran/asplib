@@ -14,7 +14,9 @@ else()
   list(APPEND CMAKE_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}/depends/lib")
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "CMAKE_MODULE_PATH=${CMAKE_MODULE_PATH}")
 
 foreach(path ${CMAKE_PREFIX_PATH})
   message(STATUS "path=${path}")
@@ -23,6 +25,8 @@ endforeach()
 if(NOT ASPLIB_MODULES_TO_BUILD)
   set(ASPLIB_MODULES_TO_BUILD "all")
 endif()
+
+include(ExternalProject)
 
 
 project(asplib)

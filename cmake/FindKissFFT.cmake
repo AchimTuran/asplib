@@ -22,12 +22,42 @@ if(NOT KISS_FFT_FOUND)
                PATH_SUFFIXES "KissFFT*" )
 endif()
 
-# handle the QUIETLY and REQUIRED arguments and set SAMPLERATE_FOUND to TRUE if
+if(NOT KISS_FFT_FOUND)
+  include(ExternalProject)
+
+  message(STATUS "KissFFT was not found. Try to download KissFFT from https://github.com/AchimTuran/KissFFT")
+  ExternalProject_Add(KissFFT
+                      LOG_DOWNLOAD    1
+                      LOG_UPDATE      1
+                      LOG_CONFIGURE   1
+                      LOG_BUILD       1
+                      LOG_INSTALL     1
+                      
+                      CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/depends/output
+                                 -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+                      
+                      #PREFIX          ${CMAKE_BINARY_DIR}/depends/build/KissFFT
+                      TMP_DIR         ${CMAKE_BINARY_DIR}/depends/build/KissFFT/KissFFT-tmp
+                      STAMP_DIR       ${CMAKE_BINARY_DIR}/depends/build/KissFFT/KissFFT-stamp
+                      
+                      BINARY_DIR      ${CMAKE_BINARY_DIR}/depends/build/KissFFT/KissFFT-project
+                      
+                      #INSTALL_DIR     ${CMAKE_BINARY_DIR}/depends/include
+                      SOURCE_DIR      ${CMAKE_BINARY_DIR}/depends/src/KissFFT
+        
+                      GIT_REPOSITORY  https://github.com/AchimTuran/KissFFT
+                      GIT_TAG         master)
+            
+  set(KISS_FFT_FOUND TRUE)
+  set(KISS_FFT_LIBRARIES ${CMAKE_BINARY_DIR}/depends/output/lib/KissFFT.lib)
+  set(KISS_FFT_INCLUDE_DIRS ${CMAKE_BINARY_DIR}/depends/output/include)
+endif()
+
+# handle the QUIETLY and REQUIRED arguments and set KISS_FFT_FOUND to TRUE if
 # all listed variables are TRUE
 include("FindPackageHandleStandardArgs")
-find_package_handle_standard_args(KissFFT DEFAULT_MSG KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES)
+find_package_handle_standard_args(KISS_FFT DEFAULT_MSG KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES)
+mark_as_advanced(KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES KISS_FFT_DEFINITIONS KISS_FFT_FOUND)
 
-mark_as_advanced(KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES)
-
-#message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
-#message(STATUS "KISS_FFT_LIBRARIES=${KISS_FFT_LIBRARIES}")
+message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
+message(STATUS "KISS_FFT_LIBRARIES=${KISS_FFT_LIBRARIES}")

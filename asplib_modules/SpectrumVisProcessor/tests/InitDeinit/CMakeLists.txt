@@ -4,8 +4,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${asplib_Core_INCLUDE_DIRS}
                     ${asplib_FFT_INCLUDE_DIRS})
                     
-find_package(KissFFT REQUIRED)
-
 file (GLOB_RECURSE ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES
       "*.c"
       "*.cpp")
