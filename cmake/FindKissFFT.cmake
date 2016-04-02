@@ -1,31 +1,30 @@
 # - Try to find KissFFT
-# Once done this will define
+# Once done this will define the following variables
 #
 # KISS_FFT_FOUND          - system has KissFFT
 # KISS_FFT_INCLUDE_DIRS   - the KissFFT include directory
 # KISS_FFT_LIBRARIES      - The KissFFT libraries
+#
+# and the following imported targets
+#
+#   KissFFT::KissFFT   - The KissFFT library
 
 if(PKG_CONFIG_FOUND)
-  pkg_check_modules(KISS_FFT KissFFT)
-  list(APPEND KISS_FFT_INCLUDE_DIRS ${KISS_FFT_INCLUDEDIR})
+  pkg_check_modules(PC_KissFFT KissFFT)
 endif()
 
-if(NOT KISS_FFT_FOUND)
-  #message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
-  find_path(KISS_FFT_INCLUDE_DIRS   "kissfft.hh"
-                                    "kiss_fft.h"
-                                    "_kiss_fft_guts.h"
-                                    PATH_SUFFIXES "KissFFT*")
+#message(STATUS "CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+find_path(KISS_FFT_INCLUDE_DIR NAMES kissfft.hh kiss_fft.h _kiss_fft_guts.h
+                               PATH_SUFFIXES "KissFFT*"
+                               PATHS ${PC_KissFFT_INCLUDEDIR})
 
-  find_library(KISS_FFT_LIBRARIES
-               NAMES "KissFFT"
-               PATH_SUFFIXES "KissFFT*" )
-endif()
+find_library(KISS_FFT_LIBRARY NAMES KissFFT
+                              PATH_SUFFIXES "KissFFT*"
+                              PATHS ${PC_KissFFT_LIBDIR})
 
-if(NOT KISS_FFT_FOUND)
+if(NOT KISS_FFT_INCLUDE_DIR AND NOT KISS_FFT_LIBRARIES)
+  message(STATUS "KissFFT was not found. Downloading KissFFT from https://github.com/AchimTuran/KissFFT")
   include(ExternalProject)
-
-  message(STATUS "KissFFT was not found. Try to download KissFFT from https://github.com/AchimTuran/KissFFT")
   ExternalProject_Add(KissFFT
                       LOG_DOWNLOAD    1
                       LOG_UPDATE      1
@@ -47,17 +46,29 @@ if(NOT KISS_FFT_FOUND)
         
                       GIT_REPOSITORY  https://github.com/AchimTuran/KissFFT
                       GIT_TAG         master)
-            
-  set(KISS_FFT_FOUND TRUE)
-  set(KISS_FFT_LIBRARIES ${CMAKE_BINARY_DIR}/depends/output/lib/KissFFT.lib)
-  set(KISS_FFT_INCLUDE_DIRS ${CMAKE_BINARY_DIR}/depends/output/include)
+
+  set(KISS_FFT_INCLUDE_DIR ${CMAKE_BINARY_DIR}/depends/output/include)
+  set(KISS_FFT_LIBRARY ${CMAKE_BINARY_DIR}/depends/output/lib/KissFFT.lib)
+
+  # Workaround for: https://cmake.org/Bug/view.php?id=15052
+  file(MAKE_DIRECTORY ${KISS_FFT_INCLUDE_DIR})
 endif()
 
-# handle the QUIETLY and REQUIRED arguments and set KISS_FFT_FOUND to TRUE if
-# all listed variables are TRUE
-include("FindPackageHandleStandardArgs")
-find_package_handle_standard_args(KISS_FFT DEFAULT_MSG KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES)
-mark_as_advanced(KISS_FFT_INCLUDE_DIRS KISS_FFT_LIBRARIES KISS_FFT_DEFINITIONS KISS_FFT_FOUND)
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(KISS_FFT DEFAULT_MSG KISS_FFT_INCLUDE_DIR KISS_FFT_LIBRARY)
+mark_as_advanced(KISS_FFT_INCLUDE_DIR KISS_FFT_LIBRARY)
 
-message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
-message(STATUS "KISS_FFT_LIBRARIES=${KISS_FFT_LIBRARIES}")
+if(KISS_FFT_FOUND)
+  set(KISS_FFT_INCLUDE_DIRS ${KISS_FFT_INCLUDE_DIR})
+  set(KISS_FFT_LIBRARIES ${KISS_FFT_LIBRARY})
+
+  if(NOT TARGET KissFFT::KissFFT)
+    add_library(KissFFT::KissFFT UNKNOWN IMPORTED)
+    set_target_properties(KissFFT::KissFFT PROPERTIES
+                                           IMPORTED_LOCATION "${KISS_FFT_LIBRARY}"
+                                           INTERFACE_INCLUDE_DIRECTORIES "${KISS_FFT_INCLUDE_DIR}")
+    if(TARGET KissFFT)
+      add_dependencies(KissFFT::KissFFT KissFFT)
+    endif()
+  endif()
+endif()

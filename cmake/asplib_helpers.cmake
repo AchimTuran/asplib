@@ -36,13 +36,13 @@ function(asplib_install_module MODULE_NAME FILE_LIST FOLDER)
 endfunction()
 
 
-macro(asplib_require_module Module)
-  list(FIND ASPLIB_SUPPORTED_COMPONENTS "${Module}" _modFound)
+#macro(asplib_require_module Module)
+#  list(FIND ASPLIB_SUPPORTED_COMPONENTS "${Module}" _modFound)
 
-  if(_modFound EQUAL -1)
-    set(asplib_required_modules "${asplib_required_modules};${Module}" CACHE INTERNAL "Temporary variable to store needed module dependencies")
-  endif()
-endmacro()
+#  if(_modFound EQUAL -1)
+#    set(asplib_required_modules "${asplib_required_modules};${Module}" CACHE INTERNAL "Temporary variable to store needed module dependencies")
+#  endif()
+#endmacro()
 
 
 macro(asplib_include_modules ModulesPath ModuleRequests) 

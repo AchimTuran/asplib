@@ -1,8 +1,3 @@
-asplib_require_module(Core)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}
-                    ${asplib_Core_INCLUDE_DIRS})
-
 file (GLOB_RECURSE ASPLIB_TIMER_SOURCES
       "Timer/*.c"
       "Timer/*.cpp")
@@ -17,11 +12,13 @@ file (GLOB_RECURSE ASPLIB_TIMER_HEADERS
 
 asplib_source_group("${ASPLIB_TIMER_SOURCES}")
 asplib_source_group("${ASPLIB_TIMER_HEADERS}")
+
 add_library(asplib_Timer STATIC ${ASPLIB_TIMER_SOURCES} ${ASPLIB_TIMER_HEADERS})
+add_library(asplib::Timer ALIAS asplib_Timer)
+target_include_directories(asplib_Timer INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(asplib_Timer PRIVATE asplib::Core)
 
 set_property(TARGET asplib_Timer PROPERTY FOLDER "modules")
-
-target_link_libraries(asplib_Timer asplib_Core)
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Timer" CACHE INTERNAL "")
 

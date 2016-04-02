@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 3.0)
+project(asplib VERSION 0.2)
+
 # TODO solve 'Enable C++ exceptions' to 'NO' and I got warning: warning C4530: C++ exception handler used, 
 #             but unwind semantics are not enabled. Specify /EHsc'
 # Solution: http://stackoverflow.com/questions/552695/how-can-i-switch-off-exception-handling-in-msvc
@@ -23,46 +26,30 @@ foreach(path ${CMAKE_PREFIX_PATH})
 endforeach()
 
 if(NOT ASPLIB_MODULES_TO_BUILD)
-  set(ASPLIB_MODULES_TO_BUILD "all")
+  set(ASPLIB_MODULES_TO_BUILD all)
 endif()
-
-include(ExternalProject)
-
-
-project(asplib)
-
-cmake_minimum_required(VERSION 2.6)
-enable_language(CXX)
 
 include(cmake/UseMultiArch.cmake)
 include(cmake/asplib_helpers.cmake)
 
+# project defines vars such as PROJECT_NAME, PROJECT_VERSION, ...
 if(NOT ${ASPLIB_BUILD_COUNT})
   set(ASPLIB_BUILD_COUNT 0)
 endif()
-
-set(asplib_NAME asplib)
-set(asplib_DESCRIPTION "asplib (Achim's Signal Processing LIBrary), is a small and lightweight C++ library for digital signal processing.")
-set(asplib_VERSION_MAJOR 0)
-set(asplib_VERSION_MINOR 2)
 set(asplib_VERSION_PATCH ${ASPLIB_BUILD_COUNT})
 
-if(NOT WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
-endif()
+set(asplib_DESCRIPTION "asplib (Achim's Signal Processing LIBrary), is a small and lightweight C++ library for digital signal processing.")
 
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  set(CMAKE_CXX_FLAGS "-DTARGET_LINUX")
-endif()
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-  set(CMAKE_CXX_FLAGS "-DTARGET_WINDOWS")
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
+  add_definitions(-DTARGET_LINUX)
+elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
+  add_definitions(-DTARGET_WINDOWS)
+
   # Enable the orginization of projects with folders
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-endif()
-
-if (NOT WIN32)
-  add_definitions(-fPIC -g -O2)
 endif()
 
 add_subdirectory(asplib_modules)
@@ -71,7 +58,7 @@ add_subdirectory(asplib_modules)
 
 asplib_install_with_folder("${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
         
-IF(NOT WIN32)
+if(NOT WIN32)
   # Pkgconfig
   include(cmake/PkgConfigHandler.cmake)
   configure_pc_file(asplib cmake/asplib.pc.in
@@ -82,7 +69,7 @@ IF(NOT WIN32)
 
   install(FILES ${CMAKE_BINARY_DIR}/asplib.pc
           DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/pkgconfig)
-ENDIF(NOT WIN32)
+endif()
 
 # config mode
 configure_file(cmake/asplib-config.cmake.in

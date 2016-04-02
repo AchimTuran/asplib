@@ -1,7 +1,3 @@
-asplib_require_module(Core)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
 file (GLOB_RECURSE ASPLIB_COMPUTE_DEVICE_INFO_SOURCES
       "ComputeDeviceInfo/*.c"
       "ComputeDeviceInfo/*.cpp")
@@ -16,11 +12,13 @@ file (GLOB_RECURSE ASPLIB_COMPUTE_DEVICE_INFO_HEADERS
 
 asplib_source_group("${ASPLIB_COMPUTE_DEVICE_INFO_SOURCES}")
 asplib_source_group("${ASPLIB_COMPUTE_DEVICE_INFO_HEADERS}")
+
 add_library(asplib_ComputeDeviceInfo STATIC ${ASPLIB_COMPUTE_DEVICE_INFO_SOURCES} ${ASPLIB_COMPUTE_DEVICE_INFO_HEADERS})
+add_library(asplib::ComputeDeviceInfo ALIAS asplib_ComputeDeviceInfo)
+target_include_directories(asplib_ComputeDeviceInfo INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(asplib_ComputeDeviceInfo PRIVATE asplib::Core)
 
 set_property(TARGET asplib_ComputeDeviceInfo PROPERTY FOLDER "modules")
-
-target_link_libraries(asplib_ComputeDeviceInfo asplib_Core)
 
 set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};ComputeDeviceInfo" CACHE INTERNAL "")
 

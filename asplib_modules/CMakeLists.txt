@@ -6,6 +6,8 @@ message(STATUS "ASPLIB_MODULES_TO_BUILD=${ASPLIB_MODULES_TO_BUILD}")
 
 message(STATUS "---------Processing asplib modules----------")
 
+# FIXME: I'd fill the supported component list already here and not in each component subdir
+
 set(ASPLIB_SUPPORTED_COMPONENTS "" CACHE INTERNAL "supported asplib components")
 set(asplib_required_modules "" CACHE INTERNAL "Temporary variable to store needed module dependencies")
 

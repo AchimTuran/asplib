@@ -1,7 +1,7 @@
-asplib_require_module(Core)
+#asplib_require_module(Core)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}
-                    ${asplib_Core_INCLUDE_DIRS})
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}
+#                    ${asplib_Core_INCLUDE_DIRS})
 
 #find_package(portaudio REQUIRED)
 
