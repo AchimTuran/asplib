@@ -53,10 +53,6 @@ elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
 endif()
 
 add_subdirectory(asplib_modules)
-
-#install(TARGETS asplib DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-asplib_install_with_folder("${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
         
 if(NOT WIN32)
   # Pkgconfig
