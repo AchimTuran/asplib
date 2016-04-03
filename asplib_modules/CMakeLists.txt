@@ -61,7 +61,7 @@ if(BUILD_AUDIOINTERFACES)
 endif()
 
 if(BUILD_BIQUAD)
-  add_subdirectory(biquad)
+  add_subdirectory(Biquad)
 endif()
 
 if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
@@ -73,11 +73,11 @@ if(BUILD_IIR)
 endif()
 
 if(BUILD_LOGGER)
-  add_subdirectory(logger)
+  add_subdirectory(Logger)
 endif()
 
 if(BUILD_SIGNALS)
-  add_subdirectory(signals)
+  add_subdirectory(Signals)
 endif()
 
 if(BUILD_SPECTRUMVISPROCESSOR)
@@ -85,5 +85,5 @@ if(BUILD_SPECTRUMVISPROCESSOR)
 endif()
 
 if(BUILD_TIMER)
-  add_subdirectory(timer)
+  add_subdirectory(Timer)
 endif()
