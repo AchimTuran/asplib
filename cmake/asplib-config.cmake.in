@@ -9,7 +9,7 @@
 #  asplib_LIBRARY_DIRS - directories in which the libraries are situated
 
 # propagate these properties from one build system to the other
-set (asplib_VERSION "@asplib_VERSION_MAJOR@.@asplib_VERSION_MINOR@")
+set (asplib_VERSION "@asplib_VERSION_MAJOR@.@asplib_VERSION_MINOR@.@asplib_VERSION_PATCH@")
 set (asplib_INCLUDE_DIRS @asplib_INCLUDE_DIRS@ @CMAKE_INSTALL_PREFIX@/include)
 set (asplib_LIBRARY_DIRS "@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 set (asplib_LINKER_FLAGS "@asplib_LINKER_FLAGS@")
