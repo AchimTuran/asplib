@@ -54,7 +54,7 @@ option(BUILD_SIGNALS              "Build signals"              OFF)
 option(BUILD_SPECTRUMVISPROCESSOR "Build SpectrumVisProcessor" OFF)
 option(BUILD_TIMER                "Build timer"                OFF)
 
-add_subdirectory(Core EXCLUDE_FROM_ALL)
+add_subdirectory(Core)
 
 if(BUILD_AUDIOINTERFACES)
   add_subdirectory(audioInterfaces)
