@@ -4,15 +4,8 @@
 
 #message(STATUS "ASPLIB_MODULES_TO_BUILD=${ASPLIB_MODULES_TO_BUILD}")
 
-#message(STATUS "---------Processing asplib modules----------")
-
-## FIXME: I'd fill the supported component list already here and not in each component subdir
-
-#set(ASPLIB_SUPPORTED_COMPONENTS "" CACHE INTERNAL "supported asplib components")
-#set(asplib_required_modules "" CACHE INTERNAL "Temporary variable to store needed module dependencies")
-
 ## build all asplib modules or only user specific with automatic depency handling
-#if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" STREQUAL "")
+#if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" STREQUAL "supported asplib modules")
 #  # for better module handling convert ASPLIB_MODULES_PATH to a absolute path
 #  get_filename_component(_modules_path "${ASPLIB_MODULES_PATH}" ABSOLUTE)
   
@@ -38,12 +31,12 @@
 #asplib_include_modules(${ASPLIB_MODULES_PATH} "${ASPLIB_MODULES}")
 
 ## output the registered asplib modules
-#message(STATUS "")
+#message(STATUS "supported asplib modules")
 #message(STATUS "Available asplib modules:")
 #foreach(_mod ${ASPLIB_SUPPORTED_COMPONENTS})
 #  message(STATUS "  ${_mod}")
 #endforeach()
-#message(STATUS "")
+#message(STATUS "supported asplib modules")
 
 option(BUILD_AUDIOINTERFACES      "Build Audio Interfaces"     OFF)
 option(BUILD_BIQUAD               "Build biquad"               OFF)
@@ -55,35 +48,49 @@ option(BUILD_SPECTRUMVISPROCESSOR "Build SpectrumVisProcessor" OFF)
 option(BUILD_TIMER                "Build timer"                OFF)
 
 add_subdirectory(Core)
+set(ASPLIB_SUPPORTED_COMPONENTS "Core" CACHE INTERNAL "supported asplib modules")
 
 if(BUILD_AUDIOINTERFACES)
   add_subdirectory(audioInterfaces)
+  #set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};AudioInterfaces" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_BIQUAD)
   add_subdirectory(Biquad)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Biquad" CACHE INTERNAL "supported asplib modules")
+endif()
+
+if(BUILD_COMPUTEDEVICEINFO)
+  add_subdirectory(ComputeDeviceInfo)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};ComputeDeviceInfo" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
   add_subdirectory(FFT)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};FFT" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_IIR)
   add_subdirectory(IIR)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};IIR" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_LOGGER)
   add_subdirectory(Logger)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Logger" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_SIGNALS)
   add_subdirectory(Signals)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Signals" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_SPECTRUMVISPROCESSOR)
   add_subdirectory(SpectrumVisProcessor)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};SpectrumVisProcessor" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_TIMER)
   add_subdirectory(Timer)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Timer" CACHE INTERNAL "supported asplib modules")
 endif()

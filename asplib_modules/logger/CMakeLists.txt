@@ -15,8 +15,6 @@ target_link_libraries(asplib_Logger PRIVATE asplib::Core)
 
 set_property(TARGET asplib_Logger PROPERTY FOLDER "modules")
 
-set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Logger" CACHE INTERNAL "")
-
 # install all specific module files
 asplib_install_module("Logger" "${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
 install(TARGETS asplib_Logger DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
