@@ -72,3 +72,8 @@ configure_file(cmake/asplib-config.cmake.in
                asplib-config.cmake @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
+
+configure_file(cmake/asplib-config.cmake.in
+               asplib-config.cmake @ONLY)
+install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
