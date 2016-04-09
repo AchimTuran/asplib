@@ -21,7 +21,7 @@
 
 
 
-#include "interfaces/asplib_ProcessFactory.hpp"
+#include "SpectrumVisProcessor/Interfaces/asplib_ProcessFactory.hpp"
 #include "SpectrumVisProcessor/AxisScaler/asplib_AxisScalerFactory.hpp"
 #include "SpectrumVisProcessor/FFTSmoother/asplib_FFTSmootherFactory.hpp"
 #include "SpectrumVisProcessor/Remapper/asplib_RemapperFactory.hpp"

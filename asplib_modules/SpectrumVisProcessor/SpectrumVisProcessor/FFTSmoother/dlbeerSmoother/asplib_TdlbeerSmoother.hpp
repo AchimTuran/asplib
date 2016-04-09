@@ -26,8 +26,8 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
-#include "interfaces/asplib_IProcess.hpp"
-#include "asplib_dlbeerSmootherOptions.hpp"
+#include "SpectrumVisProcessor/Interfaces/asplib_IProcess.hpp"
+#include "FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp"
 
 
 namespace asplib

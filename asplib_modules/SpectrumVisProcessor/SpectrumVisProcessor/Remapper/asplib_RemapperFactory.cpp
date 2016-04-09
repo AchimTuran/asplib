@@ -21,7 +21,7 @@
 
 
 
-#include "asplib_RemapperFactory.hpp"
+#include "SpectrumVisProcessor/Remapper/asplib_RemapperFactory.hpp"
 #include "Remapper/Common/asplib_RemapperProducts.hpp"
 
 using namespace std;

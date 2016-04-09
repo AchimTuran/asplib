@@ -22,7 +22,7 @@
 
 
 #include "asplib_AxisScalerFactory.hpp"
-#include "AxisScaler/Common/asplib_AxisScalerProducts.hpp"
+#include "SpectrumVisProcessor/AxisScaler/Common/asplib_AxisScalerProducts.hpp"
 
 using namespace std;
 

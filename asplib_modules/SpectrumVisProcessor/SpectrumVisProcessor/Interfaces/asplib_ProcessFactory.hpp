@@ -28,7 +28,7 @@
 #include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
 #include "Core/Exceptions/asplib_StringException.h"
 
-#include "interfaces/asplib_IProcess.hpp"
+#include "SpectrumVisProcessor/Interfaces/asplib_IProcess.hpp"
 #include <map>
 
 #define REGISTER_PROCESS_FACTORY(ProcessFactory, FactoryTypeID, FactoryID) \

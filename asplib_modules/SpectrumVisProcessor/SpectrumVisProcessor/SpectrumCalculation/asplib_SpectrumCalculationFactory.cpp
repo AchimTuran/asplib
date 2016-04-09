@@ -1,5 +1,3 @@
-#pragma once
-
 /* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
@@ -23,7 +21,7 @@
 
 
 
-#include "asplib_SpectrumCalculationFactory.hpp"
+#include "SpectrumVisProcessor/SpectrumCalculation/asplib_SpectrumCalculationFactory.hpp"
 #include "SpectrumCalculation/Common/asplib_SpectrumCalculationProducts.hpp"
 
 using namespace std;

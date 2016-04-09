@@ -26,11 +26,11 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
-#include "KissFFT/asplib_TKissFFT.hpp"
-#include "KissFFT/asplib_TRKissFFT.hpp"
-#include "common/asplib_TZeroCpyConverter.hpp"
+#include "FFT/KissFFT/asplib_TKissFFT.hpp"
+#include "FFT/KissFFT/asplib_TRKissFFT.hpp"
+#include "FFT/Common/asplib_TZeroCpyConverter.hpp"
 
-#include "asplib_FFTFactory.hpp"
+#include "FFT/asplib_FFTFactory.hpp"
 
 
 namespace asplib

@@ -21,8 +21,8 @@
 
 
 
-#include "asplib_FFTSmootherFactory.hpp"
-#include "FFTSmoother/Common/asplib_FFTSmootherProducts.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/asplib_FFTSmootherFactory.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/Common/asplib_FFTSmootherProducts.hpp"
 
 using namespace std;
 

@@ -27,7 +27,7 @@
 #endif
 #include <cmath>
 
-#include "asplib_FFTWindowFunctions.h"
+#include "FFT/FFTWindowing/asplib_FFTWindowFunctions.h"
 
 namespace asplib
 {

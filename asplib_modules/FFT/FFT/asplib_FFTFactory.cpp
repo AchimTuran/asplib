@@ -21,8 +21,8 @@
 
 
 
-#include "asplib_FFTFactory.hpp"
-#include "KissFFT/asplib_KissFFTProducts.hpp"
+#include "FFT/asplib_FFTFactory.hpp"
+#include "FFT/KissFFT/asplib_KissFFTProducts.hpp"
 
 using namespace std;
 

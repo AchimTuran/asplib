@@ -26,7 +26,7 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
-#include "interfaces/asplib_IProcess.hpp"
+#include "SpectrumVisProcessor/Interfaces/asplib_IProcess.hpp"
 #include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
 #include "Core/AutoFactory/asplib_TAutoFactory.hpp"
 

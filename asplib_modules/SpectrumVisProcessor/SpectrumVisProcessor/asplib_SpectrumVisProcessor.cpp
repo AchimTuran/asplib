@@ -23,7 +23,7 @@
 
 #include "asplib_SpectrumVisProcessor.hpp"
 #include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
-#include "interfaces/asplib_ProcessFactory.hpp"
+#include "Interfaces/asplib_ProcessFactory.hpp"
 
 #include <vector>
 

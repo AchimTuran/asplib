@@ -27,7 +27,7 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 #include "Core/ExtendedStructs/asplib_ExtendedStructContainer.hpp"
-#include "Core/Constants_Typedefs/asplib_dataFmtDefines.hpp"
+#include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
 
 #include "FFT/FFTWindowing/asplib_FFTWindowingFactory.h"
 #include "FFT/asplib_FFTFactory.hpp"

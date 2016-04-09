@@ -26,8 +26,8 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
-#include "Interfaces/asplib_IFFT.h"
-#include "KissFFT/asplib_KissFFTCpxOptions.hpp"
+#include "FFT/Interfaces/asplib_IFFT.h"
+#include "FFT/KissFFT/asplib_KissFFTCpxOptions.hpp"
 #include <KissFFT/kiss_fft.h>
 
 #define KISS_FFT_INVERSE  1

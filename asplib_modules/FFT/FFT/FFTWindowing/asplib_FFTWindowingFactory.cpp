@@ -23,7 +23,7 @@
 
 #include <memory.h>
 
-#include "asplib_FFTWindowingFactory.h"
+#include "FFT/FFTWindowing/asplib_FFTWindowingFactory.h"
 
 namespace asplib
 {
