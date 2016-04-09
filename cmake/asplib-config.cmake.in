@@ -10,25 +10,74 @@
 
 # propagate these properties from one build system to the other
 set (asplib_VERSION "@asplib_VERSION_MAJOR@.@asplib_VERSION_MINOR@.@asplib_VERSION_PATCH@")
-set (asplib_INCLUDE_DIRS @asplib_INCLUDE_DIRS@ @CMAKE_INSTALL_PREFIX@/include)
+set (asplib_INCLUDE_DIRS @CMAKE_INSTALL_PREFIX@/include
+                         @CMAKE_INSTALL_PREFIX@/include/asplib)
 set (asplib_LIBRARY_DIRS "@CMAKE_LIBRARY_OUTPUT_DIRECTORY@")
 set (asplib_LINKER_FLAGS "@asplib_LINKER_FLAGS@")
 set (asplib_CONFIG_VARS "@asplib_CONFIG_VARS@")
 
 set(_asplib_supported_components "@ASPLIB_SUPPORTED_COMPONENTS@")
 
-foreach(_comp ${_asplib_supported_components})
-  message(STATUS "_comp=${comp}")
-endforeach()
+  #if (NOT ";${_supported_components};" MATCHES _comp)
+   # set(ClimbingStats_FOUND False)
+    #set(ClimbingStats_NOTFOUND_MESSAGE "Specified unsupported component: ${_comp}")
+  #endif()
+  #include("${CMAKE_CURRENT_LIST_DIR}/ClimbingStats${_comp}Targets.cmake")
 
 # libraries come from the build tree where this file was generated
 if(WIN32)
-  set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/asplib.lib")
-else(WIN32)
-  set (asplib_LIBRARY "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lasplib")
-endif(WIN32)
+  set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/asplib_Core.lib")
+else()
+  set (asplib_LIBRARY "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lasplib_Core")
+endif()
 set (asplib_LIBRARIES ${asplib_LIBRARY} "@asplib_LIBRARIES@")
 mark_as_advanced (asplib_LIBRARY)
+
+set(linked_components "")
+
+foreach(_comp ${asplib_FIND_COMPONENTS})
+  #message(STATUS "_comp=${_comp}:${asplib_FIND_REQUIRED_${_comp}}")
+
+  list(FIND linked_components "${_comp}" _idx)
+  if (${_idx} LESS 0)
+    # only add components that which are not already in the list
+    list(FIND _asplib_supported_components "${_comp}" _index)
+    if (${_index} LESS 0 AND ${asplib_FIND_REQUIRED_${_comp}})
+      # only set raise an error if asplib component is required
+      message(FATAL_ERROR "Requested component ${_comp} is unsupported!")
+      set(asplib_NOTFOUND_MESSAGE "Requested component ${_comp} is unsupported!")
+      set(asplib_FOUND FALSE)
+    endif()
+
+    if(WIN32)
+      set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/asplib_${_comp}.lib")
+    else(WIN32)
+      list(APPEND asplib_LIBRARIES "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lasplib_${_comp}")
+    endif(WIN32)
+
+    if(${_comp} MATCHES "SpectrumVisProcessor")
+      if(WIN32)
+        set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/asplib_FFT.lib")
+        set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/KissFFT.lib")
+      else()
+        list(APPEND asplib_LIBRARIES "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lasplib_FFT")
+        list(APPEND asplib_LIBRARIES "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lKissFFT")
+      endif()
+      list(APPEND linked_components "FFT")
+    elseif(${_comp} MATCHES "FFT")
+      if(WIN32)
+        set (asplib_LIBRARY "@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@/KissFFT.lib")
+      else()
+        list(APPEND asplib_LIBRARIES "-L@CMAKE_INSTALL_PREFIX@/@CMAKE_INSTALL_LIBDIR@ -lKissFFT")
+      endif()
+    endif()
+
+    list(APPEND linked_components "${_comp}")
+  endif()
+endforeach()
+
+message(STATUS "asplib_LIBRARIES=${asplib_LIBRARIES}")
+message(STATUS "linked_components=${linked_components}")
 
 # add the library as a target, so that other things in the project including
 # this file may depend on it and get rebuild if this library changes.
