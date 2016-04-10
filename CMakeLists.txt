@@ -68,12 +68,36 @@ if(NOT WIN32)
 endif()
 
 # config mode
-configure_file(cmake/asplib-config.cmake.in
-               asplib-config.cmake @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
+#configure_file(cmake/asplib-config.cmake.in
+#               asplib-config.cmake @ONLY)
+#install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
+#        DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
 
-configure_file(cmake/asplib-config.cmake.in
-               asplib-config.cmake @ONLY)
-install(FILES ${CMAKE_BINARY_DIR}/asplib-config.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/asplib)
+# Generate and install a CMake config, version and target file
+include(CMakePackageConfigHelpers)
+set(CMAKE_INSTALL_CMAKECONFIGDIR
+    ${CMAKE_INSTALL_LIBDIR_NOARCH}/cmake/${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
+
+write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake COMPATIBILITY SameMajorVersion)
+install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+        DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+
+configure_package_config_file(cmake/${PROJECT_NAME}-config.cmake.in ${PROJECT_NAME}-config.cmake
+                              INSTALL_DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+                              #PATH_VARS INCLUDE_INSTALL_DIR)
+install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+
+install(EXPORT ${PROJECT_NAME} FILE ${PROJECT_NAME}-targets.cmake NAMESPACE ${PROJECT_NAME}::
+        DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+
+get_cmake_property(_variableNames VARIABLES)
+foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
+
+# Print project configuration
+message(STATUS)
+message(STATUS "${CMAKE_PROJECT_NAME} - Configuration:")
+message(STATUS "CMAKE_BUILD_TYPE:     ${CMAKE_BUILD_TYPE}")
+message(STATUS "CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS)
