@@ -21,6 +21,7 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core asplib::FFT)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "modules")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
 
 #add_subdirectory(tests)
 

@@ -18,6 +18,7 @@ file (GLOB_RECURSE HEADERS
 #add_library(asplib_AudioInterfaces STATIC ${SOURCES} ${HEADERS})
 
 #set_property(TARGET asplib_AudioInterfaces PROPERTY FOLDER "modules")
+#set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
 
 # install all specific module files
 #asplib_install_module("AudioInterfaces" "${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
