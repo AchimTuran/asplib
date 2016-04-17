@@ -23,27 +23,24 @@
 
 
 
-#include "asplib_utils/buffers/IBufferBase.h"
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/os/asplib_os.h"
+
+#include "Core/Exceptions/asplib_StringException.h"
+
+#include "Core/Buffers/asplib_TBaseBuffer.h"
+
 
 namespace asplib
 {
 template<typename T>
-class ITFrameBuffer : public TBufferBase<T>
+class TBaseFrameBuffer : public TBaseBuffer<T>
 {
 public:
-  ITFrameBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint32_t Alignment=0) :
-    TBufferBase<T>(MaxFrameLength, MaxFrames, Alignment)
+  TBaseFrameBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint32_t Alignment=0) :
+    TBaseBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
   {
-    m_CurrentFrame = 0;
+    this->m_CurrentFrame = 0;
   }
-
-  virtual ~ITFrameBuffer() {}
-
-  virtual T     *get_Frame(uint32_t Frame) = 0;
-  virtual T     *get_NextFrame() = 0;
-  virtual void  reset_CurrentFrameIdx() = 0;
 
 protected:
   uint32_t m_CurrentFrame;

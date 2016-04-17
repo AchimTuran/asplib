@@ -24,47 +24,50 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
-#include "ITFrameBuffer.h"
+#include "Core/os/asplib_os.h"
+
+#include "Core/Exceptions/asplib_StringException.h"
+
+#include "Core/Buffers/asplib_TBaseFrameBuffer.h"
+
 
 namespace asplib
 {
 template<typename T>
-class TFrameBuffer : public ITFrameBuffer<T>
+class TFrameBuffer : public TBaseFrameBuffer<T>
 {
 public:
   TFrameBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint16_t Alignment=0) :
-    ITFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
+    TBaseFrameBuffer<T>(MaxFrameLength, MaxFrames, Alignment)
   {
-    m_CurrentFrame = 0;
+    this->m_CurrentFrame = 0;
   }
 
-  T *get_Frame(int Frame)
+  inline T *get_Frame(uint32_t Frame)
   {
-    if(Frame < 0 || Frame >= get_MaxFrames())
+    if (Frame >= this->get_MaxFrames())
     {
       return NULL;
     }
 
-    return m_Buffer + Frame*get_MaxFrameLength();
+    return this->m_Buffer + Frame*this->get_MaxFrameLength();
   }
 
-  T *get_NextFrame()
+  inline T *get_NextFrame()
   {
-    uint32_t returnFrame = m_CurrentFrame;
-    m_CurrentFrame++;
-    if(m_CurrentFrame >= get_MaxFrames())
+    uint32_t returnFrame = this->m_CurrentFrame;
+    this->m_CurrentFrame++;
+    if (this->m_CurrentFrame >= this->get_MaxFrames())
     {
-      m_CurrentFrame = 0;
+      this->m_CurrentFrame = 0;
     }
 
-    return m_Buffer + returnFrame*get_MaxFrameLength();
+    return this->m_Buffer + returnFrame*this->get_MaxFrameLength();
   }
 
-  virtual void  reset_CurrentFrameIdx()
+  inline void  reset_CurrentFrameIdx()
   {
-    m_CurrentFrame = 0;
+    this->m_CurrentFrame = 0;
   }
 };
 }

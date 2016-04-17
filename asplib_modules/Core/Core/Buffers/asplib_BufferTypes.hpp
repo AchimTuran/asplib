@@ -23,22 +23,24 @@
 
 
 
-#include "asplib_utils/buffers/TBufferBase.h"
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/os/asplib_os.h"
+#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+
+#include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
+#include "Core/Buffers/asplib_TFrameBuffer.h"
+#include "Core/Buffers/asplib_TFrameRingBuffer.h"
+#include "Core/Buffers/asplib_TRingBuffer.h"
+
 
 namespace asplib
 {
-template<typename T>
-class ITBuffer : public TBufferBase<T>
-{
-public:
-  ITBuffer(uint32_t MaxFrameLength, uint32_t MaxFrames, uint32_t Alignment=0) :
-    TBufferBase<T>(MaxFrameLength, MaxFrames, Alignment)
-  {
-  }
+  // Native Complex Float type definitions
+  typedef TFrameBuffer<asplibFmt_NativeCPXFloat>      FrameBuffer_NativeCpxFloat;
+  typedef TFrameRingBuffer<asplibFmt_NativeCPXFloat>  FrameRingBuffer_NativeCpxFloat;
+  typedef TRingBuffer<asplibFmt_NativeCPXFloat>       RingBuffer_NativeCpxFloat;
 
-  virtual uint32_t read(T *Data, uint32_t SamplesToRead) = 0;
-  virtual uint32_t write(T *Data, uint32_t SamplesToWrite) = 0;
-};
+  // Native Float type definitions
+  typedef TFrameBuffer<asplibFmt_NativeFloat>       FrameBuffer_NativeFloat;
+  typedef TFrameRingBuffer<asplibFmt_NativeFloat>   FrameRingBuffer_NativeFloat;
+  typedef TRingBuffer<asplibFmt_NativeFloat>        RingBuffer_NativeFloat;
 }
