@@ -27,8 +27,8 @@
 // for more details see: http://en.wikipedia.org/wiki/Digital_biquad_filter
 
 #include "Core/os/asplib_os.h"
-#include "Core/Constants_Typedefs/asplib_Constants.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
+#include "Core/Constants_Typedefs/asplib_Constants.h"
 
 
 namespace asplib
