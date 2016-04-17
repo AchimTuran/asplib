@@ -24,7 +24,7 @@ asplib_source_group("${HEADERS}")
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(${CMAKE_PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_PROJECT_NAME}::Core KissFFT::KissFFT)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_PROJECT_NAME}::Core KissFFT::KissFFT)
 target_include_directories(${PROJECT_NAME}
                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
