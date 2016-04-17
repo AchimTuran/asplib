@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -23,36 +21,30 @@
  */
 
 
+
+#include "Core/os/asplib_os.h"
+
+#include "Core/Exceptions/asplib_StringException.h"
+
 #include <string>
-#include "asplib_utils/os/asplib_base_os.h"
+
+using namespace std;
+
 
 namespace asplib
 {
-template<class C>
-class IException
+CStringException::CStringException(string ExceptionMessage, string Filename, string FunctionName, int LineNumber, string ModuleName) :
+	IException(Filename, FunctionName, LineNumber, ModuleName)
 {
-public:
-  IException(std::string Filename="", std::string FunctionName="", int LineNumber=-1, std::string ModuleName="")
-  {
-    m_Filename      = Filename;
-    m_FunctionName  = FunctionName;
-    m_LineNumber    = LineNumber;
-    m_ModuleName    = ModuleName;
-  }
+	m_ExceptionMessage = ExceptionMessage;
+}
 
-  virtual ~IException() {}
+CStringException::~CStringException()
+{
+}
 
-  virtual C &what() = 0;
-
-  std::string get_Filename()      { return m_Filename; }
-  std::string get_FunctionName()  { return m_FunctionName; }
-  int         get_LineNumber()    { return m_LineNumber; }
-  std::string get_ModuleName()    { return m_ModuleName; }
-
-protected:
-  std::string m_Filename;
-  std::string m_FunctionName;
-  int         m_LineNumber;
-  std::string m_ModuleName;
-};
+string &CStringException::what()
+{
+	return m_ExceptionMessage;
+}
 }

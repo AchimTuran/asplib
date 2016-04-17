@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -22,23 +24,33 @@
 
 
 
-#include <asplib_utils/exceptions/asplib_StringException.h>
-#include <string>
-using namespace std;
-namespace asplib
-{
-CStringException::CStringException(string ExceptionMessage, string Filename, string FunctionName, int LineNumber, string ModuleName) :
-	IException(Filename, FunctionName, LineNumber, ModuleName)
-{
-	m_ExceptionMessage = ExceptionMessage;
-}
+#if defined(TARGET_WINDOWS)
+  #ifndef __ASPLIB_FUNCTION__
+    #define __ASPLIB_FUNCTION__ __FUNCTION__
+  #endif
+  #ifndef __ASPLIB_FILE__
+    #define __ASPLIB_FILE__ __FILE__
+  #endif
+  #ifndef __ASPLIB_LINE__
+    #define __ASPLIB_LINE__ __LINE__
+  #endif
 
-CStringException::~CStringException()
-{
-}
+  #include <stdint.h>
+  #include <stdio.h>
+  #include <memory.h>
 
-string &CStringException::what()
-{
-	return m_ExceptionMessage;
-}
-}
+  // data typedefs
+  //typedef unsigned char   uint8_t;
+  //typedef char            int8_t;
+  //typedef unsigned short  uint16_t;
+  //typedef short           int16_t;
+  //typedef unsigned int    uint32_t;
+  //typedef int             int32_t;
+  //typedef unsigned long   uin64_t;
+  //typedef long            int64_t;
+
+  // path typedefs
+  #define ASPLIB_PATH_SEPERATOR '\\'
+#else
+  #error "Configuring TARGET_WINDOWS failed!"
+#endif

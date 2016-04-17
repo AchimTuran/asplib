@@ -24,31 +24,38 @@
 
 
 
-#if defined(TARGET_WINDOWS)
-  #ifndef __ASPLIB_FUNCTION__
-    #define __ASPLIB_FUNCTION__ __FUNCTION__
-  #endif
-  #ifndef __ASPLIB_FILE__
-    #define __ASPLIB_FILE__ __FILE__
-  #endif
-  #ifndef __ASPLIB_LINE__
-    #define __ASPLIB_LINE__ __LINE__
-  #endif
+#include "Core/os/asplib_os.h"
 
-  #include <stdint.h>
+#include <string>
 
-  // data typedefs
-  //typedef unsigned char   uint8_t;
-  //typedef char            int8_t;
-  //typedef unsigned short  uint16_t;
-  //typedef short           int16_t;
-  //typedef unsigned int    uint32_t;
-  //typedef int             int32_t;
-  //typedef unsigned long   uin64_t;
-  //typedef long            int64_t;
 
-  // path typedefs
-  #define ASPLIB_PATH_SEPERATOR '\\'
-#else
-  #error "Configuring TARGET_WINDOWS failed!"
-#endif
+namespace asplib
+{
+template<class C>
+class IException
+{
+public:
+  IException(std::string Filename="", std::string FunctionName="", int LineNumber=-1, std::string ModuleName="")
+  {
+    m_Filename      = Filename;
+    m_FunctionName  = FunctionName;
+    m_LineNumber    = LineNumber;
+    m_ModuleName    = ModuleName;
+  }
+
+  virtual ~IException() {}
+
+  virtual C &what() = 0;
+
+  std::string get_Filename()      { return m_Filename; }
+  std::string get_FunctionName()  { return m_FunctionName; }
+  int         get_LineNumber()    { return m_LineNumber; }
+  std::string get_ModuleName()    { return m_ModuleName; }
+
+protected:
+  std::string m_Filename;
+  std::string m_FunctionName;
+  int         m_LineNumber;
+  std::string m_ModuleName;
+};
+}
