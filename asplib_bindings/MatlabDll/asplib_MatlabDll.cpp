@@ -25,8 +25,7 @@
 #include <string>
 using namespace std;
 
-#include "utils/computeDeviceInfo/cpuInfo.h"
-#include "Biquads/apslib_BiquadFactory.h"
+#include "Biquad/apslib_BiquadFactory.h"
 
 // Matlab include files
 #include <mex.h>
