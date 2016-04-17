@@ -24,37 +24,41 @@
 
 
 
-#include "samplesConverter.h"
-#include <memory>
-#include <string.h>
+#include "Core/os/asplib_os.h"
 
-bool fmtc_PCM_TO_float(unsigned char *InSamples, float *OutSamples, uint16_t BitsPerSample, uint32_t MaxSamples)
+template<typename T>
+bool fmtc_NonInterleaved_TO_Interleaved(T *InSamples, T *OutSamples, uint16_t MaxChannels, uint32_t MaxSamples)
 {
-  if(!InSamples || !MaxSamples || !OutSamples)
+  if(!InSamples || !OutSamples || !MaxSamples || !MaxChannels)
   {
     return false;
   }
 
-  // check bytes with >>3 (divide by 8)
-  if(/*BitsPerSample % (1<<3) || */(uint32_t)(BitsPerSample>>3) > sizeof(uint32_t))
+  for(uint16_t ch=0; ch < MaxChannels; ch++)
+  {
+    for(uint32_t ii = 0; ii < MaxSamples; ii++)
+    {
+      OutSamples[ii*MaxChannels + ch] = InSamples[ch*MaxSamples + ii];
+    }
+  }
+
+  return true;
+}
+
+template<typename T>
+bool fmtc_Interleaved_TO_NonInterleaved(T *InSamples, T *OutSamples, uint16_t MaxChannels, uint32_t MaxSamples)
+{
+  if(!InSamples || !OutSamples || !MaxSamples || !MaxChannels)
   {
     return false;
   }
-
-  double halfValue = (double)((1<<(sizeof(uint32_t)*8 -1)) -1);
-  const uint16_t bytes = (BitsPerSample>>3);
-  const uint32_t byteOffset = sizeof(uint32_t) - bytes;
-  uint32_t pSample = 0;
 
   for(uint32_t ii = 0; ii < MaxSamples; ii++)
   {
-    memset(&pSample, 0, sizeof(uint32_t));
-    for(uint32_t byte = 0; byte < bytes; byte++)
+    for(uint16_t ch=0; ch < MaxChannels; ch++)
     {
-      pSample |= InSamples[ii*bytes + byte] << (byte+byteOffset)*8;
+      OutSamples[ch*MaxSamples + ii] = InSamples[ii*MaxChannels + ch];
     }
-
-    OutSamples[ii] = (float)(((double)(pSample))/(halfValue));
   }
 
   return true;

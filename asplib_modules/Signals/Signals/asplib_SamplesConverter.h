@@ -24,42 +24,6 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
+#include "Core/os/asplib_os.h"
 
-template<typename T>
-bool fmtc_NonInterleaved_TO_Interleaved(T *InSamples, T *OutSamples, uint16_t MaxChannels, uint32_t MaxSamples)
-{
-  if(!InSamples || !OutSamples || !MaxSamples || !MaxChannels)
-  {
-    return false;
-  }
-
-  for(uint16_t ch=0; ch < MaxChannels; ch++)
-  {
-    for(uint32_t ii = 0; ii < MaxSamples; ii++)
-    {
-      OutSamples[ii*MaxChannels + ch] = InSamples[ch*MaxSamples + ii];
-    }
-  }
-
-  return true;
-}
-
-template<typename T>
-bool fmtc_Interleaved_TO_NonInterleaved(T *InSamples, T *OutSamples, uint16_t MaxChannels, uint32_t MaxSamples)
-{
-  if(!InSamples || !OutSamples || !MaxSamples || !MaxChannels)
-  {
-    return false;
-  }
-
-  for(uint32_t ii = 0; ii < MaxSamples; ii++)
-  {
-    for(uint16_t ch=0; ch < MaxChannels; ch++)
-    {
-      OutSamples[ch*MaxSamples + ii] = InSamples[ii*MaxChannels + ch];
-    }
-  }
-
-  return true;
-}
+bool fmtc_PCM_TO_float(unsigned char *In, float *Out, uint16_t BitsPerSample, uint32_t MaxSamples);
