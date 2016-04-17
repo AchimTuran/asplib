@@ -29,8 +29,8 @@
 #include <vector>
 #include <list>
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/os/asplib_os.h"
+#include "Core/Exceptions/asplib_StringException.h"
 
 namespace asplib
 {
