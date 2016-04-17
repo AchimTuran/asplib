@@ -1,28 +1,12 @@
-file (GLOB_RECURSE ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES
-      "*.c"
-      "*.cpp")
+project(InitDeinit)
 
-file (GLOB_RECURSE ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS
-      "*.h"
-      "*.hpp")
-      
-if(NOT ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES)
-  set(${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES} "")
-endif()
+set(SOURCES main.cpp)
 
-if(NOT ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS)
-  set(${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS} "")
-endif()
-      
-#foreach(_file ${ASPLIB_AUDIO_INTERFACES_SOURCES})
-#message(STATUS "file=${_file}")
-#endforeach()
+#asplib_source_group("${SOURCES}")
 
-#asplib_source_group("${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES}")
-#asplib_source_group("${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS}")
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-add_executable(asplib_TestSpectrumVisProcessor_InitDeinit ${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_SOURCES}
-                                                          ${ASPLIB_TEST_INIT_DEINIT_SPECTRUM_VIS_PROCESSOR_HEADERS})
-target_link_libraries(asplib_TestSpectrumVisProcessor_InitDeinit asplib::Core asplib::FFT asplib::SpectrumVisProcessor)
+target_link_libraries(${PROJECT_NAME} asplib::Core asplib::FFT asplib::SpectrumVisProcessor)
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_SpectrumVisProcessorTest_${PROJECT_NAME})
 
-set_property(TARGET asplib_TestSpectrumVisProcessor_InitDeinit PROPERTY FOLDER "tests")
+set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "tests/SpectrumVisProcessor")

@@ -1,21 +1,29 @@
-file (GLOB_RECURSE SOURCES
-      "Logger/*.c"
-      "Logger/*.cpp")
+project(Logger)
 
-file (GLOB_RECURSE HEADERS
-      "Logger/*.h"
-      "Logger/*.hpp")
+set(SOURCES Logger/asplib_DefaultLogger.cpp
+            Logger/ILogger.cpp
+            Logger/LoggerFactory.cpp
+            Logger/LoggerFile.cpp
+            Logger/LoggerStdout.cpp
+            Logger/Logger_types.cpp)
+
+set(HEADERS Logger/asplib_DefaultLogger.h
+            Logger/ILogger.h
+            Logger/LoggerFactory.h
+            Logger/LoggerFile.h
+            Logger/LoggerStdout.h
+            Logger/Logger_types.h)
       
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
 
-add_library(asplib_Logger STATIC ${SOURCES} ${HEADERS})
-add_library(asplib::Logger ALIAS asplib_Logger)
-target_link_libraries(asplib_Logger PRIVATE asplib::Core)
+add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
+add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core)
 
-set_property(TARGET asplib_Logger PROPERTY FOLDER "modules")
+set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "modules")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
 
 # install all specific module files
-asplib_install_module("Logger" "${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
-install(TARGETS asplib_Logger DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+asplib_install_module("${PROJECT_NAME}" "${HEADERS}" ${CMAKE_INSTALL_PREFIX}/include/asplib)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(asplib VERSION 0.2)
+project(asplib VERSION 1.0)
 
 # TODO solve 'Enable C++ exceptions' to 'NO' and I got warning: warning C4530: C++ exception handler used, 
 #             but unwind semantics are not enabled. Specify /EHsc'
@@ -53,6 +53,7 @@ elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
 endif()
 
 add_subdirectory(asplib_modules)
+add_subdirectory(asplib_bindings)
         
 if(NOT WIN32)
   # Pkgconfig

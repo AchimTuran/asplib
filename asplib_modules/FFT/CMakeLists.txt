@@ -1,13 +1,23 @@
 project(FFT)
+
 find_package(KissFFT REQUIRED)
 
-file (GLOB_RECURSE SOURCES
-      "FFT/*.c"
-      "FFT/*.cpp")
+set(SOURCES FFT/asplib_FFTFactory.cpp
+            FFT/FFTWindowing/asplib_FFTWindowFunctions.cpp
+            FFT/FFTWindowing/asplib_FFTWindowingFactory.cpp)
 
-file (GLOB_RECURSE HEADERS
-      "FFT/*.h"
-      "FFT/*.hpp")
+set(HEADERS FFT/FFTWindowing/asplib_FFTWindowFunctions.h
+            FFT/FFTWindowing/asplib_FFTWindowingFactory.h
+            FFT/Interfaces/asplib_IFFT.h
+
+            FFT/asplib_FFTFactory.hpp
+            FFT/asplib_FFTOptions.hpp
+            FFT/Common/asplib_TZeroCpyConverter.hpp
+            FFT/KissFFT/asplib_KissFFTCpxOptions.hpp
+            FFT/KissFFT/asplib_KissFFTProducts.hpp
+            FFT/KissFFT/asplib_KissFFTRealOptions.hpp
+            FFT/KissFFT/asplib_TKissFFT.hpp
+            FFT/KissFFT/asplib_TRKissFFT.hpp)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -16,11 +26,10 @@ add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(${CMAKE_PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_PROJECT_NAME}::Core KissFFT::KissFFT)
 target_include_directories(${PROJECT_NAME}
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/FFT
-  INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-            $<INSTALL_INTERFACE:include>
-            $<INSTALL_INTERFACE:include/asplib>
-)
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                                     $<INSTALL_INTERFACE:include>
+                                     $<INSTALL_INTERFACE:include/asplib>)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "modules")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
