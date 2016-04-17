@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -24,30 +22,37 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
-#include "ILogger.h"
-#include "Logger_types.h"
+#include "Core/Exceptions/asplib_StringException.h"
+
+#include "Logger/LoggerStdout.h"
 
 #include <string>
 #include <stdio.h>
+using namespace std;
 
 namespace asplib
 {
-class CLoggerFile : public ILogger
+CLoggerStdout::CLoggerStdout(loggerTags_t &LoggerTags) :
+  ILogger(LoggerTags)
 {
-public:
-  CLoggerFile(std::string FilePath, loggerTags_t &LoggerTags);
-  virtual ~CLoggerFile();
+}
 
-protected:
-  virtual ASPLIB_ERR Open();
-  virtual ASPLIB_ERR Close();
-  virtual ASPLIB_ERR LogWrite(const uint32_t TagID, const std::string DateStr, std::string Message, va_list VarArgs);
+ASPLIB_ERR CLoggerStdout::Open()
+{
+  return ASPLIB_ERR_NO_ERROR;
+}
 
-private:
-  std::string   m_FilePath;
-  FILE         *m_FilePtr;
-  bool          m_FirstLine;
-};
+ASPLIB_ERR CLoggerStdout::Close()
+{
+  return ASPLIB_ERR_NO_ERROR;
+}
+
+ASPLIB_ERR CLoggerStdout::LogWrite(const uint32_t TagID, const std::string DateStr, std::string Message, va_list VarArgs)
+{
+  printf("%s %s", DateStr.c_str(), get_LoggerTagStr(TagID).c_str());
+  vprintf(Message.c_str(), VarArgs);
+  printf("\n");
+
+  return ASPLIB_ERR_NO_ERROR;
+}
 }

@@ -24,24 +24,31 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
-#include "ILogger.h"
-#include "Logger_types.h"
+#include "Core/os/asplib_os.h"
+#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+
+#include "Logger/ILogger.h"
+#include "Logger/Logger_types.h"
 
 #include <string>
 #include <stdio.h>
 
 namespace asplib
 {
-class CLoggerStdout : public ILogger
+class CLoggerFile : public ILogger
 {
 public:
-  CLoggerStdout(loggerTags_t &LoggerTags);
+  CLoggerFile(std::string FilePath, loggerTags_t &LoggerTags);
+  virtual ~CLoggerFile();
 
 protected:
   virtual ASPLIB_ERR Open();
   virtual ASPLIB_ERR Close();
   virtual ASPLIB_ERR LogWrite(const uint32_t TagID, const std::string DateStr, std::string Message, va_list VarArgs);
+
+private:
+  std::string   m_FilePath;
+  FILE         *m_FilePtr;
+  bool          m_FirstLine;
 };
 }

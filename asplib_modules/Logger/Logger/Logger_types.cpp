@@ -22,7 +22,7 @@
 
 
 
-#include "Logger_types.h"
+#include "Logger/Logger_types.h"
 
 const char *defaultLoggerTags[]
 {

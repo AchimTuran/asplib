@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -23,11 +21,13 @@
  */
 
 
-
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/logger/LoggerFactory.h"
+#include "Logger/asplib_DefaultLogger.h"
 
 namespace asplib
 {
-extern ILogger *g_DefaultLogger;
+#if defined(ASPLIB_USE_STDOUT_LOGGER)
+  ILogger *defaultLogger = CLoggerFactory::get_Logger(ASPLIB_FILE_LOGGER);
+#else
+  ILogger *g_DefaultLogger = CLoggerFactory::get_Logger(ASPLIB_FILE_LOGGER);
+#endif
 }

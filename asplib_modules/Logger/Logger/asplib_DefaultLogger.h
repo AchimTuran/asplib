@@ -24,31 +24,11 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include <string>
-#include <vector>
+#include "Core/os/asplib_os.h"
 
-typedef std::pair<uint32_t, std::string> loggerTagPair_t;
-typedef std::vector<loggerTagPair_t> loggerTags_t;
+#include "Logger/LoggerFactory.h"
 
-#define ASPLIB_DEFAULT_LOGGER_FILE  "asplib.log"
-
-typedef enum ASPLIB_DEFAULT_LOG_TAGS
+namespace asplib
 {
-  ASPLIB_MIN_LOG_TAG = -1,
-  ASPLIB_DEBUG_LOG,
-  ASPLIB_INFO_LOG,
-  ASPLIB_WARNING_LOG,
-  ASPLIB_ERROR_LOG,
-  ASPLIB_MAX_LOG_TAG
-};
-
-typedef enum ASPLIB_LOGGER_TYPES
-{
-  ASPLIB_INVALID_LOGGER_TYPE = -1,
-  ASPLIB_FILE_LOGGER,
-  ASPLIB_STDOUT_LOGGER,
-  ASPLIB_MAX_LOGGER_TYPE
-};
-
-extern const char *defaultLoggerTags[];
+extern ILogger *g_DefaultLogger;
+}

@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -21,13 +23,32 @@
  */
 
 
-#include "asplib_default_logger.h"
 
-namespace asplib
+#include "Core/os/asplib_os.h"
+#include <string>
+#include <vector>
+
+typedef std::pair<uint32_t, std::string> loggerTagPair_t;
+typedef std::vector<loggerTagPair_t> loggerTags_t;
+
+#define ASPLIB_DEFAULT_LOGGER_FILE  "asplib.log"
+
+typedef enum ASPLIB_DEFAULT_LOG_TAGS
 {
-#if defined(ASPLIB_USE_STDOUT_LOGGER)
-  ILogger *defaultLogger = CLoggerFactory::get_Logger(ASPLIB_FILE_LOGGER);
-#else
-  ILogger *g_DefaultLogger = CLoggerFactory::get_Logger(ASPLIB_FILE_LOGGER);
-#endif
-}
+  ASPLIB_MIN_LOG_TAG = -1,
+  ASPLIB_DEBUG_LOG,
+  ASPLIB_INFO_LOG,
+  ASPLIB_WARNING_LOG,
+  ASPLIB_ERROR_LOG,
+  ASPLIB_MAX_LOG_TAG
+};
+
+typedef enum ASPLIB_LOGGER_TYPES
+{
+  ASPLIB_INVALID_LOGGER_TYPE = -1,
+  ASPLIB_FILE_LOGGER,
+  ASPLIB_STDOUT_LOGGER,
+  ASPLIB_MAX_LOGGER_TYPE
+};
+
+extern const char *defaultLoggerTags[];
