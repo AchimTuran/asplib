@@ -24,7 +24,7 @@
 
 
 
-#include "cpuInfo_types.h"
+#include "ComputeDeviceInfo/asplib_CPUInfo_types.h"
 
 CPUINFO_ERROR CPUINFO_getVendorName(char **VendorStr);
 CPUINFO_ERROR CPUINFO_getCPUName(char **CPUName);

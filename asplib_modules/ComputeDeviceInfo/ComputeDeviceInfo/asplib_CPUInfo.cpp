@@ -35,7 +35,7 @@
 #include <string.h>
 #include <memory.h>
 
-#include "cpuInfo.h"
+#include "asplib_CPUInfo.h"
 
 const char* CPUINFO_vendorIDTable[] =
 {
