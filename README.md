@@ -1,4 +1,4 @@
-Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=master)](https://travis-ci.org/AchimTuran/adsp.biquad.filters)
+Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=Refactor)](https://travis-ci.org/AchimTuran/asplib)
 
 
 asplib (Achim's Signal Processing LIBrary)
