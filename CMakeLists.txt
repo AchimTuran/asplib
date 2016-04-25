@@ -53,7 +53,7 @@ elseif(CMAKE_SYSTEM_NAME MATCHES Windows)
 endif()
 
 add_subdirectory(asplib_modules)
-add_subdirectory(asplib_bindings)
+#add_subdirectory(asplib_bindings)
         
 if(NOT WIN32)
   # Pkgconfig
