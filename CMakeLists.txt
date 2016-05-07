@@ -88,7 +88,7 @@ configure_package_config_file(cmake/${PROJECT_NAME}-config.cmake.in ${PROJECT_NA
                               #PATH_VARS INCLUDE_INSTALL_DIR)
 install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
 
-install(EXPORT ${PROJECT_NAME} FILE ${PROJECT_NAME}-targets.cmake NAMESPACE ${PROJECT_NAME}::
+install(EXPORT ${PROJECT_NAME} FILE ${PROJECT_NAME}-targets.cmake NAMESPACE ${CMAKE_PROJECT_NAME}::
         DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
 
 get_cmake_property(_variableNames VARIABLES)

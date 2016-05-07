@@ -11,7 +11,7 @@ set(_asplib_supported_components "@ASPLIB_SUPPORTED_COMPONENTS@")
 
 # TODO: components
 #set(asplib_LIBRARIES asplib::Core asplib::FFT asplib::SpectrumVisProcessor)
-set(asplib_LIBRARIES asplib::SpectrumVisProcessor)
+#set(asplib_LIBRARIES asplib::SpectrumVisProcessor)
 
 if(NOT TARGET KissFFT::KissFFT)
   add_library(KissFFT::KissFFT UNKNOWN IMPORTED)
