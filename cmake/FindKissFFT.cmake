@@ -32,7 +32,7 @@ if(NOT KISS_FFT_INCLUDE_DIR AND NOT KISS_FFT_LIBRARIES)
                       LOG_BUILD       1
                       LOG_INSTALL     1
                       
-                      CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/depends/output
+                      CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}#${CMAKE_BINARY_DIR}/depends/output
                                  -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
                       
                       #PREFIX          ${CMAKE_BINARY_DIR}/depends/build/KissFFT
@@ -47,20 +47,24 @@ if(NOT KISS_FFT_INCLUDE_DIR AND NOT KISS_FFT_LIBRARIES)
                       GIT_REPOSITORY  https://github.com/AchimTuran/KissFFT
                       GIT_TAG         master)
 
-  set(KISS_FFT_INCLUDE_DIR ${CMAKE_BINARY_DIR}/depends/output/include)
-  set(KISS_FFT_LIBRARY ${CMAKE_BINARY_DIR}/depends/output/lib/KissFFT.lib)
+  set(KISS_FFT_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/include)
+  set(KISS_FFT_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/KissFFT.lib)#TODO: This currently only works on Windows
 
   # Workaround for: https://cmake.org/Bug/view.php?id=15052
   file(MAKE_DIRECTORY ${KISS_FFT_INCLUDE_DIR})
 endif()
+
+message(STATUS "FindKissFFT KISS_FFT_INCLUDE_DIR=${KISS_FFT_INCLUDE_DIR}")
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(KISS_FFT DEFAULT_MSG KISS_FFT_INCLUDE_DIR KISS_FFT_LIBRARY)
 mark_as_advanced(KISS_FFT_INCLUDE_DIR KISS_FFT_LIBRARY)
 
 if(KISS_FFT_FOUND)
-  set(KISS_FFT_INCLUDE_DIRS ${KISS_FFT_INCLUDE_DIR})
+  set(KISS_FFT_INCLUDE_DIRS ${KISS_FFT_INCLUDE_DIR} ${KISS_FFT_INCLUDE_DIR}/KissFFT)
   set(KISS_FFT_LIBRARIES ${KISS_FFT_LIBRARY})
+  
+  message(STATUS "KISS_FFT_INCLUDE_DIRS=${KISS_FFT_INCLUDE_DIRS}")
 
   if(NOT TARGET KissFFT::KissFFT)
     add_library(KissFFT::KissFFT UNKNOWN IMPORTED)
