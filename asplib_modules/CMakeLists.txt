@@ -1,3 +1,9 @@
+if(ASPLIB_DEPENDS_SRC_PREFIX) # if ASPLIB_DEPENDS_SRC_PREFIX is defined use this directory for depenencies
+  set(DEPENDS_SRC_PREFIX "-DASPLIB_DEPENDS_SRC_PREFIX=${ASPLIB_DEPENDS_SRC_PREFIX}")
+else()
+  set(DEPENDS_SRC_PREFIX "")
+endif()
+
 option(BUILD_AUDIOINTERFACES      "Build Audio Interfaces"     OFF)
 option(BUILD_BIQUAD               "Build biquad"               OFF)
 option(BUILD_COMPUTEDEVICEINFO    "Build Compute Device Info"  OFF)
@@ -54,6 +60,30 @@ if(BUILD_COMPUTEDEVICEINFO)
 endif()
 
 if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
+  find_package(KissFFT 1.30 QUIET)
+  
+  if(NOT ASPLIB_KissFFT_BUILD) # only define this ASPLIB_KissFFT_BUILD once to determine if KissFFT is build by asplib or not
+    if(NOT ${KissFFT_FOUND} OR ${ASPLIB_FORCE_DEPENCY_BUILDS})
+      set(ASPLIB_KissFFT_BUILD ON CACHE INTERNAL "If this variable is ON then asplib build system will build KissFFT else it should be handled outside of asplib")
+    else()
+      set(ASPLIB_KissFFT_BUILD OFF CACHE INTERNAL "If this variable is ON then asplib build system will build KissFFT else it should be handled outside of asplib")
+    endif()
+  endif()
+
+  if(${ASPLIB_KissFFT_BUILD})
+    message(STATUS "Build of KissFFT is handled by asplib...")
+    file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
+    execute_process(COMMAND ${CMAKE_COMMAND}  -G "${CMAKE_GENERATOR}" "${CMAKE_SOURCE_DIR}/cmake/depends/KissFFT"
+                                              "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
+                                              ${DEPENDS_SRC_PREFIX}
+                                              ${OUTPUT_QUIET}
+                                              WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/depends/build")
+                        
+    execute_process(COMMAND ${CMAKE_COMMAND}  --build .
+                                              ${OUTPUT_QUIET}
+                                              WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/depends/build")
+  endif()
+
   add_subdirectory(FFT)
   set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};FFT" CACHE INTERNAL "supported asplib modules")
 endif()

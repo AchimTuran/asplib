@@ -32,6 +32,10 @@ endif()
 include(cmake/UseMultiArch.cmake)
 include(cmake/asplib_helpers.cmake)
 
+if(NOT ASPLIB_FORCE_DEPENCY_BUILDS)
+  set(ASPLIB_FORCE_DEPENCY_BUILDS OFF)
+endif()
+
 # project defines vars such as PROJECT_NAME, PROJECT_VERSION, ...
 if(NOT ${ASPLIB_BUILD_COUNT})
   set(ASPLIB_BUILD_COUNT 0)
