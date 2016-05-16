@@ -34,5 +34,5 @@
 namespace asplib
 {
 typedef TGammaCorrector<float> GammaCorrectorRemapperNativeFloat_t;
-CREATE_ASPLIB_REMAPPER_CLASS(CGammaCorrectorRemapper_NativeFloat, ASPLIB_REMAPPER_GammeCorrector, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, GammaCorrectorRemapperNativeFloat_t)
+CREATE_ASPLIB_REMAPPER_CLASS(CGammaCorrectorRemapper_NativeFloat, ASPLIB_REMAPPER_GammaCorrector, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, GammaCorrectorRemapperNativeFloat_t)
 }

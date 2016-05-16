@@ -43,6 +43,8 @@ CSpectrumVisProcessorConfigurator::CSpectrumVisProcessorConfigurator()
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_AXIS_SCALER, ASPLIB_AXIS_SCALER_Log10Scaler, true, &Log10ScalerOptions);
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_REMAPPER, ASPLIB_REMAPPER_GammeCorrector, true, NULL);
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_FFT_SMOOTHER, ASPLIB_FFT_SMOOTHER_dlbeer, true, NULL);
+  
+  AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_REMAPPER, ASPLIB_REMAPPER_GammaCorrector, true, NULL);
 }
 
 CSpectrumVisProcessorConfigurator::~CSpectrumVisProcessorConfigurator()

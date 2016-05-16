@@ -56,7 +56,7 @@ typedef enum RemapperID_t
 {
   ASPLIB_REMAPPER_INVALID_ID = -1,
 
-  ASPLIB_REMAPPER_GammeCorrector,
+  ASPLIB_REMAPPER_GammaCorrector,
 
   ASPLIB_REMAPPER_MAX_ID
 }RemapperID_t;
