@@ -27,14 +27,19 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 #include "SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TdlbeerSmoother.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TFeedbackSmoother.hpp"
+
+#include "SpectrumVisProcessor/FFTSmoother/AttackReleaseSmoother/asplib_TAttackReleaseSmoother.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/AttackReleaseSmoother/asplib_TAttackReleaseFilter.hpp"
 
 #include "SpectrumVisProcessor/FFTSmoother/asplib_FFTSmootherFactory.hpp"
-#include "SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TFeedbackSmoother.hpp"
 
 
 namespace asplib
 {
-// dlbeer link! spectrum smoother
-typedef TdlbeerFFTSmoother<float, TdlbeerFeedbackTimeSmoother<float> > dlbeerFFTSmootherNativeFloat_t;
+typedef TdlbeerFFTSmoother<float, TdlbeerFeedbackTimeSmoother<float>> dlbeerFFTSmootherNativeFloat_t;
 CREATE_ASPLIB_FFT_SMOOTHER_CLASS(CdlbeerFFTSmoother_NativeFloat, ASPLIB_FFT_SMOOTHER_dlbeer, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, dlbeerFFTSmootherNativeFloat_t)
+
+typedef TAttackReleaseSmoother<float, TAttackReleaseFilter<float>> AttackReleaseFFTSmootherNativeFloat_t;
+CREATE_ASPLIB_FFT_SMOOTHER_CLASS(CAttackReleaseFFTSmoother_NativeFloat, ASPLIB_FFT_SMOOTHER_AttackRelease, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, AttackReleaseFFTSmootherNativeFloat_t)
 }

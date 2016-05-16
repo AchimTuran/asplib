@@ -57,6 +57,7 @@ typedef enum FFTSmootherID_t
   ASPLIB_FFT_SMOOTHER_INVALID_ID = -1,
 
   ASPLIB_FFT_SMOOTHER_dlbeer,
+  ASPLIB_FFT_SMOOTHER_AttackRelease,
 
   ASPLIB_FFT_SMOOTHER_MAX_ID
 }FFTSmootherID_t;

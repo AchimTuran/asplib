@@ -29,23 +29,47 @@
 
 namespace asplib
 {
-typedef enum
+template<typename Fmt>
+class TAttackReleaseFilter
 {
-  ASPLIB_EXTENDED_STRUC_INVALID_ID = -1,
+public:
+  TAttackReleaseFilter()
+  {
+    m_CoeAttack  = (Fmt)0.0;
+    m_CoeRelease = (Fmt)0.0;
+    m_Old = 0.0;
+  }
 
-  ASPLIB_EXTENDED_STRUCT_KissFFTRealOptions,
-  ASPLIB_EXTENDED_STRUCT_KissFFTCpxOptions,
+  inline void SetCoefficients(Fmt CoeAttack, Fmt CoeRelease)
+  {
+    m_CoeAttack  = CoeAttack;
+    m_CoeRelease = CoeRelease;
+  }
 
-  // scaler options
-  ASPLIB_EXTENDED_STRUCT_TLog10ScalerOptions,
-  
-  // FFT smoother options
-  ASPLIB_EXTENDED_STRUCT_dlbeerSmootherOptions,
-  ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions,
+  inline void Reset()
+  {
+    m_Old = (Fmt)0.0;
+  }
 
-  // FFT remapper options
-  ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
+  inline Fmt Filter(Fmt In)
+  {
+    Fmt out;
+    if(In > m_Old)
+    {
+      out = m_CoeAttack*(m_Old - In) + In;
+    }
+    else
+    {
+      out = m_CoeRelease*(m_Old - In) + In;
+    }
+    m_Old = out;
 
-  ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-}asplibExtendedStructIDs_t;
+    return out;
+  }
+
+private:
+  Fmt m_Old;
+  Fmt m_CoeAttack;
+  Fmt m_CoeRelease;
+};
 }

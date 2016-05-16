@@ -21,6 +21,9 @@ set(HEADERS SpectrumVisProcessor/asplib_SpectrumVisProcessor.hpp
             SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp
             SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TdlbeerSmoother.hpp
             SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_TFeedbackSmoother.hpp
+            SpectrumVisProcessor/FFTSmoother/AttackReleaseSmoother/asplib_TAttackReleaseSmootherOptions.hpp
+            SpectrumVisProcessor/FFTSmoother/AttackReleaseSmoother/asplib_TAttackReleaseSmoother.hpp
+            SpectrumVisProcessor/FFTSmoother/AttackReleaseSmoother/asplib_TAttackReleaseFilter.hpp
             SpectrumVisProcessor/Interfaces/asplib_IProcess.hpp
             SpectrumVisProcessor/Interfaces/asplib_ProcessFactory.hpp
             SpectrumVisProcessor/Remapper/asplib_RemapperFactory.hpp

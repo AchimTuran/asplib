@@ -15,7 +15,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
+  * You should have received a copy of the GNU General Public License
  * along with asplib (Achim's Signal Processing LIBrary).
  * ifnot, see <http://www.gnu.org/licenses/>.
  *
@@ -25,27 +25,24 @@
 
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
+#include "Core/AutoFactory/asplib_TAutoFactory.hpp"
+#include "Core/ExtendedStructs/asplib_ExtendedStructs.hpp"
 
 
 namespace asplib
 {
-typedef enum
+struct AttackReleaseSmootherOptions : ASPLIB_EXTENDED_STRUCT(AttackReleaseSmootherOptions)
 {
-  ASPLIB_EXTENDED_STRUC_INVALID_ID = -1,
+  long double ReleaseTime;    // release time in seconds for smoothing values
+  long double AttackTime;     // release time in seconds for smoothing values
+  bool        UseAnalogConst; // set this to true if you want do use the analog release time definition 
+                              // or to false if you want to use the digital release time definition
 
-  ASPLIB_EXTENDED_STRUCT_KissFFTRealOptions,
-  ASPLIB_EXTENDED_STRUCT_KissFFTCpxOptions,
-
-  // scaler options
-  ASPLIB_EXTENDED_STRUCT_TLog10ScalerOptions,
-  
-  // FFT smoother options
-  ASPLIB_EXTENDED_STRUCT_dlbeerSmootherOptions,
-  ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions,
-
-  // FFT remapper options
-  ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
-
-  ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-}asplibExtendedStructIDs_t;
+  AttackReleaseSmootherOptions() : ASPLIB_EXTENDED_STRUCT_REGISTER(ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions)
+  {
+    ReleaseTime    = 0.01;   // default value is 10ms
+    AttackTime     = 0.001;  // default value is 1ms
+    UseAnalogConst = false;  // default is false to use the digital release time definition
+  }
+};
 }

@@ -27,3 +27,4 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 #include "SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/attackReleaseSmoother/asplib_TAttackReleaseSmootherOptions.hpp"
