@@ -27,11 +27,12 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 #include "SpectrumVisProcessor/Interfaces/asplib_IProcess.hpp"
-#include "FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp"
+#include "SpectrumVisProcessor/FFTSmoother/dlbeerSmoother/asplib_dlbeerSmootherOptions.hpp"
 
 
 namespace asplib
 {
+  // this implementation is based on the ideas from http://dlbeer.co.nz/articles/fftvis.html
 template<typename T, class TSmoother>
 class TdlbeerFFTSmoother : public IProcess
 {
