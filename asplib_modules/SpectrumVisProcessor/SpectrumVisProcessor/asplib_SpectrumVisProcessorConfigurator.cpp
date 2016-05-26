@@ -32,21 +32,28 @@ CSpectrumVisProcessorConfigurator::CSpectrumVisProcessorConfigurator()
   m_UserProcessingSteps = false;
   OnlyPositiveFreqBins  = false;
 
-  m_ConfigSpectrumCalc.fmt.inFmt = ASPLIB_FMT_NATIVE_FLOAT;
-  m_ConfigSpectrumCalc.fmt.outFmt = ASPLIB_FMT_NATIVE_FLOAT;
-  m_ConfigSpectrumCalc.processCategory = IProcess::PROCESS_SPECTRUM_CALC;
-  m_ConfigSpectrumCalc.processID = ASPLIB_SPECTRUM_CALCULATION_SquareRoot;
+  // configure spectrum calculatio step
+  m_ConfigSpectrumCalc.fmt.inFmt        = ASPLIB_FMT_NATIVE_FLOAT;
+  m_ConfigSpectrumCalc.fmt.outFmt       = ASPLIB_FMT_NATIVE_FLOAT;
+  m_ConfigSpectrumCalc.processCategory  = IProcess::PROCESS_SPECTRUM_CALC;
+  m_ConfigSpectrumCalc.processID        = ASPLIB_SPECTRUM_CALCULATION_SquareRoot;
   m_ConfigSpectrumCalc.options.SaveStruct(NULL);
+
+  // configure spectrum remapping step
+  m_ConfigSpectrumRemapper.fmt.inFmt        = ASPLIB_FMT_NATIVE_FLOAT;
+  m_ConfigSpectrumRemapper.fmt.outFmt       = ASPLIB_FMT_NATIVE_FLOAT;
+  m_ConfigSpectrumRemapper.processCategory  = IProcess::PROCESS_REMAPPER;
+  m_ConfigSpectrumRemapper.processID        = ASPLIB_REMAPPER_GammaCorrector;
+  m_ConfigSpectrumRemapper.options.SaveStruct(NULL);
 
   TLog10ScalerOptions Log10ScalerOptions;
   Log10ScalerOptions.use_dBFS_Scaling = true;
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_AXIS_SCALER, ASPLIB_AXIS_SCALER_Log10Scaler, true, &Log10ScalerOptions);
-  
-  AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_REMAPPER, ASPLIB_REMAPPER_GammaCorrector, true, NULL);
-  
+    
   AttackReleaseSmootherOptions attackReleaseOptions;
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_FFT_SMOOTHER, ASPLIB_FFT_SMOOTHER_AttackRelease, true, &attackReleaseOptions);
 }
+
 
 CSpectrumVisProcessorConfigurator::~CSpectrumVisProcessorConfigurator()
 {
@@ -103,6 +110,7 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigFFT(asplibFmt_t InFmt, aspli
   return ASPLIB_ERR_NO_ERROR;
 }
 
+
 ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumCalc(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options/* = NULL*/)
 {
   ASPLIB_ERR err = SetFmt(InFmt, OutFmt, m_ConfigSpectrumCalc.fmt);
@@ -119,6 +127,26 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumCalc(asplibFmt_t InF
 
   m_ConfigSpectrumCalc.processCategory  = IProcess::PROCESS_SPECTRUM_CALC;
   m_ConfigSpectrumCalc.processID        = ProcessID;
+  return ASPLIB_ERR_NO_ERROR;
+}
+
+
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumRemapper(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options/* = NULL*/)
+{
+  ASPLIB_ERR err = SetFmt(InFmt, OutFmt, m_ConfigSpectrumRemapper.fmt);
+  if (err != ASPLIB_ERR_NO_ERROR)
+  {
+    return err;
+  }
+
+  err = m_ConfigSpectrumRemapper.options.SaveStruct(Options);
+  if (err != ASPLIB_ERR_NO_ERROR)
+  {
+    return err;
+  }
+
+  m_ConfigSpectrumRemapper.processCategory  = IProcess::PROCESS_REMAPPER;
+  m_ConfigSpectrumRemapper.processID        = ProcessID;
   return ASPLIB_ERR_NO_ERROR;
 }
 

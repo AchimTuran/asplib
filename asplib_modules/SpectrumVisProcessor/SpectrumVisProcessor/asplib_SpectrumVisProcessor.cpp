@@ -45,7 +45,7 @@ CSpectrumVisProcessor::CSpectrumVisProcessor()
   m_PostProcessBuf[1] = NULL;
 
   m_FrameSize             = 0;
-  m_PostProcessFrameSize  = 0;
+  //m_PostProcessFrameSize  = 0;
   m_MaxProcessingSteps    = -1;
 }
 
@@ -56,19 +56,20 @@ CSpectrumVisProcessor::~CSpectrumVisProcessor()
 }
 
 
-ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Config, uint32_t FrameSize)
+ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Config, uint32_t FrameSize, uint32_t FFTFrameSize)
 {
-  if (FrameSize <= 0)
+  if (FrameSize <= 0 || FFTFrameSize <= 0 || FrameSize > FFTFrameSize)
   {
     return ASPLIB_ERR_INVALID_INPUT;
   }
   Destroy();
-  m_FrameSize = FrameSize;
+  m_FrameSize     = FrameSize;
+  m_FFTFrameSize  = FFTFrameSize;
 
   ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
 
   // create FFT window
-  err = CFFTWindowingFactory::CreateWindow(m_FrameSize, Config.m_ConfigFFTWindowing.FFTWindowID, m_FFTWindow);
+  err = CFFTWindowingFactory::CreateWindow(m_FFTFrameSize, Config.m_ConfigFFTWindowing.FFTWindowID, m_FFTWindow);
   if (err != ASPLIB_ERR_NO_ERROR)
   {
     Destroy();
@@ -84,7 +85,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
     return err;
   }
 
-  err = m_FFT->Create(m_FrameSize, Config.m_ConfigFFT.options);
+  err = m_FFT->Create(m_FFTFrameSize*2, Config.m_ConfigFFT.options);
   if (err != ASPLIB_ERR_NO_ERROR)
   {
     Destroy();
@@ -93,13 +94,12 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
   
   if (Config.OnlyPositiveFreqBins && m_FFT->InternalFrameSize() == m_FFT->OutFrameSize())
   {
-    m_PostProcessFrameSize = m_FFT->InternalFrameSize()/2;
+    m_RemapperFrameSize = m_FFT->InternalFrameSize() / 2;
   }
   else
   {
-    m_PostProcessFrameSize = m_FFT->OutFrameSize();
+    m_RemapperFrameSize = m_FFT->OutFrameSize();
   }
-  
 
   // create spectrum calculcation step
   err = CProcessFactoryCallbacks::Create(Config.m_ConfigSpectrumCalc.processCategory, Config.m_ConfigSpectrumCalc.processID, 
@@ -109,7 +109,29 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
     Destroy();
     return err;
   }
-  err = m_SpectrumCalc->Create(m_PostProcessFrameSize, Config.m_ConfigSpectrumCalc.options);
+  err = m_SpectrumCalc->Create(m_RemapperFrameSize, Config.m_ConfigSpectrumCalc.options);
+  if (err != ASPLIB_ERR_NO_ERROR)
+  {
+    Destroy();
+    return err;
+  }
+
+
+  // create spectrum remapping step
+  err = CProcessFactoryCallbacks::Create(Config.m_ConfigSpectrumRemapper.processCategory, Config.m_ConfigSpectrumRemapper.processID, 
+                                         Config.m_ConfigSpectrumRemapper.fmt.inFmt, Config.m_ConfigSpectrumRemapper.fmt.outFmt, m_SpectrumRemapper);
+  if (err != ASPLIB_ERR_NO_ERROR)
+  {
+    Destroy();
+    return err;
+  }
+  err = m_SpectrumRemapper->SetOutputFrameSize(m_FrameSize);
+  if (err != ASPLIB_ERR_NO_ERROR)
+  {
+    Destroy();
+    return err;
+  }
+  err = m_SpectrumRemapper->Create(m_RemapperFrameSize, Config.m_ConfigSpectrumRemapper.options);
   if (err != ASPLIB_ERR_NO_ERROR)
   {
     Destroy();
@@ -145,7 +167,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
       }
     }
 
-    err = p->Create(m_PostProcessFrameSize, Config.m_PostProcessSteps[ii].options);
+    err = p->Create(m_FrameSize, Config.m_PostProcessSteps[ii].options);
     if (err != ASPLIB_ERR_NO_ERROR)
     {
       CProcessFactoryCallbacks::Destroy(p);
@@ -168,10 +190,10 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
   }
 
   // create buffers
-  m_OutFFTBuf = new FrameBuffer_NativeCpxFloat(m_FrameSize, 1);
-  m_InBuf     = new FrameBuffer_NativeFloat(m_FrameSize, 1);
-  m_PostProcessBuf[0] = new FrameBuffer_NativeFloat(m_PostProcessFrameSize, 1);
-  m_PostProcessBuf[1] = new FrameBuffer_NativeFloat(m_PostProcessFrameSize, 1);
+  m_OutFFTBuf = new FrameBuffer_NativeCpxFloat(m_FFTFrameSize, 1);
+  m_InBuf     = new FrameBuffer_NativeFloat(m_FFTFrameSize, 1);
+  m_PostProcessBuf[0] = new FrameBuffer_NativeFloat(m_FrameSize, 1);
+  m_PostProcessBuf[1] = new FrameBuffer_NativeFloat(m_FrameSize, 1);
   
 
   return err;
@@ -248,7 +270,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Destroy()
 
 ASPLIB_ERR CSpectrumVisProcessor::GetPostProcessFrameSize(uint32_t &FrameSize)
 {
-  FrameSize = m_PostProcessFrameSize;
+  //FrameSize = m_PostProcessFrameSize; // TODO: Is this function needed?
   return ASPLIB_ERR_NO_ERROR;
 }
 }

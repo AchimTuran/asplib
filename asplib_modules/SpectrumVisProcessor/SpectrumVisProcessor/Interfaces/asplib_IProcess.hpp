@@ -57,6 +57,10 @@ public:
     m_ProcessType = Type;
   }
 
+  virtual ASPLIB_ERR SetOutputFrameSize(uint32_t OutputFrameSize)
+  {
+    return ASPLIB_ERR_NOT_IMPLEMENTED;
+  }
   virtual ASPLIB_ERR Create(uint32_t FrameSize, void *Options) = 0;
   virtual ASPLIB_ERR Process(void *In, void *Out) = 0;
   virtual ASPLIB_ERR Destroy() = 0;

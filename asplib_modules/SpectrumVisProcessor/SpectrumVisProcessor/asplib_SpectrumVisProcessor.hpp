@@ -48,11 +48,11 @@ public:
    * @brief Creates the SpectrumVisProcessor.
    *
    * @param Config SpectrumVisProcessor configuration. For more detaily see CSpectrumVisProcessorConfigurator.
-   * @param FrameSize Configures the frame size that is used by the FFT library.
-   * @remarks Some libraries don't support prime numbers as frame size.
+   * @param FrameSize Configures the output frame size.
+   * @param FFTFrameSize Configures the frame size that is used by the FFT library.
    * @return asplib error code. For more details see ASPLIB_ERR.
    */
-  ASPLIB_ERR Create(CSpectrumVisProcessorConfigurator &Config, uint32_t FrameSize);
+  ASPLIB_ERR Create(CSpectrumVisProcessorConfigurator &Config, uint32_t FrameSize, uint32_t FFTFrameSize=4096);
   
   /*!
    * @brief Call this method to process one frame. 
@@ -86,10 +86,13 @@ private:
   IProcess                **m_PostProcess;
   CFFTWindowFunctions     *m_FFTWindow;
   IFFT                    *m_FFT;
+  IProcess                *m_SpectrumRemapper;
   IProcess                *m_SpectrumCalc;
 
   uint32_t                      m_FrameSize;
-  uint32_t                      m_PostProcessFrameSize;
+  uint32_t                      m_FFTFrameSize;
+  uint32_t                      m_RemapperFrameSize;
+  //uint32_t                      m_PostProcessFrameSize;
   FrameBuffer_NativeFloat       *m_InBuf;
   FrameBuffer_NativeFloat       *m_PostProcessBuf[2];
   FrameBuffer_NativeCpxFloat    *m_OutFFTBuf;

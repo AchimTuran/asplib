@@ -160,6 +160,16 @@ public:
    * @remarks Make sure you have enough memory reserved for In and Out. For higher performance this method does no error checking.
    */
   ASPLIB_ERR ConfigSpectrumCalc(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options = NULL);
+
+  /*!
+   * @brief Call this method to process one frame. 
+   *
+   * @param In Input array pointer.
+   * @param Out Output array pointer.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   * @remarks Make sure you have enough memory reserved for In and Out. For higher performance this method does no error checking.
+   */
+  ASPLIB_ERR ConfigSpectrumRemapper(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options = NULL);
   
   /*!
    * @brief Call this method to process one frame. 
@@ -186,6 +196,7 @@ private:
   ConfigFFTWindowing_t  m_ConfigFFTWindowing;
   ConfigFFT_t           m_ConfigFFT;
   ProcessConfig_t       m_ConfigSpectrumCalc;
+  ProcessConfig_t       m_ConfigSpectrumRemapper;
   ProcessConfigVector_t m_PostProcessSteps;
   bool                  m_UserProcessingSteps;
 };
