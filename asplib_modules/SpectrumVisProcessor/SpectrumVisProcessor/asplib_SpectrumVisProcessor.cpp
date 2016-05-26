@@ -219,7 +219,8 @@ ASPLIB_ERR CSpectrumVisProcessor::Process(float *In, float *Out)
 
   m_FFT->FFT(m_InBuf->get_Frame(0), cpxSamples);
 
-  m_SpectrumCalc->Process(cpxSamples, inBuf);
+  m_SpectrumCalc->Process(cpxSamples, m_InBuf->get_Frame(0));
+  m_SpectrumRemapper->Process(m_InBuf->get_Frame(0), inBuf);
 
   if (m_MaxProcessingSteps >= 0)
   {
