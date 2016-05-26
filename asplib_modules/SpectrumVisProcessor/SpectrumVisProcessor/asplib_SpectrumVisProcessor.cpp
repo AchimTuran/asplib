@@ -245,6 +245,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Destroy()
   ASPLIB_FACTORY_FFT.Destroy(m_FFT);
   CFFTWindowingFactory::DestroyWindow(m_FFTWindow);
   CProcessFactoryCallbacks::Destroy(m_SpectrumCalc);
+  CProcessFactoryCallbacks::Destroy(m_SpectrumRemapper);
 
   for (IProcess::ProcessVector_t::iterator iter = m_ProcessVector.begin(); iter != m_ProcessVector.end(); ++iter)
   {
