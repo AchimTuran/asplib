@@ -39,7 +39,20 @@ public:
   TGammaCorrector() :
     IProcess(IProcess::PROCESS_REMAPPER)
   {
-    m_Gamma = 2.0;
+    m_FrameSize       = 0;
+    m_OutputFrameSize = 0;
+  }
+
+
+  virtual ASPLIB_ERR SetOutputFrameSize(uint32_t OutputFrameSize)
+  {
+    if (OutputFrameSize <= 0)
+    {
+      return ASPLIB_ERR_INVALID_INPUT;
+    }
+    m_OutputFrameSize = OutputFrameSize;
+
+    return ASPLIB_ERR_NO_ERROR;
   }
 
 
@@ -50,6 +63,10 @@ public:
       return ASPLIB_ERR_INVALID_INPUT;
     }
     m_FrameSize = FrameSize;
+    if (m_OutputFrameSize <= 0)
+    {
+      m_OutputFrameSize = m_FrameSize;
+    }
 
     if (Options)
     {
@@ -63,15 +80,31 @@ public:
 
       m_Gamma = options->Gamma;
     }
-
-    m_RemapperValues = new uint32_t[m_FrameSize];
-    
-    const long double num = 1.0 / (long double)m_FrameSize;
-    const long double invGamma = 1.0 / m_Gamma;
-    for (uint32_t ii = 0; ii < m_FrameSize; ii++)
+    else
     {
-      m_RemapperValues[ii] = (uint32_t)(pow(((long double)ii) * num, m_Gamma)*((long double)m_FrameSize));
+      TGammaCorrectorOptions options;
+      m_Gamma = options.Gamma;
     }
+
+    m_RemapperValues = new uint32_t[m_OutputFrameSize*2];
+    long double *tmpValues = new long double[m_OutputFrameSize];
+    
+    const long double num = 1.0 / (long double)m_OutputFrameSize;
+    const long double invGamma = 1.0 / m_Gamma;
+    for (uint32_t ii = 0; ii < m_OutputFrameSize; ii++)
+    {
+      tmpValues[ii] = (pow(((long double)ii)*num, invGamma)*((long double)m_FrameSize));
+    }
+
+    for (uint32_t ii = 0; ii < m_OutputFrameSize -1; ii++)
+    {
+      m_RemapperValues[ii*2]    = (uint32_t)(tmpValues[ii] + (long double)0.5);
+      m_RemapperValues[ii*2 +1] = (uint32_t)(tmpValues[ii+1]);
+    }
+    m_RemapperValues[m_OutputFrameSize*2 +1] = m_FrameSize;
+
+    delete tmpValues;
+    tmpValues = NULL;
 
     return ASPLIB_ERR_NO_ERROR;
   }
@@ -81,7 +114,8 @@ public:
   {
     T *input = (T*)In;
     T *output = (T*)Out;
-    for (uint32_t ii = 0; ii < m_FrameSize; ii++)
+    // TODO implement max search for a specific frequency band
+    for (uint32_t ii = 0; ii < m_OutputFrameSize; ii++)
     {
       output[ii] = input[m_RemapperValues[ii]];
     }
@@ -108,6 +142,7 @@ public:
 private:
   uint32_t    *m_RemapperValues;
   uint32_t    m_FrameSize;
+  uint32_t    m_OutputFrameSize;
   long double m_Gamma;
 };
 }
