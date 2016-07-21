@@ -1,11 +1,11 @@
 project(Biquad)
 
-set(SOURCES Biquad/apslib_BiquadFactory.cpp
-            Biquad/Biquad_Native/asplib_BiquadNative.cpp)
+set(SOURCES asplib/Biquad/apslib_BiquadFactory.cpp
+            asplib/Biquad/Biquad_Native/asplib_BiquadNative.cpp)
 
-set(HEADERS Biquad/apslib_BiquadFactory.h
-            Biquad/Biquad_Native/asplib_BiquadNative.h
-            Biquad/Interfaces/asplib_IBiquad.h)
+set(HEADERS asplib/Biquad/apslib_BiquadFactory.h
+            asplib/Biquad/Biquad_Native/asplib_BiquadNative.h
+            asplib/Biquad/Interfaces/asplib_IBiquad.h)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -13,8 +13,8 @@ asplib_source_group("${HEADERS}")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PUBLIC asplib::Core)

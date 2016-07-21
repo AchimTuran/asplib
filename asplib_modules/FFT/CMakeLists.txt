@@ -2,22 +2,22 @@ project(FFT)
 
 find_package(KissFFT REQUIRED)
 
-set(SOURCES FFT/asplib_FFTFactory.cpp
-            FFT/FFTWindowing/asplib_FFTWindowFunctions.cpp
-            FFT/FFTWindowing/asplib_FFTWindowingFactory.cpp)
+set(SOURCES asplib/FFT/asplib_FFTFactory.cpp
+            asplib/FFT/FFTWindowing/asplib_FFTWindowFunctions.cpp
+            asplib/FFT/FFTWindowing/asplib_FFTWindowingFactory.cpp)
 
-set(HEADERS FFT/FFTWindowing/asplib_FFTWindowFunctions.h
-            FFT/FFTWindowing/asplib_FFTWindowingFactory.h
-            FFT/Interfaces/asplib_IFFT.h
+set(HEADERS asplib/FFT/FFTWindowing/asplib_FFTWindowFunctions.h
+            asplib/FFT/FFTWindowing/asplib_FFTWindowingFactory.h
+            asplib/FFT/Interfaces/asplib_IFFT.h
 
-            FFT/asplib_FFTFactory.hpp
-            FFT/asplib_FFTOptions.hpp
-            FFT/Common/asplib_TZeroCpyConverter.hpp
-            FFT/KissFFT/asplib_KissFFTCpxOptions.hpp
-            FFT/KissFFT/asplib_KissFFTProducts.hpp
-            FFT/KissFFT/asplib_KissFFTRealOptions.hpp
-            FFT/KissFFT/asplib_TKissFFT.hpp
-            FFT/KissFFT/asplib_TRKissFFT.hpp)
+            asplib/FFT/asplib_FFTFactory.hpp
+            asplib/FFT/asplib_FFTOptions.hpp
+            asplib/FFT/Common/asplib_TZeroCpyConverter.hpp
+            asplib/FFT/KissFFT/asplib_KissFFTCpxOptions.hpp
+            asplib/FFT/KissFFT/asplib_KissFFTProducts.hpp
+            asplib/FFT/KissFFT/asplib_KissFFTRealOptions.hpp
+            asplib/FFT/KissFFT/asplib_TKissFFT.hpp
+            asplib/FFT/KissFFT/asplib_TRKissFFT.hpp)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -25,8 +25,8 @@ asplib_source_group("${HEADERS}")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PUBLIC asplib::Core KissFFT::KissFFT)

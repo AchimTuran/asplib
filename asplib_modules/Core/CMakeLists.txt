@@ -4,47 +4,48 @@ project(Core)
 # FIXME: Don't use globbing for source files
 # https://cmake.org/cmake/help/latest/command/file.html?highlight=glob#file
 
-set(SOURCES Core/Exceptions/asplib_StringException.cpp
-            Core/ExtendedStructs/asplib_ExtendedStructContainer.cpp
-            Core/ExtendedStructs/asplib_ExtendedStructs.cpp)
+set(SOURCES asplib/Core/Exceptions/asplib_StringException.cpp
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructContainer.cpp
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.cpp)
 
-set(HEADERS Core/Buffers/asplib_IBufferBase.h
-            Core/Buffers/asplib_ITBuffer.h
-            Core/Buffers/asplib_TBaseBuffer.h
-            Core/Buffers/asplib_TBaseFrameBuffer.h
-            Core/Buffers/asplib_TFrameBuffer.h
-            Core/Buffers/asplib_TFrameRingBuffer.h
-            Core/Buffers/asplib_TRingBuffer.h
-            Core/Constants_Typedefs/asplib_Constants.h
-            Core/Constants_Typedefs/asplib_Typedefs.h
-            Core/Exceptions/asplib_IException.h
-            Core/Exceptions/asplib_StringException.h
-            Core/os/asplib_os.h
-            Core/os/android/android_definitions.h
-            Core/os/darwin_ios/darwin_ios_definitions.h
-            Core/os/darwin_osx/darwin_osx_definitions.h
-            Core/os/freebsd/freebsd_definitions.h
-            Core/os/linux/linux_definitions.h
-            Core/os/raspberry_pi/raspberry_pi.h
-            Core/os/windows/windows_definitions.h
-            Core/Strings/asplib_stdStringUtils.h
+set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
+            asplib/Core/Buffers/asplib_ITBuffer.h
+            asplib/Core/Buffers/asplib_TBaseBuffer.h
+            asplib/Core/Buffers/asplib_TBaseFrameBuffer.h
+            asplib/Core/Buffers/asplib_TFrameBuffer.h
+            asplib/Core/Buffers/asplib_TFrameRingBuffer.h
+            asplib/Core/Buffers/asplib_TRingBuffer.h
+            asplib/Core/Constants_Typedefs/asplib_Constants.h
+            asplib/Core/Constants_Typedefs/asplib_Typedefs.h
+            asplib/Core/Exceptions/asplib_IException.h
+            asplib/Core/Exceptions/asplib_StringException.h
+            asplib/Core/os/asplib_os.h
+            asplib/Core/os/android/android_definitions.h
+            asplib/Core/os/darwin_ios/darwin_ios_definitions.h
+            asplib/Core/os/darwin_osx/darwin_osx_definitions.h
+            asplib/Core/os/freebsd/freebsd_definitions.h
+            asplib/Core/os/linux/linux_definitions.h
+            asplib/Core/os/raspberry_pi/raspberry_pi.h
+            asplib/Core/os/windows/windows_definitions.h
+            asplib/Core/Strings/asplib_stdStringUtils.h
 
-            Core/AutoFactory/asplib_TAutoFactory.hpp
-            Core/AutoFactory/asplib_TProductStatistics.hpp
-            Core/Buffers/asplib_BufferTypes.hpp
-            Core/Constants_Typedefs/asplib_DataFmtDefines.hpp
-            Core/Constants_Typedefs/asplib_ExtendedStructIDs.hpp
-            Core/ExtendedStructs/asplib_ExtendedStructContainer.hpp
-            Core/ExtendedStructs/asplib_ExtendedStructs.hpp)
+            asplib/Core/AutoFactory/asplib_TAutoFactory.hpp
+            asplib/Core/AutoFactory/asplib_TProductStatistics.hpp
+            asplib/Core/Buffers/asplib_BufferTypes.hpp
+            asplib/Core/Constants_Typedefs/asplib_DataFmtDefines.hpp
+            asplib/Core/Constants_Typedefs/asplib_ExtendedStructIDs.hpp
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructContainer.hpp
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.hpp)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
 
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+MESSAGE(STATUS "---Core Include = ${CMAKE_CURRENT_SOURCE_DIR}/asplib")
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 

@@ -1,9 +1,9 @@
 project(ComputeDeviceInfo)
 
-set(SOURCES ComputeDeviceInfo/asplib_CPUInfo.cpp)
+set(SOURCES asplib/ComputeDeviceInfo/asplib_CPUInfo.cpp)
 
-set(HEADERS ComputeDeviceInfo/asplib_CPUInfo.h
-            ComputeDeviceInfo/asplib_CPUInfo_types.h)
+set(HEADERS asplib/ComputeDeviceInfo/asplib_CPUInfo.h
+            asplib/ComputeDeviceInfo/asplib_CPUInfo_types.h)
       
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -11,8 +11,8 @@ asplib_source_group("${HEADERS}")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core)

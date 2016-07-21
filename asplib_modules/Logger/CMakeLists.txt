@@ -1,18 +1,18 @@
 project(Logger)
 
-set(SOURCES Logger/asplib_DefaultLogger.cpp
-            Logger/ILogger.cpp
-            Logger/LoggerFactory.cpp
-            Logger/LoggerFile.cpp
-            Logger/LoggerStdout.cpp
-            Logger/Logger_types.cpp)
+set(SOURCES asplib/Logger/asplib_DefaultLogger.cpp
+            asplib/Logger/ILogger.cpp
+            asplib/Logger/LoggerFactory.cpp
+            asplib/Logger/LoggerFile.cpp
+            asplib/Logger/LoggerStdout.cpp
+            asplib/Logger/Logger_types.cpp)
 
-set(HEADERS Logger/asplib_DefaultLogger.h
-            Logger/ILogger.h
-            Logger/LoggerFactory.h
-            Logger/LoggerFile.h
-            Logger/LoggerStdout.h
-            Logger/Logger_types.h)
+set(HEADERS asplib/Logger/asplib_DefaultLogger.h
+            asplib/Logger/ILogger.h
+            asplib/Logger/LoggerFactory.h
+            asplib/Logger/LoggerFile.h
+            asplib/Logger/LoggerStdout.h
+            asplib/Logger/Logger_types.h)
       
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -20,8 +20,8 @@ asplib_source_group("${HEADERS}")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core)

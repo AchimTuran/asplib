@@ -1,8 +1,8 @@
 project(IIR)
 
-set(SOURCES IIR/asplib_TFirstOrderFeedback.cpp)
+set(SOURCES asplib/IIR/asplib_TFirstOrderFeedback.cpp)
 
-set(HEADERS IIR/asplib_TFirstOrderFeedback.hpp)
+set(HEADERS asplib/IIR/asplib_TFirstOrderFeedback.hpp)
       
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -10,8 +10,8 @@ asplib_source_group("${HEADERS}")
 add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS})
 add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${PROJECT_NAME}
-                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                           PRIVATE asplib
+                           INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core)
