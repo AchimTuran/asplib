@@ -22,7 +22,7 @@
 
 
 #include "SpectrumVisProcessor/SpectrumCalculation/asplib_SpectrumCalculationFactory.hpp"
-#include "SpectrumCalculation/Common/asplib_SpectrumCalculationProducts.hpp"
+#include "SpectrumVisProcessor/SpectrumCalculation/Common/asplib_SpectrumCalculationProducts.hpp"
 
 using namespace std;
 
