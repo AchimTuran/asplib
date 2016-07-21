@@ -39,7 +39,7 @@ endfunction()
 function(asplib_install_module MODULE_NAME FILE_LIST FOLDER)
   foreach(_FILE ${FILE_LIST})
     # remove absolute path to this module
-    string(REPLACE "${CMAKE_SOURCE_DIR}/asplib_modules/${MODULE_NAME}/asplib/" "" _FILE "${_FILE}")
+    string(REPLACE "${CMAKE_SOURCE_DIR}/asplib_modules/${MODULE_NAME}/" "" _FILE "${_FILE}")
     get_filename_component(HEADERDIR ${_FILE} DIRECTORY)
         
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/${_FILE} DESTINATION ${FOLDER}/${HEADERDIR})
