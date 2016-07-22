@@ -30,7 +30,7 @@
 
 #include "FFT/Interfaces/asplib_IFFT.h"
 #include "FFT/KissFFT/asplib_KissFFTRealOptions.hpp"
-#include <KissFFT/kiss_fftr.h>
+#include <KissFFT/tools/kiss_fftr.h>
 
 #define KISS_FFT_INVERSE  1
 #define KISS_FFT_FORWARD  0
