@@ -72,16 +72,11 @@ if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
 
   if(${ASPLIB_KissFFT_BUILD})
     message(STATUS "Build of KissFFT is handled by asplib...")
-    file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX})
-    execute_process(COMMAND ${CMAKE_COMMAND}  -G "${CMAKE_GENERATOR}" "${CMAKE_SOURCE_DIR}/cmake/depends/KissFFT"
-                                              "-DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}"
-                                              ${DEPENDS_SRC_PREFIX}
-                                              ${OUTPUT_QUIET}
-                                              WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/depends/build")
-                        
-    execute_process(COMMAND ${CMAKE_COMMAND}  --build .
-                                              ${OUTPUT_QUIET}
-                                              WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/depends/build")
+    include(../cmake/gitCloneProject.cmake)
+    git_clone_project(PROJ                KissFFT
+                      GIT_REPOSITORY      https://github.com/AchimTuran/KissFFT
+                      GIT_TAG             master)
+    add_subdirectory(${KissFFT_SOURCE_DIR} ${KissFFT_BINARY_DIR})
   endif()
 
   add_subdirectory(FFT)

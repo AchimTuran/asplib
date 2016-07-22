@@ -1,6 +1,8 @@
 project(FFT)
 
-find_package(KissFFT REQUIRED)
+if(NOT KissFFT::KissFFT)
+  find_package(KissFFT REQUIRED)
+endif()
 
 set(SOURCES asplib/FFT/asplib_FFTFactory.cpp
             asplib/FFT/FFTWindowing/asplib_FFTWindowFunctions.cpp
@@ -27,6 +29,7 @@ add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME}
                            PRIVATE asplib
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
+                                     $<BUILD_INTERFACE:${KissFFT_SOURCE_DIR}>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 target_link_libraries(${PROJECT_NAME} PUBLIC asplib::Core KissFFT::KissFFT)
