@@ -1,6 +1,6 @@
 project(FFT)
 
-if(NOT KissFFT::KissFFT)
+if(NOT KissFFT_SOURCE_DIR)
   find_package(KissFFT REQUIRED)
 endif()
 
