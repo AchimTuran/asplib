@@ -37,9 +37,9 @@
 
 namespace asplib
 {
-typedef TdlbeerFFTSmoother<float, TdlbeerFeedbackTimeSmoother<float>> dlbeerFFTSmootherNativeFloat_t;
+typedef TdlbeerFFTSmoother<float, TdlbeerFeedbackTimeSmoother<float> > dlbeerFFTSmootherNativeFloat_t;
 CREATE_ASPLIB_FFT_SMOOTHER_CLASS(CdlbeerFFTSmoother_NativeFloat, ASPLIB_FFT_SMOOTHER_dlbeer, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, dlbeerFFTSmootherNativeFloat_t)
 
-typedef TAttackReleaseSmoother<float, TAttackReleaseFilter<float>> AttackReleaseFFTSmootherNativeFloat_t;
+typedef TAttackReleaseSmoother<float, TAttackReleaseFilter<float> > AttackReleaseFFTSmootherNativeFloat_t;
 CREATE_ASPLIB_FFT_SMOOTHER_CLASS(CAttackReleaseFFTSmoother_NativeFloat, ASPLIB_FFT_SMOOTHER_AttackRelease, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, AttackReleaseFFTSmootherNativeFloat_t)
 }
