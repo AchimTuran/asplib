@@ -50,7 +50,7 @@ target_include_directories(${PROJECT_NAME}
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "modules")
+set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "asplib modules")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
 
 # install all specific module files

@@ -34,15 +34,16 @@ namespace asplib
 {
 CSpectrumVisProcessor::CSpectrumVisProcessor()
 {
-  m_FFTWindow         = NULL;
-  m_FFT               = NULL;
-  m_SpectrumCalc      = NULL;
+  m_FFTWindow         = nullptr;
+  m_FFT               = nullptr;
+  m_SpectrumCalc      = nullptr;
 
-  m_InBuf             = NULL;
-  m_OutFFTBuf         = NULL;
-  m_PostProcess       = NULL;
-  m_PostProcessBuf[0] = NULL;
-  m_PostProcessBuf[1] = NULL;
+  m_InBuf             = nullptr;
+  m_OutFFTBuf         = nullptr;
+  m_PostProcess       = nullptr;
+  m_PostProcessBuf[0] = nullptr;
+  m_PostProcessBuf[1] = nullptr;
+  m_SpectrumRemapper  = nullptr;
 
   m_FrameSize             = 0;
   //m_PostProcessFrameSize  = 0;
