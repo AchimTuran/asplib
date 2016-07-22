@@ -46,6 +46,7 @@ MESSAGE(STATUS "---Core Include = ${CMAKE_CURRENT_SOURCE_DIR}/asplib")
 target_include_directories(${PROJECT_NAME}
                            PRIVATE asplib
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
+                                     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 

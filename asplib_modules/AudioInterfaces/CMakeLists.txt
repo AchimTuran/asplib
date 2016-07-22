@@ -11,6 +11,7 @@ set(HEADERS asplib/AudioInterfaces/PortAudio/asplib_IPortAudio.h)
 #target_include_directories(${PROJECT_NAME}
                            #PRIVATE asplib
                            #INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
+                                     #$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                      #$<INSTALL_INTERFACE:include>
                                      #$<INSTALL_INTERFACE:include/asplib>)
 #target_link_libraries(${PROJECT_NAME} PUBLIC asplib::Core)
