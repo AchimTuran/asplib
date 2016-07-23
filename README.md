@@ -8,7 +8,7 @@ Is a small and lightweight C++ library for digital signal processing.
 Projects using asplib
 -------
 * [adsp.xconvolver](https://github.com/AchimTuran/adsp.xconvolver) (Convolution Engine AudioDSP-Addon for Kodi with several platform optimizations)
-* [adsp.parametric.eq](https://github.com/AchimTuran/adsp.parametric.eq) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
+* [adsp.biquad.filters](https://github.com/AchimTuran/adsp.biquad.filters) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
 
 How to build aslpib
 -------
