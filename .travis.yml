@@ -2,9 +2,22 @@
 # Travis defaults to building on Ubuntu Precise. We need Trusty
 # in order to get up to date versions of cmake and g++
 #
+sudo: false
 language: cpp
-sudo: required
 dist: trusty
+compiler:
+  - gcc
+  - clang
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - clang
 
 #
 # The source is automatically checked out in $TRAVIS_BUILD_DIR
@@ -12,6 +25,6 @@ dist: trusty
 before_script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build && cd build
-  - cmake .. -DASPLIB_MODULES_TO_BUILD=SpectrumVisProcessor
+  - cmake .. -DASPLIB_MODULES_TO_BUILD=all
 
 script: make
