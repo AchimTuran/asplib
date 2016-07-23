@@ -33,7 +33,7 @@ namespace asplib
 class CFFTWindowingFactory
 {
 public:
-  static ASPLIB_ERR CreateWindow(int FrameSize, CFFTWindowFunctions::eFFT_WINDOW_ID FFTWindowID, CFFTWindowFunctions *&FFTWindow);
-  static ASPLIB_ERR DestroyWindow(CFFTWindowFunctions *&FFTWindow);
+  static ASPLIB_ERR CreateFFTWindow(int FrameSize, CFFTWindowFunctions::eFFT_WINDOW_ID FFTWindowID, CFFTWindowFunctions *&FFTWindow);
+  static ASPLIB_ERR DestroyFFTWindow(CFFTWindowFunctions *&FFTWindow);
 };
 }

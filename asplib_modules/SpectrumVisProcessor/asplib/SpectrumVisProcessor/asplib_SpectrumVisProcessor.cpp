@@ -70,7 +70,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
   ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
 
   // create FFT window
-  err = CFFTWindowingFactory::CreateWindow(m_FFTFrameSize, Config.m_ConfigFFTWindowing.FFTWindowID, m_FFTWindow);
+  err = CFFTWindowingFactory::CreateFFTWindow(m_FFTFrameSize, Config.m_ConfigFFTWindowing.FFTWindowID, m_FFTWindow);
   if (err != ASPLIB_ERR_NO_ERROR)
   {
     Destroy();
@@ -244,7 +244,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Process(float *In, float *Out)
 ASPLIB_ERR CSpectrumVisProcessor::Destroy()
 {
   ASPLIB_FACTORY_FFT.Destroy(m_FFT);
-  CFFTWindowingFactory::DestroyWindow(m_FFTWindow);
+  CFFTWindowingFactory::DestroyFFTWindow(m_FFTWindow);
   CProcessFactoryCallbacks::Destroy(m_SpectrumCalc);
   CProcessFactoryCallbacks::Destroy(m_SpectrumRemapper);
 

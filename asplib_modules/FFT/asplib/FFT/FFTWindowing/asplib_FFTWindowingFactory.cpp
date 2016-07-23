@@ -27,13 +27,13 @@
 
 namespace asplib
 {
-ASPLIB_ERR CFFTWindowingFactory::CreateWindow(int FrameSize, CFFTWindowFunctions::eFFT_WINDOW_ID FFTWindowID, CFFTWindowFunctions *&FFTWindowFunction)
+ASPLIB_ERR CFFTWindowingFactory::CreateFFTWindow(int FrameSize, CFFTWindowFunctions::eFFT_WINDOW_ID FFTWindowID, CFFTWindowFunctions *&FFTWindowFunction)
 {
   FFTWindowFunction = new CFFTWindowFunctions();
   ASPLIB_ERR err = FFTWindowFunction->Init(FrameSize, FFTWindowID);
   if(err != ASPLIB_ERR_NO_ERROR)
   {
-    DestroyWindow(FFTWindowFunction);
+    DestroyFFTWindow(FFTWindowFunction);
     // TODO: error code
     return err;
   }
@@ -43,7 +43,7 @@ ASPLIB_ERR CFFTWindowingFactory::CreateWindow(int FrameSize, CFFTWindowFunctions
 }
 
 
-ASPLIB_ERR CFFTWindowingFactory::DestroyWindow(CFFTWindowFunctions *&FFTWindowFunction)
+ASPLIB_ERR CFFTWindowingFactory::DestroyFFTWindow(CFFTWindowFunctions *&FFTWindowFunction)
 {
   if(FFTWindowFunction)
   {
