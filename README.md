@@ -1,4 +1,4 @@
-Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=Refactor)](https://travis-ci.org/AchimTuran/asplib)
+Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=add-spectrum-vis-processor)](https://travis-ci.org/AchimTuran/asplib)
 
 
 asplib (Achim's Signal Processing LIBrary)
