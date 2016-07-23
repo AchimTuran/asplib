@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
 project(asplib VERSION 1.0)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE 1)
+
+# Enable C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # TODO solve 'Enable C++ exceptions' to 'NO' and I got warning: warning C4530: C++ exception handler used, 
 #             but unwind semantics are not enabled. Specify /EHsc'
 # Solution: http://stackoverflow.com/questions/552695/how-can-i-switch-off-exception-handling-in-msvc
