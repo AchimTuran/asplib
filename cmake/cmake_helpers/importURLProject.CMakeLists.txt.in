@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.2)
+
+project(@DL_ARGS_PROJECT@-download NONE)
+
+include(ExternalProject)
+ExternalProject_Add(@DL_ARGS_PROJECT@-download
+                    @DL_ARGS_UNPARSED_ARGUMENTS@;UPDATE_DISCONNECTED 1
+                    SOURCE_DIR          "@DL_ARGS_SOURCE_DIR@"
+                    BINARY_DIR          "@DL_ARGS_BINARY_DIR@"
+                    DOWNLOAD_DIR        "@DL_ARGS_DOWNLOAD_DIR@"
+                    URL                 "@DL_ARGS_URL@/@DL_ARGS_DOWNLOAD_NAME@"
+                    CONFIGURE_COMMAND   ""
+                    BUILD_COMMAND       ""
+                    INSTALL_COMMAND     ""
+                    TEST_COMMAND        ""
+)
+

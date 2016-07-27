@@ -45,8 +45,34 @@ add_subdirectory(Core)
 set(ASPLIB_SUPPORTED_COMPONENTS "Core" CACHE INTERNAL "supported asplib modules")
 
 if(BUILD_AUDIOINTERFACES)
+  find_package(portaudio QUIET)
+  
+  if(NOT ASPLIB_PortAudio_BUILD) # only define this ASPLIB_PortAudio_BUILD once to determine if PortAudio is build by asplib or not
+    if(NOT ${portaudio_FOUND} OR ${ASPLIB_FORCE_DEPENCY_BUILDS})
+      set(ASPLIB_PortAudio_BUILD ON CACHE INTERNAL "If this variable is ON then asplib build system will build PortAudio else it should be handled outside of asplib")
+    else()
+      set(ASPLIB_PortAudio_BUILD OFF CACHE INTERNAL "If this variable is ON then asplib build system will build PortAudio else it should be handled outside of asplib")
+    endif()
+  endif()
+
+  if(${ASPLIB_PortAudio_BUILD})
+    if(MSVC)
+      set(PA_USE_WASAPI ON)
+      set(PA_USE_WDMKS ON)
+      set(PA_USE_WMME ON)
+      set(PA_UNICODE_BUILD ON)
+    endif()
+  
+    message(STATUS "Build of PortAudio is handled by asplib...")
+    include(../cmake/cmake_helpers/importURLProject.cmake)
+    importURLProject(PROJECT portaudio
+                     URL "http://www.portaudio.com/archives"
+                     DOWNLOAD_NAME "pa_stable_v19_20140130.tgz")
+    add_subdirectory(${portaudio_SOURCE_DIR})
+  endif()
+
   add_subdirectory(AudioInterfaces)
-  #set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};AudioInterfaces" CACHE INTERNAL "supported asplib modules")
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};AudioInterfaces" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_BIQUAD)
