@@ -68,6 +68,7 @@ if(BUILD_AUDIOINTERFACES)
     importURLProject(PROJECT portaudio
                      URL "http://www.portaudio.com/archives"
                      DOWNLOAD_NAME "pa_stable_v19_20140130.tgz")
+    set(portaudio_INCLUDE_DIRS "${portaudio_SOURCE_DIR}/include")
     add_subdirectory(${portaudio_SOURCE_DIR} ${portaudio_BINARY_DIR})
     set_property(TARGET portaudio PROPERTY FOLDER "contrib")
     set_property(TARGET portaudio_static PROPERTY FOLDER "contrib")
