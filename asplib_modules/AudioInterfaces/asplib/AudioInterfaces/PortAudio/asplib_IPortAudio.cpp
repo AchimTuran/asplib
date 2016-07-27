@@ -22,7 +22,7 @@
 
 
 
-#include "AudioInterfaces/asplib_IPortAudio.h"
+#include "AudioInterfaces/PortAudio/asplib_IPortAudio.h
 
 #include <iostream>
 #include <string.h>
