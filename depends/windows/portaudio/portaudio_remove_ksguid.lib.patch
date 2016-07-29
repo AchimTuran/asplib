@@ -1,0 +1,15 @@
+--- src/os/win/pa_win_wdmks_utils.c	2016-07-28 07:47:50.372227100 +0200
++++ src/os/win/pa_win_wdmks_utils.c	2016-07-28 00:44:44.492645300 +0200
+@@ -67,9 +67,9 @@
+ #include "pa_win_wdmks_utils.h"
+ 
+ #if !defined(PA_WDMKS_NO_KSGUID_LIB) && !defined(PAWIN_WDMKS_NO_KSGUID_LIB) && !defined(__GNUC__)
+-    #if (defined(WIN32) && (defined(_MSC_VER) && (_MSC_VER >= 1200))) /* MSC version 6 and above */
+-        #pragma comment( lib, "ksguid.lib" )
+-    #endif
++    //#if (defined(WIN32) && (defined(_MSC_VER) && (_MSC_VER >= 1200))) /* MSC version 6 and above */
++    //    #pragma comment( lib, "ksguid.lib" )
++    //#endif
+     #define pa_KSDATAFORMAT_TYPE_AUDIO            KSDATAFORMAT_TYPE_AUDIO
+     #define pa_KSDATAFORMAT_SUBTYPE_IEEE_FLOAT    KSDATAFORMAT_SUBTYPE_IEEE_FLOAT
+     #define pa_KSDATAFORMAT_SUBTYPE_PCM           KSDATAFORMAT_SUBTYPE_PCM
