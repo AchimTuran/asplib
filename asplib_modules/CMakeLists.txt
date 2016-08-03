@@ -60,6 +60,7 @@ if(BUILD_AUDIOINTERFACES)
       set(PA_USE_WASAPI ON)
       set(PA_USE_WDMKS ON)
       set(PA_USE_WMME ON)
+      #set(PA_USE_ASIO ON)
       set(PA_UNICODE_BUILD ON)
     endif()
   

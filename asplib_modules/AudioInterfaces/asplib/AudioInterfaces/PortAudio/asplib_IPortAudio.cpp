@@ -440,6 +440,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
 {
 #if defined(TARGET_WINDOWS)
   // configure HostAPI audio channels
+#if defined(PA_USE_ASIO)
   if(m_UsedOutputHostAPI == paASIO)
   { // Configure ASIO device
     m_OutputParameters.hostApiSpecificStreamInfo = new PaAsioStreamInfo;
@@ -457,7 +458,9 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
       ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors[ch] = ch;
     }
   }
-  else if(m_UsedOutputHostAPI == paWASAPI)
+  else 
+#endif
+  if(m_UsedOutputHostAPI == paWASAPI)
   {
     if(m_OutputParameters.channelCount < m_OutputDeviceInfo.deviceInfo->maxOutputChannels)
     { // try to set WASAPI exclusive mode
@@ -488,6 +491,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
   }
 
   // configure device latency/bufferSize
+#if defined(PA_USE_ASIO)
   if(m_UsedOutputHostAPI == paASIO)
   {
     long minBufferSizeFrames;
@@ -528,6 +532,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
   }
   else
   {
+#endif
     if(FrameSize <= 0)
     {
       m_OutputFrameSize = 2048;
@@ -536,8 +541,9 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
     {
       m_OutputFrameSize = FrameSize;
     }
-
+#if defined(PA_USE_ASIO)
   }
+#endif
 #endif
 
   return paNoError;
@@ -547,6 +553,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
 {
 #if defined(TARGET_WINDOWS)
   // configure HostAPI audio channels
+#if defined(PA_USE_ASIO)
   if(m_UsedInputHostAPI == paASIO)
   { // Configure ASIO device
     m_InputParameters.hostApiSpecificStreamInfo = new PaAsioStreamInfo;
@@ -564,7 +571,9 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
       ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors[ch] = ch;
     }
   }
-  else if(m_UsedInputHostAPI == paWASAPI)
+  else 
+#endif
+  if(m_UsedInputHostAPI == paWASAPI)
   {
     if(m_InputParameters.channelCount < m_InputDeviceInfo.deviceInfo->maxInputChannels)
     { // try to set WASAPI exclusive mode
@@ -595,6 +604,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
   }
 
   // configure device latency/bufferSize
+#if defined(PA_USE_ASIO)
   if(m_UsedInputHostAPI == paASIO)
   {
     long minBufferSizeFrames;
@@ -635,6 +645,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
   }
   else
   {
+#endif
     if(FrameSize <= 0)
     {
       FrameSize = 2048;
@@ -643,8 +654,9 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
     {
       m_InputFrameSize = FrameSize;
     }
-
+#if defined(PA_USE_ASIO)
   }
+#endif
 #endif
 
 
@@ -697,6 +709,7 @@ void IPortAudio::DestroyValues()
     switch(m_UsedOutputHostAPI)
     {
 #if defined(TARGET_WINDOWS)
+#if defined(PA_USE_ASIO)
     case paASIO:
     if(((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors)
     {
@@ -704,6 +717,7 @@ void IPortAudio::DestroyValues()
       ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
     }
     break;
+#endif
 #endif
     }
 
@@ -716,6 +730,7 @@ void IPortAudio::DestroyValues()
     switch(m_UsedInputHostAPI)
     {
 #if defined(TARGET_WINDOWS)
+#if defined(PA_USE_ASIO)
     case paASIO:
     if(((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors)
     {
@@ -723,6 +738,7 @@ void IPortAudio::DestroyValues()
       ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
     }
     break;
+#endif
 #endif
     }
 
