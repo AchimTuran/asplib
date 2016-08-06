@@ -206,7 +206,6 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       else
       {
         m_InputDeviceInfo.paDeviceIdx = Pa_GetDefaultInputDevice();
-        m_InputParameters.device = m_InputDeviceInfo.paDeviceIdx;
       }
     }
     else
@@ -214,6 +213,7 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       m_InputDeviceInfo.paDeviceIdx = InDeviceID;
     }
 
+    m_InputParameters.device = m_InputDeviceInfo.paDeviceIdx;
     m_InputDeviceInfo.deviceName = m_InputDeviceInfo.deviceInfo->name;
     m_InputParameters.sampleFormat = Format;
 
@@ -245,14 +245,13 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
     if(!Pa_GetDeviceInfo(OutDeviceID))
     { // try to get default device
       m_OutputDeviceInfo.deviceInfo = (PaDeviceInfo*)Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice());
-      if(!m_InputDeviceInfo.deviceInfo)
+      if (!m_OutputDeviceInfo.deviceInfo)
       {
         return paInvalidDevice;
       }
       else
       {
         m_OutputDeviceInfo.paDeviceIdx = Pa_GetDefaultOutputDevice();
-        m_OutputParameters.device = m_OutputDeviceInfo.paDeviceIdx;
       }
     }
     else
@@ -260,6 +259,7 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       m_OutputDeviceInfo.paDeviceIdx = OutDeviceID;
     }
 
+    m_OutputParameters.device = m_OutputDeviceInfo.paDeviceIdx;
     m_OutputDeviceInfo.deviceName = m_OutputDeviceInfo.deviceInfo->name;
     m_OutputParameters.sampleFormat = Format;
     PaError paErr = configure_OutputDevice(OutputDeviceBufferSize);
@@ -691,8 +691,8 @@ void IPortAudio::CreateAvailableDevicesList()
 void IPortAudio::ResetValues()
 {
   m_SampleFrequency = -1.0;
-  m_InputFrameSize  = -1;
-  m_OutputFrameSize = -1;
+  m_InputFrameSize  = 0;
+  m_OutputFrameSize = 0;
   m_PaStream        = NULL;
 
   m_UsedOutputHostAPI = paInDevelopment;
