@@ -162,12 +162,12 @@ public:
 
     if (!m_SymmetricSpectrum)
     {
-      m_OutFrameSize = m_InternalFrameSize/2 + 1;
+      m_OutFrameSize = m_InternalFrameSize/2;
     }
     else
     {
       m_OutFrameSize = m_InternalFrameSize;
-      SymmetricSpectrumStart = m_InternalFrameSize / 2 + 1;
+      SymmetricSpectrumStart = m_InternalFrameSize/2 +1;
     }
 
     if (m_InternalFrameSize < m_InFrameSize)
