@@ -40,8 +40,8 @@ struct AttackReleaseSmootherOptions : ASPLIB_EXTENDED_STRUCT(AttackReleaseSmooth
 
   AttackReleaseSmootherOptions() : ASPLIB_EXTENDED_STRUCT_REGISTER(ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions)
   {
-    ReleaseTime    = 0.01;   // default value is 10ms
-    AttackTime     = 0.001;  // default value is 1ms
+    ReleaseTime    = 0.000000001;   // default value is 10ms
+    AttackTime     = 0.00005;  // default value is 1ms
     UseAnalogConst = false;  // default is false to use the digital release time definition
   }
 };
