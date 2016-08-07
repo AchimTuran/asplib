@@ -101,7 +101,8 @@ public:
       m_RemapperValues[ii*2]    = (uint32_t)(tmpValues[ii] + (long double)0.5);
       m_RemapperValues[ii*2 +1] = (uint32_t)(tmpValues[ii+1]);
     }
-    m_RemapperValues[m_OutputFrameSize*2 +1] = m_FrameSize;
+    m_RemapperValues[m_OutputFrameSize*2 -2] = tmpValues[m_OutputFrameSize -1];
+    m_RemapperValues[m_OutputFrameSize*2 -1] = m_FrameSize;
 
     delete tmpValues;
     tmpValues = NULL;
@@ -117,7 +118,16 @@ public:
     // TODO implement max search for a specific frequency band
     for (uint32_t ii = 0; ii < m_OutputFrameSize; ii++)
     {
-      output[ii] = input[m_RemapperValues[ii]];
+      T maxVal = 0;
+      for (uint32_t jj = m_RemapperValues[ii*2]; jj < m_RemapperValues[ii*2 +1]; jj++)
+      {
+        if (input[jj] > maxVal)
+        {
+          maxVal = input[jj];
+        }
+      }
+
+      output[ii] = maxVal;
     }
 
     return ASPLIB_ERR_NO_ERROR;
