@@ -86,7 +86,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
     return err;
   }
 
-  err = m_FFT->Create(m_FFTFrameSize*2, Config.m_ConfigFFT.options);
+  err = m_FFT->Create(m_FFTFrameSize, Config.m_ConfigFFT.options);
   if (err != ASPLIB_ERR_NO_ERROR)
   {
     Destroy();
