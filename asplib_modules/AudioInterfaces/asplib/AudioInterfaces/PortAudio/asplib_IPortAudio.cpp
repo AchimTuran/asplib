@@ -22,7 +22,7 @@
 
 
 
-#include "AudioInterfaces/asplib_IPortAudio.h"
+#include "AudioInterfaces/PortAudio/asplib_IPortAudio.h"
 
 #include <iostream>
 #include <string.h>
@@ -206,7 +206,6 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       else
       {
         m_InputDeviceInfo.paDeviceIdx = Pa_GetDefaultInputDevice();
-        m_InputParameters.device = m_InputDeviceInfo.paDeviceIdx;
       }
     }
     else
@@ -214,6 +213,7 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       m_InputDeviceInfo.paDeviceIdx = InDeviceID;
     }
 
+    m_InputParameters.device = m_InputDeviceInfo.paDeviceIdx;
     m_InputDeviceInfo.deviceName = m_InputDeviceInfo.deviceInfo->name;
     m_InputParameters.sampleFormat = Format;
 
@@ -245,14 +245,13 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
     if(!Pa_GetDeviceInfo(OutDeviceID))
     { // try to get default device
       m_OutputDeviceInfo.deviceInfo = (PaDeviceInfo*)Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice());
-      if(!m_InputDeviceInfo.deviceInfo)
+      if (!m_OutputDeviceInfo.deviceInfo)
       {
         return paInvalidDevice;
       }
       else
       {
         m_OutputDeviceInfo.paDeviceIdx = Pa_GetDefaultOutputDevice();
-        m_OutputParameters.device = m_OutputDeviceInfo.paDeviceIdx;
       }
     }
     else
@@ -260,6 +259,7 @@ PaError IPortAudio::configure_Device( uint32_t MaxInCh, uint32_t MaxOutCh,
       m_OutputDeviceInfo.paDeviceIdx = OutDeviceID;
     }
 
+    m_OutputParameters.device = m_OutputDeviceInfo.paDeviceIdx;
     m_OutputDeviceInfo.deviceName = m_OutputDeviceInfo.deviceInfo->name;
     m_OutputParameters.sampleFormat = Format;
     PaError paErr = configure_OutputDevice(OutputDeviceBufferSize);
@@ -440,6 +440,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
 {
 #if defined(TARGET_WINDOWS)
   // configure HostAPI audio channels
+#if defined(PA_USE_ASIO)
   if(m_UsedOutputHostAPI == paASIO)
   { // Configure ASIO device
     m_OutputParameters.hostApiSpecificStreamInfo = new PaAsioStreamInfo;
@@ -457,7 +458,9 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
       ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors[ch] = ch;
     }
   }
-  else if(m_UsedOutputHostAPI == paWASAPI)
+  else 
+#endif
+  if(m_UsedOutputHostAPI == paWASAPI)
   {
     if(m_OutputParameters.channelCount < m_OutputDeviceInfo.deviceInfo->maxOutputChannels)
     { // try to set WASAPI exclusive mode
@@ -488,6 +491,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
   }
 
   // configure device latency/bufferSize
+#if defined(PA_USE_ASIO)
   if(m_UsedOutputHostAPI == paASIO)
   {
     long minBufferSizeFrames;
@@ -528,6 +532,7 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
   }
   else
   {
+#endif
     if(FrameSize <= 0)
     {
       m_OutputFrameSize = 2048;
@@ -536,8 +541,9 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
     {
       m_OutputFrameSize = FrameSize;
     }
-
+#if defined(PA_USE_ASIO)
   }
+#endif
 #endif
 
   return paNoError;
@@ -547,6 +553,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
 {
 #if defined(TARGET_WINDOWS)
   // configure HostAPI audio channels
+#if defined(PA_USE_ASIO)
   if(m_UsedInputHostAPI == paASIO)
   { // Configure ASIO device
     m_InputParameters.hostApiSpecificStreamInfo = new PaAsioStreamInfo;
@@ -564,7 +571,9 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
       ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors[ch] = ch;
     }
   }
-  else if(m_UsedInputHostAPI == paWASAPI)
+  else 
+#endif
+  if(m_UsedInputHostAPI == paWASAPI)
   {
     if(m_InputParameters.channelCount < m_InputDeviceInfo.deviceInfo->maxInputChannels)
     { // try to set WASAPI exclusive mode
@@ -595,6 +604,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
   }
 
   // configure device latency/bufferSize
+#if defined(PA_USE_ASIO)
   if(m_UsedInputHostAPI == paASIO)
   {
     long minBufferSizeFrames;
@@ -635,6 +645,7 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
   }
   else
   {
+#endif
     if(FrameSize <= 0)
     {
       FrameSize = 2048;
@@ -643,8 +654,9 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
     {
       m_InputFrameSize = FrameSize;
     }
-
+#if defined(PA_USE_ASIO)
   }
+#endif
 #endif
 
 
@@ -679,8 +691,8 @@ void IPortAudio::CreateAvailableDevicesList()
 void IPortAudio::ResetValues()
 {
   m_SampleFrequency = -1.0;
-  m_InputFrameSize  = -1;
-  m_OutputFrameSize = -1;
+  m_InputFrameSize  = 0;
+  m_OutputFrameSize = 0;
   m_PaStream        = NULL;
 
   m_UsedOutputHostAPI = paInDevelopment;
@@ -697,6 +709,7 @@ void IPortAudio::DestroyValues()
     switch(m_UsedOutputHostAPI)
     {
 #if defined(TARGET_WINDOWS)
+#if defined(PA_USE_ASIO)
     case paASIO:
     if(((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors)
     {
@@ -704,6 +717,7 @@ void IPortAudio::DestroyValues()
       ((PaAsioStreamInfo*)m_OutputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
     }
     break;
+#endif
 #endif
     }
 
@@ -716,6 +730,7 @@ void IPortAudio::DestroyValues()
     switch(m_UsedInputHostAPI)
     {
 #if defined(TARGET_WINDOWS)
+#if defined(PA_USE_ASIO)
     case paASIO:
     if(((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors)
     {
@@ -723,6 +738,7 @@ void IPortAudio::DestroyValues()
       ((PaAsioStreamInfo*)m_InputParameters.hostApiSpecificStreamInfo)->channelSelectors = NULL;
     }
     break;
+#endif
 #endif
     }
 
