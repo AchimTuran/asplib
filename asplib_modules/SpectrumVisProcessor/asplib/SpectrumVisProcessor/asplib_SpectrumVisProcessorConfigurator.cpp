@@ -30,7 +30,7 @@ namespace asplib
 CSpectrumVisProcessorConfigurator::CSpectrumVisProcessorConfigurator()
 {
   m_UserProcessingSteps = false;
-  OnlyPositiveFreqBins  = false;
+  OnlyPositiveFreqBins  = true;
 
   // configure spectrum calculatio step
   m_ConfigSpectrumCalc.fmt.inFmt        = ASPLIB_FMT_NATIVE_FLOAT;
@@ -46,12 +46,12 @@ CSpectrumVisProcessorConfigurator::CSpectrumVisProcessorConfigurator()
   m_ConfigSpectrumRemapper.processID        = ASPLIB_REMAPPER_GammaCorrector;
   m_ConfigSpectrumRemapper.options.SaveStruct(NULL);
 
-  TLog10ScalerOptions Log10ScalerOptions;
-  Log10ScalerOptions.use_dBFS_Scaling = true;
-  AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_AXIS_SCALER, ASPLIB_AXIS_SCALER_Log10Scaler, true, &Log10ScalerOptions);
-    
   AttackReleaseSmootherOptions attackReleaseOptions;
   AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_FFT_SMOOTHER, ASPLIB_FFT_SMOOTHER_AttackRelease, true, &attackReleaseOptions);
+
+  TLog10ScalerOptions Log10ScalerOptions;
+  Log10ScalerOptions.use_dBFS_Scaling = true;
+  AddPostProcessingStep(ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, IProcess::PROCESS_AXIS_SCALER, ASPLIB_AXIS_SCALER_Log10Scaler, true, &Log10ScalerOptions);    
 }
 
 
