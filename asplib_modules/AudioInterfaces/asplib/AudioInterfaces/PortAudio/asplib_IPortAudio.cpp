@@ -544,6 +544,15 @@ PaError IPortAudio::configure_OutputDevice(long FrameSize)
 #if defined(PA_USE_ASIO)
   }
 #endif
+#elif defined(TARGET_LINUX)
+    if(FrameSize <= 0)
+    {
+      m_OutputFrameSize = 2048;
+    }
+    else
+    {
+      m_OutputFrameSize = FrameSize;
+    }
 #endif
 
   return paNoError;
@@ -657,6 +666,15 @@ PaError IPortAudio::configure_InputDevice(long FrameSize)
 #if defined(PA_USE_ASIO)
   }
 #endif
+#elif defined(TARGET_LINUX)
+    if(FrameSize <= 0)
+    {
+      FrameSize = 2048;
+    }
+    else
+    {
+      m_InputFrameSize = FrameSize;
+    }
 #endif
 
 
