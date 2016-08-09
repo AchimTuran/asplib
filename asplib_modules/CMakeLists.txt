@@ -65,11 +65,15 @@ if(BUILD_AUDIOINTERFACES)
     endif()
   
     message(STATUS "Build of PortAudio is handled by asplib...")
-    include(../cmake/cmake_helpers/importURLProject.cmake)
-    importURLProject(PROJECT portaudio
-                     URL "http://www.portaudio.com/archives"
-                     DOWNLOAD_NAME "pa_stable_v19_20140130.tgz")
-    set(portaudio_INCLUDE_DIRS "${portaudio_SOURCE_DIR}/include")
+    include(../cmake/gitCloneProject.cmake)
+    git_clone_project(PROJ                portaudio
+                      GIT_REPOSITORY      https://github.com/kodi-adsp/portaudio_cmake
+                      GIT_TAG             cmake)
+    #include(../cmake/cmake_helpers/importURLProject.cmake)
+    #importURLProject(PROJECT portaudio
+    #                 URL "http://www.portaudio.com/archives"
+    #                 DOWNLOAD_NAME "pa_stable_v19_20140130.tgz")
+    #set(portaudio_INCLUDE_DIRS "${portaudio_SOURCE_DIR}/include")
     add_subdirectory(${portaudio_SOURCE_DIR} ${portaudio_BINARY_DIR})
     if(MSVC)
       message(STATUS "patching PortAudio")
