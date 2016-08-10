@@ -142,6 +142,14 @@ public:
   ASPLIB_ERR ConfigFFTWindowing(asplibFmt_t InFmt, asplibFmt_t OutFmt, CFFTWindowFunctions::eFFT_WINDOW_ID FFTWindowID, void* Options = NULL);
   
   /*!
+   * @brief Sets the options for the configured FFT window module.
+   *
+   * @param Options FFT window options.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   */
+  ASPLIB_ERR SetFFTWindowingOptions(void* Options);
+  
+  /*!
    * @brief Call this method to process one frame. 
    *
    * @param In Input array pointer.
@@ -152,6 +160,14 @@ public:
   ASPLIB_ERR ConfigFFT(asplibFmt_t InFmt, asplibFmt_t OutFmt, FFTLibID_t FFTLibID, void* Options = NULL);
   
   /*!
+   * @brief Sets the options for the configured FFT module.
+   *
+   * @param Options FFT options.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   */
+  ASPLIB_ERR SetFFTOptions(void *Options);
+  
+  /*!
    * @brief Call this method to process one frame. 
    *
    * @param In Input array pointer.
@@ -160,6 +176,14 @@ public:
    * @remarks Make sure you have enough memory reserved for In and Out. For higher performance this method does no error checking.
    */
   ASPLIB_ERR ConfigSpectrumCalc(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options = NULL);
+  
+  /*!
+   * @brief Sets the options for the configured spectrum calculation module.
+   *
+   * @param Options FFT window options.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   */
+  ASPLIB_ERR SetSpectrumCalcOptions(void* Options);
 
   /*!
    * @brief Call this method to process one frame. 
@@ -172,6 +196,14 @@ public:
   ASPLIB_ERR ConfigSpectrumRemapper(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options = NULL);
   
   /*!
+   * @brief Sets the options for the configured spectrum remapper module.
+   *
+   * @param Options Spectrum remapping options.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   */
+  ASPLIB_ERR SetSpectrumRemapperOptions(void* Options);
+  
+  /*!
    * @brief Call this method to process one frame. 
    *
    * @param In Input array pointer.
@@ -180,6 +212,15 @@ public:
    * @remarks Make sure you have enough memory reserved for In and Out. For higher performance this method does no error checking.
    */
   ASPLIB_ERR AddPostProcessingStep(asplibFmt_t InFmt, asplibFmt_t OutFmt, IProcess::ProcessTypes_t ProcessCategory, int32_t ProcessID, void* Options = NULL);
+
+  /*!
+   * @brief Sets the options for a specific post processing step. 
+   *
+   * @param Step Post processing step. Valid values are in the range of 1 ... added post processing steps.
+   * @param Options Post processing step options.
+   * @return asplib error code. For more details see ASPLIB_ERR.
+   */
+  ASPLIB_ERR SetPostProcessingOptions(uint32_t Step, void* Options);
 
   // If true, only the positive frequency bins are feed into the post processing chain.
   // Otherwise the whole spectrum is processed, which is symmetrical for real signals.

@@ -85,6 +85,11 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigFFTWindowing(asplibFmt_t InF
   return ASPLIB_ERR_NO_ERROR;
 }
 
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::SetFFTWindowingOptions(void* Options)
+{
+  return m_ConfigFFTWindowing.options.SaveStruct(Options);
+}
+
 
 ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigFFT(asplibFmt_t InFmt, asplibFmt_t OutFmt, FFTLibID_t FFTLibID, void* Options/* = NULL*/)
 {
@@ -110,6 +115,11 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigFFT(asplibFmt_t InFmt, aspli
   return ASPLIB_ERR_NO_ERROR;
 }
 
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::SetFFTOptions(void *Options)
+{
+  return m_ConfigFFT.options.SaveStruct(Options);
+}
+
 
 ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumCalc(asplibFmt_t InFmt, asplibFmt_t OutFmt, int32_t ProcessID, void* Options/* = NULL*/)
 {
@@ -128,6 +138,11 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumCalc(asplibFmt_t InF
   m_ConfigSpectrumCalc.processCategory  = IProcess::PROCESS_SPECTRUM_CALC;
   m_ConfigSpectrumCalc.processID        = ProcessID;
   return ASPLIB_ERR_NO_ERROR;
+}
+
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::SetSpectrumCalcOptions(void* Options)
+{
+  return m_ConfigSpectrumCalc.options.SaveStruct(Options);
 }
 
 
@@ -150,10 +165,25 @@ ASPLIB_ERR CSpectrumVisProcessorConfigurator::ConfigSpectrumRemapper(asplibFmt_t
   return ASPLIB_ERR_NO_ERROR;
 }
 
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::SetSpectrumRemapperOptions(void* Options)
+{
+  return m_ConfigSpectrumRemapper.options.SaveStruct(Options);
+}
+
 
 ASPLIB_ERR CSpectrumVisProcessorConfigurator::AddPostProcessingStep(asplibFmt_t InFmt, asplibFmt_t OutFmt, IProcess::ProcessTypes_t ProcessCategory, int32_t ProcessID, void* Options/* = NULL*/)
 {
   return AddPostProcessingStep(InFmt, OutFmt, ProcessCategory, ProcessID, false, Options);
+}
+
+ASPLIB_ERR CSpectrumVisProcessorConfigurator::SetPostProcessingOptions(uint32_t Step, void* Options)
+{
+  if (Step > m_PostProcessSteps.size() || Step <= 0)
+  {
+    return ASPLIB_ERR_INVALID_INPUT;
+  }
+
+  return m_PostProcessSteps[Step -1].options.SaveStruct(Options);
 }
 
 
