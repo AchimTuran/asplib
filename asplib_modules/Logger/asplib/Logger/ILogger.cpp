@@ -22,8 +22,9 @@
 
 
 
-#include "ILogger.h"
-#include "asplib_utils/exceptions/asplib_StringException.h"
+#include "Core/Exceptions/asplib_StringException.h"
+
+#include "Logger/ILogger.h"
 
 #include <stdarg.h>
 #include <string>

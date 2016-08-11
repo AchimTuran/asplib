@@ -21,7 +21,7 @@
  */
 
 
-#include "asplib_default_logger.h"
+#include "Logger/asplib_DefaultLogger.h"
 
 namespace asplib
 {

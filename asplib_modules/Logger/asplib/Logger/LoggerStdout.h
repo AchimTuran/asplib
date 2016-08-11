@@ -24,10 +24,11 @@
 
 
 
-#include "asplib_utils/os/asplib_base_os.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
-#include "ILogger.h"
-#include "Logger_types.h"
+#include "Core/os/asplib_os.h"
+#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+
+#include "Logger/ILogger.h"
+#include "Logger/Logger_types.h"
 
 #include <string>
 #include <stdio.h>
