@@ -25,8 +25,8 @@
 #include <iostream>
 using namespace std;
 
-#include "asplib_CPUTimer.h"
-#include "asplib_utils/constants_typedefs/asplib_constants.h"
+#include "Timer/asplib_CPUTimer.h"
+#include "Core/Constants_Typedefs/asplib_Constants.h"
 
 namespace asplib
 {
