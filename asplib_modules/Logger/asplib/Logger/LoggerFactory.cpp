@@ -24,9 +24,9 @@
 
 
 
-#include "LoggerFactory.h"
-#include "LoggerFile.h"
-#include "LoggerStdout.h"
+#include "Logger/LoggerFactory.h"
+#include "Logger/LoggerFile.h"
+#include "Logger/LoggerStdout.h"
 
 #include <vector>
 #include <string>
