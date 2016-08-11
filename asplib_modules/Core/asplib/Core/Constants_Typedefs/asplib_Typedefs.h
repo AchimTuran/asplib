@@ -24,6 +24,10 @@
 
 
 
+#include "Core/os/asplib_os.h"
+#include "Core/Constants_Typedefs/asplib_ExtendedStructIDs.hpp"
+
+
 // error definitions
 typedef int ASPLIB_ERR;
 #define ASPLIB_ERR_NO_ERROR         0x00000000
