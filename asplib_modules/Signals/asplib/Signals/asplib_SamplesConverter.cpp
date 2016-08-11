@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
@@ -24,7 +22,7 @@
 
 
 
-#include "samplesConverter.h"
+#include "Signals/asplib_SamplesConverter.h"
 #include <memory>
 #include <string.h>
 
