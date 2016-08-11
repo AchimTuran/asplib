@@ -1,3 +1,5 @@
+#FIXME: You can use https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html instead
+
 # - Multiarch support in object code library directories
 #
 # This module sets the following variable
