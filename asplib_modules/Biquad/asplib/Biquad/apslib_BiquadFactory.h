@@ -26,9 +26,10 @@
 // this module implements basic biquad filters 
 // for more details see: http://en.wikipedia.org/wiki/Digital_biquad_filter
 
-#include "asplib_utils/constants_typedefs/asplib_constants.h"
-#include "asplib_utils/constants_typedefs/asplib_typedefs.h"
-#include "asplib_utils/os/asplib_base_os.h"
+#include "Core/os/asplib_os.h"
+#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+#include "Core/Constants_Typedefs/asplib_Constants.h"
+
 
 namespace asplib
 {
