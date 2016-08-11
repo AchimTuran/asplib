@@ -196,7 +196,6 @@ ASPLIB_ERR CSpectrumVisProcessor::Create(CSpectrumVisProcessorConfigurator &Conf
   m_PostProcessBuf[0] = new FrameBuffer_NativeFloat(m_FrameSize, 1);
   m_PostProcessBuf[1] = new FrameBuffer_NativeFloat(m_FrameSize, 1);
   
-
   return err;
 }
 
@@ -273,7 +272,7 @@ ASPLIB_ERR CSpectrumVisProcessor::Destroy()
 
 ASPLIB_ERR CSpectrumVisProcessor::GetPostProcessFrameSize(uint32_t &FrameSize)
 {
-  //FrameSize = m_PostProcessFrameSize; // TODO: Is this function needed?
+  FrameSize = m_FrameSize;
   return ASPLIB_ERR_NO_ERROR;
 }
 }
