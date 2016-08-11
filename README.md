@@ -1,4 +1,4 @@
-Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=master)](https://travis-ci.org/AchimTuran/adsp.biquad.filters)
+Linux Master: [![Linux Build Status](https://travis-ci.org/AchimTuran/asplib.svg?branch=master)](https://travis-ci.org/AchimTuran/asplib)
 
 
 asplib (Achim's Signal Processing LIBrary)
@@ -8,7 +8,7 @@ Is a small and lightweight C++ library for digital signal processing.
 Projects using asplib
 -------
 * [adsp.xconvolver](https://github.com/AchimTuran/adsp.xconvolver) (Convolution Engine AudioDSP-Addon for Kodi with several platform optimizations)
-* [adsp.parametric.eq](https://github.com/AchimTuran/adsp.parametric.eq) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
+* [adsp.biquad.filters](https://github.com/kodi-adsp/adsp.biquad.filters) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
 
 How to build aslpib
 -------
@@ -18,7 +18,6 @@ Features
 -------
 * all needed functions for [BiQuad-Filter](http://en.wikipedia.org/wiki/Digital_biquad_filter) calculation
 * constant Q peaking filter coefficient calculation
-* Native (C++-Classes), SSE2, SSE3 and AVX-optimizations
 * Easy and well designed API
 
 Planned Features
@@ -32,4 +31,4 @@ Planned Features
 * Digital Delay Lines
 * Dynamic Processors (AGC, Compressor, Limiter, Expander and Noise-Gate)
 * Peak Level estimation
-
+* Native (C++-Classes), SSE2, SSE3 and AVX-optimizations
