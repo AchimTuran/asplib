@@ -2,16 +2,34 @@
 # Travis defaults to building on Ubuntu Precise. We need Trusty
 # in order to get up to date versions of cmake and g++
 #
-language: cpp
 sudo: required
+language: cpp
 dist: trusty
+compiler:
+  - gcc
+  - clang
+#install:
+#- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+addons:
+  apt: 
+    sources:
+    - ubuntu-toolchain-r-test
+    - llvm-toolchain-precise-3.6
+    - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+    packages:
+    # install toolchains
+    - cmake
+    - cmake-data
+    - gcc-5
+    - g++-5
+    - clang-3.6
 
 #
 # The source is automatically checked out in $TRAVIS_BUILD_DIR
 #
 before_script:
-  - cd $TRAVIS_BUILD_DIR/..
-  - cd asplib && mkdir build && cd build
-  - cmake .. -DCMAKE_INSTALL_PREFIX=$TRAVIS_BUILD_DIR/../install
+  - cd $TRAVIS_BUILD_DIR
+  - mkdir build && cd build
+  - cmake .. -DASPLIB_MODULES_TO_BUILD=all
 
 script: make
