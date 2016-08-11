@@ -1,8 +1,4 @@
 project(Core)
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
-# FIXME: Don't use globbing for source files
-# https://cmake.org/cmake/help/latest/command/file.html?highlight=glob#file
 
 set(SOURCES asplib/Core/Exceptions/asplib_StringException.cpp
             asplib/Core/ExtendedStructs/asplib_ExtendedStructContainer.cpp
@@ -25,7 +21,7 @@ set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
             asplib/Core/os/darwin_osx/darwin_osx_definitions.h
             asplib/Core/os/freebsd/freebsd_definitions.h
             asplib/Core/os/linux/linux_definitions.h
-            asplib/Core/os/raspberry_pi/raspberry_pi.h
+            asplib/Core/os/raspberry_pi/raspberry_pi_definitions.h
             asplib/Core/os/windows/windows_definitions.h
             asplib/Core/Strings/asplib_stdStringUtils.h
 
