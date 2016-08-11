@@ -92,7 +92,6 @@ private:
   uint32_t                      m_FrameSize;
   uint32_t                      m_FFTFrameSize;
   uint32_t                      m_RemapperFrameSize;
-  //uint32_t                      m_PostProcessFrameSize;
   FrameBuffer_NativeFloat       *m_InBuf;
   FrameBuffer_NativeFloat       *m_PostProcessBuf[2];
   FrameBuffer_NativeCpxFloat    *m_OutFFTBuf;
