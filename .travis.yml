@@ -23,6 +23,9 @@ addons:
     - gcc-5
     - g++-5
     - clang-3.6
+    - libasound2-dev
+    - alsa-utils
+    - alsa-oss
 
 #
 # The source is automatically checked out in $TRAVIS_BUILD_DIR
