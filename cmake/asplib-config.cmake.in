@@ -1,0 +1,13 @@
+@PACKAGE_INIT@
+
+include(${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-targets.cmake)
+
+#  asplib_INCLUDE_DIRS - header directories with which to compile
+#  asplib_LIBRARIES    - names of the libraries with which to link
+
+set(_asplib_supported_components "@ASPLIB_SUPPORTED_COMPONENTS@")
+
+# TODO: components
+#set(asplib_LIBRARIES asplib::Core asplib::FFT asplib::SpectrumVisProcessor)
+#set(asplib_LIBRARIES asplib::SpectrumVisProcessor)
+

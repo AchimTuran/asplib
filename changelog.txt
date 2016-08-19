@@ -1,3 +1,14 @@
+1.0.0 alpha
+- Refactor file structure
+- Added better CMake support with automatic dependency integration and build
+- Added Linux support for the PortAudio interface classes
+- Added FFT wrapper module
+- Added SpectrumVisProcessor (AxisScaler, FFTSmoother, Remapper and SpectrumCalculation) module
+- Reimplementation of buffer classes
+- Options interface through ExtendedStructs implementation
+- Added Factory template with automatic object registration
+- Added IIR module
+
 0.0.2
 - Support for Android, OS X, iOS, freebsd and Raspberry Pi
 
