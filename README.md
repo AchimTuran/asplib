@@ -9,11 +9,7 @@ Projects using asplib
 -------
 * [adsp.xconvolver](https://github.com/AchimTuran/adsp.xconvolver) (Convolution Engine AudioDSP-Addon for Kodi with several platform optimizations)
 * [adsp.biquad.filters](https://github.com/kodi-adsp/adsp.biquad.filters) (Graphical Equalizer AudioDSP-Addon for Kodi with several platform optimizations)
-
-How to build aslpib
--------
-- Under Windows add system variable "MATLAB_PATH" to build Matlab dll.
-
+* [PictureIt](https://github.com/linuxwhatelse/PictureIt/) (Gaphics library to render images and audio spectrum which is used by [visualization.pictureit](https://github.com/linuxwhatelse/visualization.pictureit))
 Features
 -------
 * all needed functions for [BiQuad-Filter](http://en.wikipedia.org/wiki/Digital_biquad_filter) calculation
