@@ -11,7 +11,7 @@ include(cmake/asplib_helpers.cmake)
 set(asplib_NAME asplib)
 set(asplib_DESCRIPTION "asplib (Achim's Signal Processing LIBrary), is a small and lightweight C++ library for digital signal processing.")
 set(asplib_VERSION_MAJOR 0)
-set(asplib_VERSION_MINOR 2)
+set(asplib_VERSION_MINOR 3)
 set(asplib_VERSION_PATCH 0)
 
 if(NOT WIN32)
