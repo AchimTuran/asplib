@@ -26,6 +26,35 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
+#include "Dynamics/Compressor/asplib_DynamicsCompressorOptions.hpp"
+
+#include "Dynamics/Interfaces/asplib_IDynamics.hpp"
 
 
+namespace asplib
+{
+class CCompressor : public IDynamics
+{
+public:
+  CCompressor();
+  ~CCompressor();
 
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr);
+  virtual ASPLIB_ERR Process(void *In, void *Out);
+  virtual ASPLIB_ERR Destroy();
+
+private:
+  uint32_t m_FrameSize;
+  uint32_t m_SampleFrequency;
+
+  float m_AlphaRelease;
+  float m_AlphaAttack;
+  float m_Threshold;
+  float m_CompressionRatio;
+
+  float m_Array[1000];
+
+  float m_yL_old;
+  CompressorOptions::eGainCurve_t m_GainCurve;
+};
+}
