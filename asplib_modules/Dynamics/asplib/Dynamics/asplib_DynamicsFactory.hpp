@@ -26,6 +26,51 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
+#include "Core/Constants_Typedefs/asplib_DataFmtDefines.hpp"
+#include "Core/AutoFactory/asplib_TAutoFactory.hpp"
 
+#include "Dynamics/Interfaces/asplib_IDynamics.hpp"
+
+
+#define CREATE_ASPLIB_DYNAMICS_CLASS(Class, ClassID, InFmt, OutFmt, DynamicsObject)       \
+class Class :                                                                             \
+  public TDynamicsFactory::TRegisterProduct<Class, ClassID, InFmt, OutFmt>,               \
+  public DynamicsObject                                                                   \
+{                                                                                         \
+public:                                                                                   \
+  Class() {}                                                                              \
+};
+
+#define ASPLIB_FACTORY_DYNAMICS asplib::CDynamicsFactory()
+
+
+namespace asplib
+{
+class CDynamicsFactoryMetaData
+{
+public:
+  const static std::string Name;
+};
+
+
+typedef enum DynamicsID_t
+{
+  ASPLIB_DYNAMICS_INVALID_ID = -1,
+
+  ASPLIB_DYNAMICS_Compressor,
+
+  ASPLIB_DYNAMICS_MAX_ID
+}DynamicsID_t;
+
+
+typedef TAutoFactory<IDynamics, DynamicsID_t, asplibFmt_t, CDynamicsFactoryMetaData> TDynamicsFactory;
+
+class CDynamicsFactory : public TDynamicsFactory
+{
+public:
+  CDynamicsFactory();
+  ~CDynamicsFactory();
+};
+}
 
 

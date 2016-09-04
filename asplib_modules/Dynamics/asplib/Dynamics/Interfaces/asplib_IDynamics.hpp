@@ -27,5 +27,12 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 
-
-
+namespace asplib
+{
+class IDynamics
+{
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr) = 0;
+  virtual ASPLIB_ERR Process(void *In, void *Out) = 0;
+  virtual ASPLIB_ERR Destroy() = 0;
+};
+}

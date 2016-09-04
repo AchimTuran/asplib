@@ -26,6 +26,12 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
+#include "Dynamics/asplib_DynamicsFactory.hpp"
+
+#include "Dynamics/Compressor/asplib_DynamicsCompressor.hpp"
 
 
-
+namespace asplib
+{
+CREATE_ASPLIB_DYNAMICS_CLASS(CCompressor_NativeFloat, ASPLIB_DYNAMICS_Compressor, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, CCompressor)
+}

@@ -23,9 +23,27 @@
 
 
 
-#include "Core/os/asplib_os.h"
-#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+#include "Dynamics/asplib_DynamicsFactory.hpp"
+#include "Dynamics/Common/asplib_DynamicsProducts.hpp"
+
+using namespace std;
 
 
+namespace asplib
+{
+const string CDynamicsFactoryMetaData::Name = "CDynamicsFactory";
+
+
+CDynamicsFactory::CDynamicsFactory()
+{
+}
+
+
+CDynamicsFactory::~CDynamicsFactory()
+{
+}
+
+template class TAutoFactory<IDynamics, DynamicsID_t, asplibFmt_t, CDynamicsFactoryMetaData>;
+}
 
 

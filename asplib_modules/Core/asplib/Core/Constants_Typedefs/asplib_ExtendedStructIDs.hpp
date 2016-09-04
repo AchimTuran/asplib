@@ -49,6 +49,9 @@ typedef enum
   // Resampling options
   ASPLIB_EXTENDED_STRUCT_DecimatorOptions,
 
+  // Dynamics options
+  ASPLIB_EXTENDED_STRUCT_CompressorOptions,
+
   ASPLIB_EXTENDED_STRUC_MAX_ID = -1
 }asplibExtendedStructIDs_t;
 }

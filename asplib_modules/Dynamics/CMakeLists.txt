@@ -1,13 +1,15 @@
 project(Dynamics)
 
 set(SOURCES asplib/Dynamics/asplib_DynamicsFactory.cpp
-            asplib/Dynamics/Compressor/asplib_Compressor.cpp)
+            asplib/Dynamics/Compressor/asplib_DynamicsCompressor.cpp)
 
-set(HEADERS asplib/Dynamics/Compressor/asplib_Compressor.hpp
-            asplib/Dynamics/Compressor/asplib_CompressorOptions.hpp
+set(HEADERS asplib/Dynamics/Compressor/asplib_DynamicsCompressor.hpp
+            asplib/Dynamics/Compressor/asplib_DynamicsCompressorOptions.hpp
             asplib/Dynamics/Common/asplib_DynamicsProducts.hpp
+            asplib/Dynamics/Interfaces/asplib_IDynamics.hpp
             asplib/Dynamics/asplib_DynamicsFactory.hpp
-            asplib/Dynamics/asplib_DynamicsFactory.hpp)
+            asplib/Dynamics/asplib_DynamicsFactory.hpp
+            asplib/Dynamics/asplib_DynamicsOptions.hpp)
       
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
