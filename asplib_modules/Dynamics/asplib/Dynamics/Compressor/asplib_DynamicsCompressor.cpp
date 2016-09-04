@@ -95,7 +95,7 @@ ASPLIB_ERR CCompressor::Process(void *In, void *Out)
   float *out = static_cast<float*>(Out);
 
   float xT  = 0.0f;
-  float eps = 0.0f;
+  float eps = E_m12;
   float xG  = 0.0f;
   float yG  = 0.0f;
   float yL  = 0.0f;
@@ -129,7 +129,8 @@ ASPLIB_ERR CCompressor::Process(void *In, void *Out)
     }
 
     // peak detection
-    if (xG - yG)
+    xL = xG - yG;
+    if (xL > m_yL_old)
     {
       yL = m_AlphaAttack*m_yL_old +  (1.0f - m_AlphaAttack)*xL;
     }
