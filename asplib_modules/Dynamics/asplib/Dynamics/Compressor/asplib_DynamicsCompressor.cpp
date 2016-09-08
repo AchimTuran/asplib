@@ -39,6 +39,7 @@ CCompressor::CCompressor()
   m_AlphaAttack       = 0.0f;
   m_Threshold        = 0.0f;
   m_CompressionRatio = 0.0f;
+  m_yL_old           = 0.0f;
 }
 
 
