@@ -65,7 +65,7 @@ private:
   class CProductKeyCmp
   {
   public:
-    bool operator()(const ProductKey_t &Obj1, const ProductKey_t &Obj2)
+    bool operator()(const ProductKey_t &Obj1, const ProductKey_t &Obj2) const
     {
       return  Obj1.ProductID < Obj2.ProductID || (Obj1.ProductID == Obj2.ProductID  && Obj1.FmtIn < Obj2.FmtIn) &&
               Obj1.FmtIn < Obj2.FmtIn         || (Obj1.FmtIn == Obj2.FmtIn          && Obj1.FmtOut < Obj2.FmtOut);
