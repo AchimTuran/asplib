@@ -43,6 +43,13 @@ typedef enum
   ASPLIB_FMT_MAX
 }asplibFmt_t;
 
-typedef float asplibFmt_NativeCPXFloat[2];
 typedef float asplibFmt_NativeFloat;
+
+typedef struct asplibFmt_NativeCPXFloat
+{
+  float r;
+  float i;
+  inline asplibFmt_NativeCPXFloat(float R, float I) : r(R), i(I) {}
+  inline asplibFmt_NativeCPXFloat() : r(0.0f), i(0.0f) {}
+}asplibFmt_NativeCPXFloat;
 }
