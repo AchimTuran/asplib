@@ -31,7 +31,10 @@ set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
             asplib/Core/Constants_Typedefs/asplib_DataFmtDefines.hpp
             asplib/Core/Constants_Typedefs/asplib_ExtendedStructIDs.hpp
             asplib/Core/ExtendedStructs/asplib_ExtendedStructContainer.hpp
-            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.hpp)
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.hpp
+            
+            asplib/Core/ComplexVector/asplib_TComplexVector.hpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_NativeFloat.hpp)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
