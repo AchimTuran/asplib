@@ -20,7 +20,7 @@ target_include_directories(${PROJECT_NAME}
                                      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
-target_link_libraries(${PROJECT_NAME} PRIVATE asplib::Core asplib::FFT)
+target_link_libraries(${PROJECT_NAME} PUBLIC asplib::Core asplib::FFT)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY FOLDER "asplib modules")
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME asplib_${PROJECT_NAME})
