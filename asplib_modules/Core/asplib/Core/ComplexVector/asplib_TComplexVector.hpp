@@ -35,7 +35,7 @@ template<class T>
 class TComplexVector
 {
 public:
-  typedef typename complex_vector_type<T>::complex_type value_type;
+  typedef typename complex_vector_type<T>::complex_type type;
 
   // downcast operators
   inline T& operator()() { return *static_cast<T*>(this); }
@@ -48,7 +48,7 @@ public:
       return (*this)();
   }
 
-  inline T& operator+=(const value_type& rhs)
+  inline T& operator+=(const type& rhs)
   {
       (*this)() = (*this)() + T(rhs);
       return (*this)();
@@ -61,7 +61,7 @@ public:
     return (*this)();
   }
 
-  inline T& operator-=(const value_type& rhs)
+  inline T& operator-=(const type& rhs)
   {
     (*this)() = (*this)() - T(rhs);
     return (*this)();
@@ -75,7 +75,7 @@ public:
     return (*this)();
   }
 
-  inline T& operator*=(const value_type& rhs)
+  inline T& operator*=(const type& rhs)
   {
     (*this)() = (*this)() * T(rhs);
     return (*this)();
@@ -88,7 +88,7 @@ public:
     return (*this)();
   }
 
-  inline T& operator/=(const value_type& rhs)
+  inline T& operator/=(const type& rhs)
   {
     (*this)() = (*this)() / T(rhs);
     return (*this)();
@@ -99,13 +99,13 @@ public:
   inline T operator++(int)
   {
       T tmp = (*this)();
-      (*this) += value_type(1);
+      (*this) += type(1);
       return tmp;
   }
 
   inline T& operator++()
   {
-      (*this)() += value_type(1);
+      (*this)() += type(1);
       return (*this)();
   }
 
@@ -113,13 +113,13 @@ public:
   inline T operator--(int)
   {
     T tmp = (*this)();
-    (*this) += value_type(1);
+    (*this) += type(1);
     return tmp;
   }
 
   inline T& operator--()
   {
-    (*this)() += value_type(1);
+    (*this)() += type(1);
     return (*this)();
   }
 
