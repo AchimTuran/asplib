@@ -44,10 +44,12 @@ struct complex_vector_type<CComplexVector_NativeFloat>
 class CComplexVector_NativeFloat : public TComplexVector<CComplexVector_NativeFloat>
 {
 public:
-  inline CComplexVector_NativeFloat() {}
-  inline CComplexVector_NativeFloat(const float& f) : m_Value(f, f) {}
+  inline CComplexVector_NativeFloat() : m_Value(0.0f, 0.0f) {}
+  inline CComplexVector_NativeFloat(const float& f) : m_Value(f, 0.0f) {}
   inline CComplexVector_NativeFloat(const float& R, const float& I) : m_Value(R, I) {}
   inline CComplexVector_NativeFloat(const asplibFmt_NativeCPXFloat& rhs) : m_Value(rhs) {}
+
+  inline void Scale(const float& Val) { m_Value.r *= Val; m_Value.i *= Val; }
 
   inline CComplexVector_NativeFloat& operator=(const asplibFmt_NativeCPXFloat& rhs)
   {
@@ -55,11 +57,17 @@ public:
     return *this;
   }
 
+  static const uint32_t    vectorSize;
+  static const asplibFmt_t typeID;
+
   inline operator asplibFmt_NativeCPXFloat() const { return m_Value; }
 
 private:
   asplibFmt_NativeCPXFloat m_Value;
 };
+
+const uint32_t    CComplexVector_NativeFloat::vectorSize = 1;
+const asplibFmt_t CComplexVector_NativeFloat::typeID = ASPLIB_FMT_NATIVE_CPX_FLOAT;
 
 inline CComplexVector_NativeFloat operator+(const CComplexVector_NativeFloat& LHS, const CComplexVector_NativeFloat& RHS)
 {
@@ -88,6 +96,14 @@ inline CComplexVector_NativeFloat operator*(const CComplexVector_NativeFloat& LH
                                     lhs.r*rhs.i + lhs.i*rhs.r);
 }
 
+inline CComplexVector_NativeFloat& operator*(const CComplexVector_NativeFloat& LHS, const float& Val)
+{
+  const asplibFmt_NativeCPXFloat &lhs = LHS;
+
+  return CComplexVector_NativeFloat(lhs.r*Val,
+                                    lhs.i*Val);
+}
+
 inline CComplexVector_NativeFloat operator/(const CComplexVector_NativeFloat& LHS, const CComplexVector_NativeFloat& RHS)
 {
   const asplibFmt_NativeCPXFloat &lhs = LHS;
@@ -96,6 +112,6 @@ inline CComplexVector_NativeFloat operator/(const CComplexVector_NativeFloat& LH
   const float numerator = rhs.r*rhs.r + rhs.i*rhs.i;
 
   return CComplexVector_NativeFloat((lhs.r*rhs.r + lhs.i*rhs.i)/numerator,
-                                    (lhs.r*rhs.i - lhs.r*rhs.i)/numerator);
+                                    (lhs.i*rhs.r - lhs.r*rhs.i)/numerator);
 }
 }
