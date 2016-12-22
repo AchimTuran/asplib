@@ -34,7 +34,11 @@ set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
             asplib/Core/ExtendedStructs/asplib_ExtendedStructs.hpp
             
             asplib/Core/ComplexVector/asplib_TComplexVector.hpp
-            asplib/Core/ComplexVector/asplib_ComplexVector_NativeFloat.hpp)
+            asplib/Core/ComplexVector/asplib_ComplexVector_NativeFloat.hpp
+			asplib/Core/ComplexVector/asplib_ComplexVector_SSE3Float.hpp
+			asplib/Core/ComplexVector/asplib_ComplexVector_NEONFloat.hpp
+			asplib/Core/ComplexVector/asplib_ComplexVector_AVXFloat.hpp
+			asplib/Core/ComplexVector/asplib_ComplexVector_AVX512Float.hpp)
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
