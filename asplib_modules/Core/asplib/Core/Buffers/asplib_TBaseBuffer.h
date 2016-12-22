@@ -48,6 +48,7 @@ public:
     this->m_MaxFrameLength = MaxFrameLength;
     this->m_MaxFrames = MaxFrames;
     this->m_Alignment = Alignment;
+    m_MaxElementBytes = sizeof(T);
 
     this->Create();
   }
