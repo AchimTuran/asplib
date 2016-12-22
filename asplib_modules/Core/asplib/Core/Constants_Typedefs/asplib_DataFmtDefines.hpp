@@ -31,12 +31,14 @@ typedef enum
 
   // native formats
   ASPLIB_FMT_NATIVE_FLOAT,                // float
-  ASPLIB_FMT_NATIVE_CPX_FLOAT,            // float[2]
+  ASPLIB_FMT_NATIVE_CPX_FLOAT,            // asplibFmt_NativeCPXFloat
   ASPLIB_FMT_NATIVE_CPX_SPLIT_FLOAT,      // float*, float*
     
   // optimized formats
   ASPLIB_FMT_SSE3_CPX_FLOAT,              // TODO: description
+  ASPLIB_FMT_NEON_CPX_FLOAT,              // TODO: description
   ASPLIB_FMT_AVX_CPX_FLOAT,               // TODO: description
+  ASPLIB_FMT_AVX512_CPX_FLOAT,            // TODO: description
   ASPLIB_FMT_CU_CPX_FLOAT,                // TODO: description
   ASPLIB_FMT_OpenCL_CPX_FLOAT,            // TODO: description
 
