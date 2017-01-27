@@ -29,7 +29,7 @@
   #include <windows.h>
   #include <time.h>
 #elif defined(TARGET_LINUX)
-  #include <sys/time.h>
+  #include <time.h>
 #endif
 
 namespace asplib
