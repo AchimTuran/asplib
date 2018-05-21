@@ -27,9 +27,20 @@
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
 #include "Convolution/asplib_ConvolutionFactory.hpp"
+#include "Convolution/TConvolution/TConvolution.hpp"
+#include "Core/ComplexVector/asplib_ComplexVector_NativeFloat.hpp"
+#include "Core/ComplexVector/asplib_ComplexVector_SSE3Float.hpp"
+#include "Core/ComplexVector/asplib_ComplexVector_AVXFloat.hpp"
+//! @todo reserved for future optimizations
+//#include "Core/ComplexVector/asplib_ComplexVector_AVX512Float.hpp"
+//#include "Core/ComplexVector/asplib_ComplexVector_NEONFloat.hpp"
 
 
 namespace asplib
 {
-//CREATE_ASPLIB_CONVOLUTION_CLASS(CCompressor_NativeFloat, ASPLIB_Convolution_Compressor, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, CCompressor)
+  CREATE_ASPLIB_CONVOLUTION_CLASS(CConvolution_NativeFloat, ASPLIB_Convolution_NativeFloat, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, TConvolution<CComplexVector_NativeFloat>);
+  CREATE_ASPLIB_CONVOLUTION_CLASS(CConvolution_SSE3Float, ASPLIB_Convolution_SSE3Float, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, TConvolution<CComplexVector_SSE3Float>);
+  //! @todo reserved for future optimizations
+  //CREATE_ASPLIB_CONVOLUTION_CLASS(CConvolution_AVXFloat, ASPLIB_Convolution_AVXFloat, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, TConvolution<CComplexVector_AVXFloat>);
+  //CREATE_ASPLIB_CONVOLUTION_CLASS(CConvolution_NEONFloat, ASPLIB_Convolution_NEONFloat, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_FLOAT, TConvolution<CComplexVector_NEONFloat>);
 }
