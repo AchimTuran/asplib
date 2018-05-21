@@ -57,7 +57,7 @@ typedef enum ConvolutionID_t
 {
   ASPLIB_Convolution_INVALID_ID = -1,
 
-  ASPLIB_Convolution_Compressor,
+  ASPLIB_Convolution,
 
   ASPLIB_Convolution_MAX_ID
 }ConvolutionID_t;
