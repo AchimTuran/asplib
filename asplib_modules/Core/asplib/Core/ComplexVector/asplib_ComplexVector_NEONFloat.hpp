@@ -32,7 +32,7 @@
 #if defined(ASPLIB_NEON)
   #include <arm_neon.h>
 #else
-  #include <NEON2SSE/NEON_2_SSE.h>
+  #include <NEON_2_SSE.h>
 #endif
 
 
@@ -90,8 +90,6 @@ private:
   }
 };
 
-const uint32_t    CComplexVector_NEONFloat::vectorSize = 2;
-const asplibFmt_t CComplexVector_NEONFloat::typeID = ASPLIB_FMT_NEON_CPX_FLOAT;
 
 inline CComplexVector_NEONFloat operator+(const CComplexVector_NEONFloat& LHS, const CComplexVector_NEONFloat& RHS)
 {

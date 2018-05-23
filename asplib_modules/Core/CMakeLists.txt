@@ -2,7 +2,13 @@ project(Core)
 
 set(SOURCES asplib/Core/Exceptions/asplib_StringException.cpp
             asplib/Core/ExtendedStructs/asplib_ExtendedStructContainer.cpp
-            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.cpp)
+            asplib/Core/ExtendedStructs/asplib_ExtendedStructs.cpp
+            
+            asplib/Core/ComplexVector/asplib_ComplexVector_NativeFloat.cpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_SSE3Float.cpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_NEONFloat.cpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_AVXFloat.cpp)
+            #asplib/Core/ComplexVector/asplib_ComplexVector_AVX512Float.cpp)
 
 set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
             asplib/Core/Buffers/asplib_ITBuffer.h
@@ -35,10 +41,10 @@ set(HEADERS asplib/Core/Buffers/asplib_IBufferBase.h
             
             asplib/Core/ComplexVector/asplib_TComplexVector.hpp
             asplib/Core/ComplexVector/asplib_ComplexVector_NativeFloat.hpp
-			asplib/Core/ComplexVector/asplib_ComplexVector_SSE3Float.hpp
-			asplib/Core/ComplexVector/asplib_ComplexVector_NEONFloat.hpp
-			asplib/Core/ComplexVector/asplib_ComplexVector_AVXFloat.hpp
-			asplib/Core/ComplexVector/asplib_ComplexVector_AVX512Float.hpp)
+            asplib/Core/ComplexVector/asplib_ComplexVector_SSE3Float.hpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_NEONFloat.hpp
+            asplib/Core/ComplexVector/asplib_ComplexVector_AVXFloat.hpp)
+            #asplib/Core/ComplexVector/asplib_ComplexVector_AVX512Float.hpp) # AVX512 is supported from VS2017 https://blogs.msdn.microsoft.com/vcblog/2017/07/11/microsoft-visual-studio-2017-supports-intel-avx-512/
 
 asplib_source_group("${SOURCES}")
 asplib_source_group("${HEADERS}")
@@ -48,8 +54,10 @@ add_library(asplib::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 MESSAGE(STATUS "---Core Include = ${CMAKE_CURRENT_SOURCE_DIR}/asplib")
 target_include_directories(${PROJECT_NAME}
                            PRIVATE asplib
+                                   ${CMAKE_BINARY_DIR}/depends/NEON2SSE
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/asplib>
                                      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+                                     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/depends/NEON2SSE>
                                      $<INSTALL_INTERFACE:include>
                                      $<INSTALL_INTERFACE:include/asplib>)
 

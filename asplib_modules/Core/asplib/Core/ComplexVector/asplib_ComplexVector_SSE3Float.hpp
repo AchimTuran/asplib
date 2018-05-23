@@ -72,9 +72,6 @@ private:
   __m128 m_Value;
 };
 
-const uint32_t    CComplexVector_SSE3Float::vectorSize = 2;
-const asplibFmt_t CComplexVector_SSE3Float::typeID = ASPLIB_FMT_SSE3_CPX_FLOAT;
-
 inline CComplexVector_SSE3Float operator+(const CComplexVector_SSE3Float& LHS, const CComplexVector_SSE3Float& RHS)
 {
   //Z0[ii][0] += Zi[ii][0];

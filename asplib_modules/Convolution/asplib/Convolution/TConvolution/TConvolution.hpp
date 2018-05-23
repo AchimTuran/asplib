@@ -117,8 +117,8 @@ public:
   virtual ASPLIB_ERR Convolve(void *x, void *y)
   {
     T::type *in = m_x->get_Frame(0);
-    copy_n(in + m_MaxInteralFrameSize/2, m_MaxInteralFrameSize/2, in);
-    copy_n((T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
+    std::copy_n(in + m_MaxInteralFrameSize/2, m_MaxInteralFrameSize/2, in);
+    std::copy_n((T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
 
     m_fft->FFT(m_x->get_Frame(0), m_X->get_NextFrame());
 
@@ -151,7 +151,7 @@ public:
 
     m_fft->iFFT(Y0, m_y->get_Frame(0));
 
-    copy_n(m_y->get_Frame(0) + m_MaxInteralFrameSize/2, m_MaxFrameSize, (T::type*)y);
+    std::copy_n(m_y->get_Frame(0) + m_MaxInteralFrameSize/2, m_MaxFrameSize, (T::type*)y);
 
     return ASPLIB_ERR_NO_ERROR;
   }

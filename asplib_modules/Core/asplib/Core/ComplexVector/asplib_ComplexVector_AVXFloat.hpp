@@ -72,8 +72,6 @@ private:
   __m256 m_Value;
 };
 
-const uint32_t    CComplexVector_AVXFloat::vectorSize = 4;
-const asplibFmt_t CComplexVector_AVXFloat::typeID = ASPLIB_FMT_AVX_CPX_FLOAT;
 
 inline CComplexVector_AVXFloat operator+(const CComplexVector_AVXFloat& LHS, const CComplexVector_AVXFloat& RHS)
 {

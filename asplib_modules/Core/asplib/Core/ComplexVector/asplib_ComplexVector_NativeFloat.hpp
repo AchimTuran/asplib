@@ -66,8 +66,6 @@ private:
   asplibFmt_NativeCPXFloat m_Value;
 };
 
-const uint32_t    CComplexVector_NativeFloat::vectorSize = 1;
-const asplibFmt_t CComplexVector_NativeFloat::typeID = ASPLIB_FMT_NATIVE_CPX_FLOAT;
 
 inline CComplexVector_NativeFloat operator+(const CComplexVector_NativeFloat& LHS, const CComplexVector_NativeFloat& RHS)
 {
