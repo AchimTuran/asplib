@@ -23,12 +23,16 @@
 
 
 
+// core includes
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
+// resampling includes
 #include "Resampling/Decimator/asplib_DecimatorOptions.hpp"
-
 #include "Resampling/Interfaces/asplib_IResampling.hpp"
+
+// STL includes
+#include <vector>
 
 
 namespace asplib
@@ -39,19 +43,21 @@ namespace asplib
     CDecimator();
     ~CDecimator();
 
-    virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr);
-    virtual ASPLIB_ERR Process(void *In, void *Out);
-    virtual ASPLIB_ERR Destroy();
+    ASPLIB_ERR Create(const uint32_t InputFrameSize, const uint32_t OutputFrameSize, const uint32_t SampleFrequency, const void *Options = nullptr) override;
+    ASPLIB_ERR Process(const void *In, void *Out) override;
+    ASPLIB_ERR Destroy() override;
 
   private:
-    uint32_t m_FrameSize;
-    uint32_t m_SampleFrequency;
-    float m_CutOffFrequency;
+    uint32_t m_inputFrameSize;
+    uint32_t m_outputFrameSize;
+    uint32_t m_sampleFrequency;
+    float m_cutOffFrequency;
 
-    uint32_t m_DecimationFactor;
-    uint32_t m_FilterLength;
-    float *m_FilterCoeff;
+    uint32_t m_decimationFactor;
+    uint32_t m_filterLength;
+    float *m_filterCoeff;
 
+    std::vector<float> m_convolutionBuffer;
   };
 }
 #pragma once

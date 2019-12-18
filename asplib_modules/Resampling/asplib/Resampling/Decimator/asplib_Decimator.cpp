@@ -21,25 +21,27 @@
 *
 */
 
-
-
-#include "Resampling/Decimator/asplib_Decimator.hpp"
-
+// math includes should be the first as includes to STL override the _USE_MATH_DEFINES define...
 #if defined(TARGET_WINDOWS)
 #define _USE_MATH_DEFINES
 #endif
 #include <cmath>
 
+// resampling includes
+#include "Resampling/Decimator/asplib_Decimator.hpp"
+
+
 
 namespace asplib
 {
-CDecimator::CDecimator()
+CDecimator::CDecimator() :
+  m_inputFrameSize(0),
+  m_outputFrameSize(0),
+  m_filterLength(0),
+  m_sampleFrequency(0),
+  m_decimationFactor(0),
+  m_cutOffFrequency(0.0f)
 {
-  m_FrameSize         = 0;
-  m_FilterLength      = 0;
-  m_SampleFrequency   = 0;
-  m_DecimationFactor  = 0;
-  m_CutOffFrequency   = 0.0f;
 }
 
 
@@ -48,18 +50,18 @@ CDecimator::~CDecimator()
 }
 
 
-ASPLIB_ERR CDecimator::Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options/* = nullptr*/)
+ASPLIB_ERR CDecimator::Create(const uint32_t InputFrameSize, const uint32_t OutputFrameSize, const uint32_t SampleFrequency, const void *Options/* = nullptr*/)
 {
   DecimatorOptions options;
   if (Options)
   {
-    CExtendedStructs *extendedStruct = static_cast<CExtendedStructs*>(Options);
+    const CExtendedStructs *extendedStruct = static_cast<const CExtendedStructs*>(Options);
     if (extendedStruct->ID != ASPLIB_EXTENDED_STRUCT_DecimatorOptions)
     {
       return ASPLIB_ERR_FFT_INVALID_OPTIONS_STRUCT;
     }
 
-    DecimatorOptions *pOptions = static_cast<DecimatorOptions*>(Options);
+    const DecimatorOptions *pOptions = static_cast<const DecimatorOptions*>(Options);
     if (pOptions->decimationFactor <= 1.0)
     {
       return ASPLIB_ERR_INVALID_INPUT;
@@ -70,51 +72,50 @@ ASPLIB_ERR CDecimator::Create(uint32_t FrameSize, uint32_t SampleFrequency, void
     options.cutoffFrequency = pOptions->cutoffFrequency;
   }
 
-  if (FrameSize <= 0 || SampleFrequency <= 0)
+  if (InputFrameSize <= 0 || SampleFrequency <= 0)
   {
     return ASPLIB_ERR_INVALID_INPUT;
   }
-  m_FrameSize = FrameSize;
-  m_SampleFrequency = SampleFrequency;
+  m_inputFrameSize = InputFrameSize;
+  m_sampleFrequency = SampleFrequency;
+  m_cutOffFrequency = options.cutoffFrequency;
+  m_filterLength = options.filterLength;
+  
+  const float normFrequency = m_cutOffFrequency / m_sampleFrequency;
+  const uint32_t filterOrder = m_filterLength - 1;
 
-  float val = 0.0f;
-  float normFrequency = m_CutOffFrequency / m_SampleFrequency;
-  uint32_t filterOrder = m_FilterLength - 1;
-
-  for (size_t ii = 0; ii < m_FilterLength; ii++)
+  for (size_t ii = 0; ii < m_filterLength; ii++)
   {
-    val = sinf(2.0f*M_PI*normFrequency*(ii - filterOrder*0.5f)) / (M_PI * (ii - filterOrder*0.5f));
-    m_FilterCoeff[ii] = val*(0.54 - 0.46*cos(2 * M_PI*ii / filterOrder));
+    float val = ::sinf(2.0f*static_cast<float>(M_PI)*normFrequency*(ii - filterOrder*0.5f)) / (static_cast<float>(M_PI) * (ii - filterOrder*0.5f));
+    m_filterCoeff[ii] = val*(0.54f - 0.46f*::cos(2.0f * static_cast<float>(M_PI)*ii / filterOrder));
   }
-  m_FilterCoeff[filterOrder / 2] = 2.0f * normFrequency;
+  m_filterCoeff[filterOrder / 2] = 2.0f * normFrequency;
+
+  m_convolutionBuffer.resize(m_inputFrameSize + m_filterLength - 1, 0.0f);
 
   return ASPLIB_ERR_NO_ERROR;
 }
 
 
-ASPLIB_ERR CDecimator::Process(void *In, void *Out)
+ASPLIB_ERR CDecimator::Process(const void *In, void *Out)
 {
-  float *in = static_cast<float*>(In);
+  const float *in = static_cast<const float*>(In);
   float *out = static_cast<float*>(Out);
 
-  // Die Laenge des Ausgangspuffers ist ja kleiner als des Eingangspuffers. Wie komme ich an diese Länge?
-  uint32_t convolutionLength = m_FrameSizeInput + m_FilterLength - 1;
-  float outTemp[convolutionLength];
-
-  for (uint32_t ii = 0; ii < convolutionLength; ii++)
+  for (uint32_t ii = 0; ii < m_convolutionBuffer.size(); ii++)
   {
-    outTemp[ii] = 0.0;
-    for (size_t jj = 0; jj < m_FilterLength; jj++)
+    m_convolutionBuffer[ii] = 0.0;
+    for (size_t jj = 0; jj < m_filterLength; jj++)
     {
-      if ((ii - jj) <= 1 && (ii - jj) <= m_FrameSizeInput)// Input Größe
+      if ((ii - jj) <= 1 && (ii - jj) <= m_inputFrameSize)// Input Größe
       {
-        outTemp[ii] += outTemp[ii] + m_FilterCoeff[jj] * in[ii - jj];
+        m_convolutionBuffer[ii] += m_convolutionBuffer[ii] + m_filterCoeff[jj] * in[ii - jj];
       }
     }
 
-    for (size_t kk = 0; kk < m_FrameSizeTemp; kk++) // Ausgangsgröße
+    for (size_t kk = 0; kk < m_outputFrameSize; kk++) // Ausgangsgröße
     {
-      out[ii] = m_DecimationFactor*outTemp[kk * m_DecimationFactor];
+      out[ii] = m_decimationFactor* m_convolutionBuffer[kk * m_decimationFactor];
     }
   }
 
