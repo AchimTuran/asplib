@@ -1,6 +1,6 @@
 #pragma once
 
-/* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+/* Copyright (C) 2014-2016 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)
@@ -26,32 +26,35 @@
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Typedefs.h"
 
+#include "Dynamics/Compressor/asplib_DynamicsCompressorOptions.hpp"
+
+#include "Dynamics/Interfaces/asplib_IDynamics.hpp"
+
 
 namespace asplib
 {
-typedef enum
+class CCompressor : public IDynamics
 {
-  ASPLIB_EXTENDED_STRUC_INVALID_ID = -1,
+public:
+  CCompressor();
+  ~CCompressor();
 
-  ASPLIB_EXTENDED_STRUCT_KissFFTRealOptions,
-  ASPLIB_EXTENDED_STRUCT_KissFFTCpxOptions,
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr);
+  virtual ASPLIB_ERR Process(void *In, void *Out);
+  virtual ASPLIB_ERR Destroy();
 
-  // scaler options
-  ASPLIB_EXTENDED_STRUCT_TLog10ScalerOptions,
-  
-  // FFT smoother options
-  ASPLIB_EXTENDED_STRUCT_dlbeerSmootherOptions,
-  ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions,
+private:
+  uint32_t m_FrameSize;
+  uint32_t m_SampleFrequency;
 
-  // FFT remapper options
-  ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
+  float m_AlphaRelease;
+  float m_AlphaAttack;
+  float m_Threshold;
+  float m_CompressionRatio;
 
-  // Resampling options
-  ASPLIB_EXTENDED_STRUCT_DecimatorOptions,
+  float m_Array[1000];
 
-  // Dynamics options
-  ASPLIB_EXTENDED_STRUCT_CompressorOptions,
-
-  ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-}asplibExtendedStructIDs_t;
+  float m_yL_old;
+  CompressorOptions::eGainCurve_t m_GainCurve;
+};
 }

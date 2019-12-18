@@ -1,6 +1,6 @@
 #pragma once
 
-/* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+/* Copyright (C) 2014-2016 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)
@@ -23,35 +23,27 @@
 
 
 
-#include "Core/os/asplib_os.h"
-#include "Core/Constants_Typedefs/asplib_Typedefs.h"
+#include "Dynamics/asplib_DynamicsFactory.hpp"
+#include "Dynamics/Common/asplib_DynamicsProducts.hpp"
+
+using namespace std;
 
 
 namespace asplib
 {
-typedef enum
+const string CDynamicsFactoryMetaData::Name = "CDynamicsFactory";
+
+
+CDynamicsFactory::CDynamicsFactory()
 {
-  ASPLIB_EXTENDED_STRUC_INVALID_ID = -1,
-
-  ASPLIB_EXTENDED_STRUCT_KissFFTRealOptions,
-  ASPLIB_EXTENDED_STRUCT_KissFFTCpxOptions,
-
-  // scaler options
-  ASPLIB_EXTENDED_STRUCT_TLog10ScalerOptions,
-  
-  // FFT smoother options
-  ASPLIB_EXTENDED_STRUCT_dlbeerSmootherOptions,
-  ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions,
-
-  // FFT remapper options
-  ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
-
-  // Resampling options
-  ASPLIB_EXTENDED_STRUCT_DecimatorOptions,
-
-  // Dynamics options
-  ASPLIB_EXTENDED_STRUCT_CompressorOptions,
-
-  ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-}asplibExtendedStructIDs_t;
 }
+
+
+CDynamicsFactory::~CDynamicsFactory()
+{
+}
+
+template class TAutoFactory<IDynamics, DynamicsID_t, asplibFmt_t, CDynamicsFactoryMetaData>;
+}
+
+
