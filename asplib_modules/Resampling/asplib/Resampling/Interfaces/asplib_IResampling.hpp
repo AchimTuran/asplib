@@ -1,6 +1,6 @@
 #pragma once
 
-/* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+/* Copyright (C) 2014-2016 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)
@@ -29,26 +29,10 @@
 
 namespace asplib
 {
-typedef enum
+class IResampling
 {
-  ASPLIB_EXTENDED_STRUC_INVALID_ID = -1,
-
-  ASPLIB_EXTENDED_STRUCT_KissFFTRealOptions,
-  ASPLIB_EXTENDED_STRUCT_KissFFTCpxOptions,
-
-  // scaler options
-  ASPLIB_EXTENDED_STRUCT_TLog10ScalerOptions,
-  
-  // FFT smoother options
-  ASPLIB_EXTENDED_STRUCT_dlbeerSmootherOptions,
-  ASPLIB_EXTENDED_STRUCT_TAttackReleaseSmootherOptions,
-
-  // FFT remapper options
-  ASPLIB_EXTENDED_STRUCT_TGammaCorrectorOptions,
-
-  // Resampling options
-  ASPLIB_EXTENDED_STRUCT_DecimatorOptions,
-
-  ASPLIB_EXTENDED_STRUC_MAX_ID = -1
-}asplibExtendedStructIDs_t;
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr) = 0;
+  virtual ASPLIB_ERR Process(void *In, void *Out) = 0;
+  virtual ASPLIB_ERR Destroy() = 0;
+};
 }
