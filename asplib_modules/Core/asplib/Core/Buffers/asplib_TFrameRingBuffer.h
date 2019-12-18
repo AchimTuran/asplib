@@ -1,6 +1,6 @@
 #pragma once
 
-/* Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+/* Copyright (C) 2014-2015 Achim Turan, mail@achim-turan.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)
@@ -62,7 +62,7 @@ public:
   inline T* get_NextFrame()
   {
     this->m_CurrentFrame++;
-    if (this->m_CurrentFrame >= this->m_MaxFrames)
+    if (this->m_CurrentFrame >= this->get_MaxFrames())
     {
       this->m_CurrentFrame = 0;
     }
@@ -72,7 +72,7 @@ public:
       this->m_IsEmpty = false;
     }
 
-    return this->m_Buffer + this->m_CurrentFrame*this->m_MaxFrameLength;
+    return this->m_Buffer + this->m_CurrentFrame*this->get_MaxFrameLength();
   }
 
 private:

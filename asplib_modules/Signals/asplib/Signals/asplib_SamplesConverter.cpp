@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Achim Turan, Achim.Turan@o2online.de
+ * Copyright (C) 2014-2015 Achim Turan, mail@achim-turan.de
  * https://github.com/AchimTuran/asplib
  *
  * This file is part of asplib (Achim's Signal Processing LIBrary)

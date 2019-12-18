@@ -15,8 +15,9 @@ option(BUILD_SIGNALS              "Build Signals"              OFF)
 option(BUILD_SPECTRUMVISPROCESSOR "Build SpectrumVisProcessor" OFF)
 option(BUILD_TIMER                "Build Timer"                OFF)
 option(BUILD_RESAMPLING           "Build Resampling"           OFF)
+option(BUILD_CONVOLUTION          "Build Convolution"          OFF)
 
-set(AVAILABLE_MODULES AUDIOINTERFACES BIQUAD COMPUTEDEVICEINFO DYNAMICS FFT IIR LOGGER SIGNALS SPECTRUMVISPROCESSOR TIMER)
+set(AVAILABLE_MODULES AUDIOINTERFACES BIQUAD COMPUTEDEVICEINFO FFT IIR LOGGER SIGNALS SPECTRUMVISPROCESSOR TIMER)
 
 if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" STREQUAL "")# OR NOT ${ASPLIB_MODULES_TO_BUILD})
   set(BUILD_AUDIOINTERFACES ON)
@@ -30,6 +31,7 @@ if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" S
   set(BUILD_SPECTRUMVISPROCESSOR ON)
   set(BUILD_TIMER ON)
   set(BUILD_RESAMPLING ON)
+  set(BUILD_CONVOLUTION ON)
 else()
   message(STATUS "ASPLIB_MODULES_TO_BUILD=${ASPLIB_MODULES_TO_BUILD}")
   foreach(_mod ${ASPLIB_MODULES_TO_BUILD})
@@ -44,6 +46,13 @@ else()
   endforeach()
 endif()
 
+
+include(../cmake/gitCloneProject.cmake)
+
+message(STATUS "Download ARM_NEON_2_x86_SSE of is handled by asplib...")
+git_clone_project(PROJ                NEON2SSE
+                  GIT_REPOSITORY      https://github.com/intel/ARM_NEON_2_x86_SSE.git
+                  GIT_TAG             master)
 
 add_subdirectory(Core)
 set(ASPLIB_SUPPORTED_COMPONENTS "Core" CACHE INTERNAL "supported asplib modules")
@@ -69,7 +78,6 @@ if(BUILD_AUDIOINTERFACES)
     endif()
   
     message(STATUS "Build of PortAudio is handled by asplib...")
-    include(../cmake/gitCloneProject.cmake)
     git_clone_project(PROJ                portaudio
                       GIT_REPOSITORY      https://github.com/kodi-adsp/portaudio_cmake
                       GIT_TAG             cmake)
@@ -103,7 +111,7 @@ if(BUILD_COMPUTEDEVICEINFO)
   set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};ComputeDeviceInfo" CACHE INTERNAL "supported asplib modules")
 endif()
 
-if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
+if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR OR BUILD_CONVOLUTION)
   find_package(KissFFT 1.30 QUIET)
   
   if(NOT ASPLIB_KissFFT_BUILD) # only define this ASPLIB_KissFFT_BUILD once to determine if KissFFT is build by asplib or not
@@ -116,7 +124,6 @@ if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
 
   if(${ASPLIB_KissFFT_BUILD})
     message(STATUS "Build of KissFFT is handled by asplib...")
-    include(../cmake/gitCloneProject.cmake)
     git_clone_project(PROJ                KissFFT
                       GIT_REPOSITORY      https://github.com/AchimTuran/KissFFT
                       GIT_TAG             master)
@@ -125,6 +132,11 @@ if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR)
 
   add_subdirectory(FFT)
   set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};FFT" CACHE INTERNAL "supported asplib modules")
+endif()
+
+if(BUILD_CONVOLUTION)
+  add_subdirectory(Convolution)
+  set(ASPLIB_SUPPORTED_COMPONENTS "${ASPLIB_SUPPORTED_COMPONENTS};Convolution" CACHE INTERNAL "supported asplib modules")
 endif()
 
 if(BUILD_IIR)
