@@ -140,7 +140,7 @@ float CBiquad_Native::calcSample(float In)
     return out;
 }
 
-ASPLIB_ERR CBiquad_Native::calcSamples(float *In, float *Out, uint32_t N)
+ASPLIB_ERR CBiquad_Native::calcSamples(const float *In, float *Out, uint32_t N)
 {
     if (!In || !Out || !N)
     {

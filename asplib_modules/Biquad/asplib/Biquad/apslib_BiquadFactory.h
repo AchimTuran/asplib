@@ -38,11 +38,11 @@ class CBiquadFactory
 public:
     // Handle Biquads
     static ASPLIB_ERR            reset_Biquads(ASPLIB_BIQUAD_HANDLE *Biquads);
-    static ASPLIB_ERR            destroy_Biquads(ASPLIB_BIQUAD_HANDLE **Biquads);
+    static ASPLIB_ERR            destroy_Biquads(ASPLIB_BIQUAD_HANDLE *&Biquads);
     static uint32_t              get_maxBiquads(ASPLIB_BIQUAD_HANDLE *Biquads);
     static ASPLIB_BIQUAD_HANDLE* get_Biquads(uint32_t BiquadQuantity, float SampleFrequency, ASPLIB_OPT_MODULE OptModule);
     static ASPLIB_ERR            calc_BiquadSample(ASPLIB_BIQUAD_HANDLE *Biquads, float In, float *Out);
-    static ASPLIB_ERR            calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, float *In, float *Out, uint32_t FrameSize);
+    static ASPLIB_ERR            calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, const float *In, float *Out, uint32_t FrameSize);
 
     // set Biquad Parameters
     static ASPLIB_ERR            set_BiquadCoefficients(ASPLIB_BIQUAD_HANDLE *Biquads, ASPLIB_BIQUAD_COEFFICIENTS *Coefficients, float C0 = 1.0f, float D0 = 0.0f);

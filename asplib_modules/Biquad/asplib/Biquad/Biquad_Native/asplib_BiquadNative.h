@@ -52,6 +52,6 @@ public:
     virtual float calcSample(float In);
     // calculate output samples with the following difference equation
     // y[k] = a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
-    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint32_t N);
+    virtual ASPLIB_ERR calcSamples(const float *In, float *Out, uint32_t N);
 };
 };
