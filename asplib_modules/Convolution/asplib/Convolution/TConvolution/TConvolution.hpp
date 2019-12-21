@@ -60,7 +60,7 @@ public:
   }
   ~TConvolution() { Destroy(); }
 
-  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, void *Filter, uint32_t FilterLength, void *Options = nullptr)
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, const void *Filter, uint32_t FilterLength, void *Options = nullptr)
   {
     ASPLIB_ERR err = ASPLIB_FACTORY_FFT.Create(FFTLibID, FFTInFmt, T::typeID, m_fft);
     if(err != ASPLIB_ERR_NO_ERROR)
@@ -114,11 +114,11 @@ public:
     return ASPLIB_ERR_NO_ERROR;
   }
 
-  virtual ASPLIB_ERR Convolve(void *x, void *y)
+  virtual ASPLIB_ERR Convolve(const void *x, void *y)
   {
     T::type *in = m_x->get_Frame(0);
     std::copy_n(in + m_MaxInteralFrameSize/2, m_MaxInteralFrameSize/2, in);
-    std::copy_n((T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
+    std::copy_n((const T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
 
     m_fft->FFT(m_x->get_Frame(0), m_X->get_NextFrame());
 
