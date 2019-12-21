@@ -87,11 +87,11 @@ public:
       m_MaxParts++;
     }
 
-    TFrameBuffer<T::type> *filter = new TFrameBuffer<T::type>(m_fft->InternalFrameSize(), m_MaxParts);
-    filter->ResetBuffer();
+    TFrameBuffer<T::type> filter(m_fft->InternalFrameSize(), m_MaxParts);
+    filter.ResetBuffer();
     for (uint32_t ii = 0; ii < m_MaxParts; ii++)
     {
-      T::type *p = filter->get_Frame(ii);
+      T::type *p = filter.get_Frame(ii);
       for (uint32_t jj = 0; jj < m_MaxFrameSize && ii*m_MaxParts + jj < FilterLength; jj++)
       {
         p[jj] = ((T::type*)Filter)[ii*m_MaxParts + jj];
@@ -106,10 +106,8 @@ public:
     m_x = new TFrameBuffer<T::type>(m_MaxInteralFrameSize, 1);
     for (uint32_t ii = 0; ii < m_MaxParts; ii++)
     {
-      m_fft->FFT(filter->get_Frame(ii), m_G->get_Frame(ii));
+      m_fft->FFT(filter.get_Frame(ii), m_G->get_Frame(ii));
     }
-
-    delete filter;
 
     return ASPLIB_ERR_NO_ERROR;
   }
