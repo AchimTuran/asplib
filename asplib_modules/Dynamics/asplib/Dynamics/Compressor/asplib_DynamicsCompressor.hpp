@@ -39,9 +39,9 @@ public:
   CCompressor();
   ~CCompressor();
 
-  virtual ASPLIB_ERR Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options = nullptr);
-  virtual ASPLIB_ERR Process(void *In, void *Out);
-  virtual ASPLIB_ERR Destroy();
+  ASPLIB_ERR Create(const uint32_t FrameSize, const uint32_t SampleFrequency, const void *Options = nullptr) override;
+  ASPLIB_ERR Process(const void *In, void *Out) override;
+  ASPLIB_ERR Destroy() override;
 
 private:
   uint32_t m_FrameSize;
