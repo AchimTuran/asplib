@@ -50,6 +50,8 @@ public:
   inline CComplexVector_NativeFloat(const asplibFmt_NativeCPXFloat& rhs) : m_Value(rhs) {}
 
   inline void Scale(const float& Val) { m_Value.r *= Val; m_Value.i *= Val; }
+  inline const float& R() const { return m_Value.r; }
+  inline const float& I() const { return m_Value.i; }
 
   inline CComplexVector_NativeFloat& operator=(const asplibFmt_NativeCPXFloat& rhs)
   {
