@@ -78,7 +78,7 @@ public:
     // set internal frame size and scale factor
     m_MaxInteralFrameSize = m_fft->InternalFrameSize();// / T::vectorSize;
     m_MaxVectorFrameSize = m_MaxInteralFrameSize / T::vectorSize;
-    m_ScaleValue = 1.0 / (double)m_fft->InternalFrameSize();
+    m_ScaleValue = static_cast<T::type>(1.0 / static_cast<double>(m_fft->InternalFrameSize()));
 
     // store filter in internal buffer
     m_MaxParts = FilterLength / m_MaxFrameSize;
