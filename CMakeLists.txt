@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(asplib VERSION 1.0)
 
+option(ASPLIB_VERBOSE "You can enable this option if you want to debug the CMake build system of asplib" OFF)
+
 set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 
 # Enable C++11
@@ -104,10 +106,12 @@ if (NOT ASPLIB_DISABLE_PACKAGING)
           DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
 endif()
 
-get_cmake_property(_variableNames VARIABLES)
-foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
+if(ASPLIB_VERBOSE)
+  get_cmake_property(_variableNames VARIABLES)
+  foreach (_variableName ${_variableNames})
+      message(STATUS "${_variableName}=${${_variableName}}")
+  endforeach()
+endif()
 
 # Print project configuration
 message(STATUS)
