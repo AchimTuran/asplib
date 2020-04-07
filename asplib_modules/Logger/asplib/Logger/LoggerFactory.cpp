@@ -1,5 +1,3 @@
-#pragma once
-
 /*
  * Copyright (C) 2014-2015 Achim Turan, mail@achim-turan.de
  * https://github.com/AchimTuran/asplib

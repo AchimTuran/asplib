@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(asplib VERSION 1.0)
 
+option(ASPLIB_VERBOSE "You can enable this option if you want to debug the CMake build system of asplib" OFF)
+
 set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 
 # Enable C++11
@@ -73,9 +75,10 @@ if(NOT WIN32)
                            ${CMAKE_INSTALL_PREFIX}
                            ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}
                            ${CMAKE_INSTALL_PREFIX}/include)
-
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/asplib.pc
-          DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/pkgconfig)
+  if (NOT ASPLIB_DISABLE_PACKAGING)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/asplib.pc
+            DESTINATION ${CMAKE_INSTALL_LIBDIR_NOARCH}/pkgconfig)
+  endif()
 endif()
 
 # config mode
@@ -90,21 +93,25 @@ set(CMAKE_INSTALL_CMAKECONFIGDIR
     ${CMAKE_INSTALL_LIBDIR_NOARCH}/cmake/${PROJECT_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR})
 
 write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake COMPATIBILITY SameMajorVersion)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
-        DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+if (NOT ASPLIB_DISABLE_PACKAGING)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
+          DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
 
-configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in ${PROJECT_NAME}-config.cmake
-                              INSTALL_DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
-                              #PATH_VARS INCLUDE_INSTALL_DIR)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+  configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/${PROJECT_NAME}-config.cmake.in ${PROJECT_NAME}-config.cmake
+                                INSTALL_DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+                                #PATH_VARS INCLUDE_INSTALL_DIR)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
 
-install(EXPORT ${PROJECT_NAME} FILE ${PROJECT_NAME}-targets.cmake NAMESPACE ${CMAKE_PROJECT_NAME}::
-        DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+  install(EXPORT ${PROJECT_NAME} FILE ${PROJECT_NAME}-targets.cmake NAMESPACE ${CMAKE_PROJECT_NAME}::
+          DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR})
+endif()
 
-get_cmake_property(_variableNames VARIABLES)
-foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
+if(ASPLIB_VERBOSE)
+  get_cmake_property(_variableNames VARIABLES)
+  foreach (_variableName ${_variableNames})
+      message(STATUS "${_variableName}=${${_variableName}}")
+  endforeach()
+endif()
 
 # Print project configuration
 message(STATUS)

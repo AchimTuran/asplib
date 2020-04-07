@@ -1,5 +1,3 @@
-#pragma once
-
 /* Copyright (C) 2014-2016 Achim Turan, Achim.Turan@o2online.de
  * https://github.com/AchimTuran/asplib
  *
@@ -42,25 +40,23 @@ CCompressor::CCompressor()
   m_yL_old           = 0.0f;
 }
 
-
 CCompressor::~CCompressor()
 {
 }
 
-
-ASPLIB_ERR CCompressor::Create(uint32_t FrameSize, uint32_t SampleFrequency, void *Options/* = nullptr*/)
+ASPLIB_ERR CCompressor::Create(const uint32_t FrameSize, const uint32_t SampleFrequency, const void *Options/* = nullptr*/)
 {
   CompressorOptions options;
   if (Options)
   {
-    CExtendedStructs *extendedStruct = static_cast<CExtendedStructs*>(Options);
+    const CExtendedStructs *extendedStruct = static_cast<const CExtendedStructs*>(Options);
     if (extendedStruct->ID != ASPLIB_EXTENDED_STRUCT_CompressorOptions)
     {
       return ASPLIB_ERR_FFT_INVALID_OPTIONS_STRUCT;
     }
 
     // TODO mtk2003: value checking
-    CompressorOptions *pOptions = static_cast<CompressorOptions*>(Options);
+    const CompressorOptions *pOptions = static_cast<const CompressorOptions*>(Options);
     if (pOptions->compressionRatio <= 1.0 || pOptions->tauRelease <= 0.0 || pOptions->tauAttack <= 0.0)
     {
       return ASPLIB_ERR_INVALID_INPUT;
@@ -80,19 +76,19 @@ ASPLIB_ERR CCompressor::Create(uint32_t FrameSize, uint32_t SampleFrequency, voi
   m_FrameSize       = FrameSize;
   m_SampleFrequency = SampleFrequency;
 
-  m_AlphaAttack  = (float)exp(-1.0 / (options.tauAttack*((long double)m_SampleFrequency)));
-  m_AlphaRelease = (float)exp(-1.0 / (options.tauRelease*((long double)m_SampleFrequency)));
+  m_AlphaAttack  = static_cast<float>(::exp(-1.0 / (options.tauAttack*((long double)m_SampleFrequency))));
+  m_AlphaRelease = static_cast<float>(::exp(-1.0 / (options.tauRelease*((long double)m_SampleFrequency))));
 
-  m_Threshold        = (float)options.threshold;
-  m_CompressionRatio = (float)options.compressionRatio;
+  m_Threshold        = static_cast<float>(options.threshold);
+  m_CompressionRatio = static_cast<float>(options.compressionRatio);
   m_GainCurve        = options.gainCurve;
 
   return ASPLIB_ERR_NO_ERROR;
 }
 
-ASPLIB_ERR CCompressor::Process(void *In, void *Out)
+ASPLIB_ERR CCompressor::Process(const void *In, void *Out)
 {
-  float *in = static_cast<float*>(In);
+  const float *in = static_cast<const float*>(In);
   float *out = static_cast<float*>(Out);
 
   float xT  = 0.0f;
@@ -104,12 +100,12 @@ ASPLIB_ERR CCompressor::Process(void *In, void *Out)
 
   for (uint32_t ii = 0; ii < m_FrameSize; ii++)
   {
-    xT = abs(in[ii]);
+    xT = ::abs(in[ii]);
     if (xT <= eps)
     {
       xT = eps;
     }
-    xG = 20.0f * log10f(xT);
+    xG = 20.0f * ::log10f(xT);
 
     // gain computation
     if (xG <= m_Threshold)
@@ -124,7 +120,7 @@ ASPLIB_ERR CCompressor::Process(void *In, void *Out)
     switch (m_GainCurve)
     {
       case CompressorOptions::COMPRESSION_HARD_CLIPPING:
-	      // TODO
+	      //! @todo add hard clipping function
         //yG = function();
       break;
     }
@@ -146,7 +142,7 @@ ASPLIB_ERR CCompressor::Process(void *In, void *Out)
     }
     else
     {
-      out[ii] = in[ii] * powf(10.0f, (-yL / 20.0f));
+      out[ii] = in[ii] * ::powf(10.0f, (-yL / 20.0f));
     }
     m_yL_old = yL;
   }

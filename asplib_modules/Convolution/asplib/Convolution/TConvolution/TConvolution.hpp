@@ -60,7 +60,7 @@ public:
   }
   ~TConvolution() { Destroy(); }
 
-  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, void *Filter, uint32_t FilterLength, void *Options = nullptr)
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, const void *Filter, uint32_t FilterLength, void *Options = nullptr)
   {
     ASPLIB_ERR err = ASPLIB_FACTORY_FFT.Create(FFTLibID, FFTInFmt, T::typeID, m_fft);
     if(err != ASPLIB_ERR_NO_ERROR)
@@ -78,7 +78,7 @@ public:
     // set internal frame size and scale factor
     m_MaxInteralFrameSize = m_fft->InternalFrameSize();// / T::vectorSize;
     m_MaxVectorFrameSize = m_MaxInteralFrameSize / T::vectorSize;
-    m_ScaleValue = 1.0 / (double)m_fft->InternalFrameSize();
+    m_ScaleValue = static_cast<T::type>(1.0 / static_cast<double>(m_fft->InternalFrameSize()));
 
     // store filter in internal buffer
     m_MaxParts = FilterLength / m_MaxFrameSize;
@@ -87,11 +87,11 @@ public:
       m_MaxParts++;
     }
 
-    TFrameBuffer<T::type> *filter = new TFrameBuffer<T::type>(m_fft->InternalFrameSize(), m_MaxParts);
-    filter->ResetBuffer();
+    TFrameBuffer<T::type> filter(m_fft->InternalFrameSize(), m_MaxParts);
+    filter.ResetBuffer();
     for (uint32_t ii = 0; ii < m_MaxParts; ii++)
     {
-      T::type *p = filter->get_Frame(ii);
+      T::type *p = filter.get_Frame(ii);
       for (uint32_t jj = 0; jj < m_MaxFrameSize && ii*m_MaxParts + jj < FilterLength; jj++)
       {
         p[jj] = ((T::type*)Filter)[ii*m_MaxParts + jj];
@@ -106,19 +106,17 @@ public:
     m_x = new TFrameBuffer<T::type>(m_MaxInteralFrameSize, 1);
     for (uint32_t ii = 0; ii < m_MaxParts; ii++)
     {
-      m_fft->FFT(filter->get_Frame(ii), m_G->get_Frame(ii));
+      m_fft->FFT(filter.get_Frame(ii), m_G->get_Frame(ii));
     }
-
-    delete filter;
 
     return ASPLIB_ERR_NO_ERROR;
   }
 
-  virtual ASPLIB_ERR Convolve(void *x, void *y)
+  virtual ASPLIB_ERR Convolve(const void *x, void *y)
   {
     T::type *in = m_x->get_Frame(0);
     std::copy_n(in + m_MaxInteralFrameSize/2, m_MaxInteralFrameSize/2, in);
-    std::copy_n((T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
+    std::copy_n((const T::type*)x, m_MaxFrameSize, in + m_MaxInteralFrameSize/2);
 
     m_fft->FFT(m_x->get_Frame(0), m_X->get_NextFrame());
 

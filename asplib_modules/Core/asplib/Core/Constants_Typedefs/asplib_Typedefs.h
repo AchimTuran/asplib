@@ -72,25 +72,48 @@ typedef enum
   ASPLIB_OPT_MAX
 }ASPLIB_OPT_MODULE;
 
-typedef struct
+struct ASPLIB_BIQUAD_HANDLE
 {
   ASPLIB_OPT_MODULE  optModule;
   void               *Biquads;
-}ASPLIB_BIQUAD_HANDLE;
 
-typedef struct
+  ASPLIB_BIQUAD_HANDLE() :
+    optModule(ASPLIB_OPT_MODULE::ASPLIB_OPT_NATIVE),
+    Biquads(nullptr)
+  {
+  }
+};
+
+struct ASPLIB_BIQUAD_COEFFICIENTS
 {
   float a0;
   float a1;
   float a2;
   float b1;
   float b2;
-}ASPLIB_BIQUAD_COEFFICIENTS;
 
-typedef struct
+  ASPLIB_BIQUAD_COEFFICIENTS() :
+    a0(0.0f),
+    a1(0.0f),
+    a2(0.0f),
+    b1(0.0f),
+    b2(0.0f)
+  {
+  }
+};
+
+struct ASPLIB_CONST_Q_PEAKING_PARAM
 {
   float fc;
   float fs;
   float Q;
   float Gain;
-}ASPLIB_CONST_Q_PEAKING_PARAM;
+
+  ASPLIB_CONST_Q_PEAKING_PARAM() :
+    fc(0.0f),
+    fs(0.0f),
+    Q(0.0f),
+    Gain(0.0f)
+  {
+  }
+};

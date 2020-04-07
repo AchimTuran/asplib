@@ -34,8 +34,8 @@ namespace asplib
 class IConvolution
 {
 public:
-  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, void *Filter, uint32_t FilterLength, void *Options = nullptr) = 0;
+  virtual ASPLIB_ERR Create(uint32_t FrameSize, FFTLibID_t FFTLibID, const void *Filter, uint32_t FilterLength, void *Options = nullptr) = 0;
   virtual ASPLIB_ERR Destroy() = 0;
-  virtual ASPLIB_ERR Convolve(void *x, void *y) = 0;
+  virtual ASPLIB_ERR Convolve(const void *x, void *y) = 0;
 };
 }

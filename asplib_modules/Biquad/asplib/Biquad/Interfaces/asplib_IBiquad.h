@@ -67,7 +67,7 @@ public:
     // calculate one output sample with the following difference equation
     // y[k] = d0*x[k] + a0*x[k] + a1*x[k-1] + a2*x[k-2] - (b1*y[k-1] + b2*y[k-2])
     virtual float calcSample(float In) = 0;
-    virtual ASPLIB_ERR calcSamples(float *In, float *Out, uint32_t N) = 0;
+    virtual ASPLIB_ERR calcSamples(const float *In, float *Out, uint32_t N) = 0;
 
     // Set all past values (x[k-1], x[k-2], y[k-1] and y[k-2]) to zero.
     virtual void resetState() = 0;

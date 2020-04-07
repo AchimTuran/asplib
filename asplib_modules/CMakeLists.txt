@@ -20,7 +20,7 @@ option(BUILD_CONVOLUTION          "Build Convolution"          OFF)
 set(AVAILABLE_MODULES AUDIOINTERFACES BIQUAD COMPUTEDEVICEINFO FFT IIR LOGGER SIGNALS SPECTRUMVISPROCESSOR TIMER)
 
 if("${ASPLIB_MODULES_TO_BUILD}" STREQUAL "all" OR "${ASPLIB_MODULES_TO_BUILD}" STREQUAL "")# OR NOT ${ASPLIB_MODULES_TO_BUILD})
-  set(BUILD_AUDIOINTERFACES ON)
+  set(BUILD_AUDIOINTERFACES OFF)
   set(BUILD_BIQUAD ON)
   set(BUILD_COMPUTEDEVICEINFO ON)
   set(BUILD_DYNAMICS ON)
@@ -49,7 +49,7 @@ endif()
 
 include(../cmake/gitCloneProject.cmake)
 
-message(STATUS "Download ARM_NEON_2_x86_SSE of is handled by asplib...")
+message(STATUS "Download ARM_NEON_2_x86_SSE of is handled by asplib")
 git_clone_project(PROJ                NEON2SSE
                   GIT_REPOSITORY      https://github.com/intel/ARM_NEON_2_x86_SSE.git
                   GIT_TAG             master)
@@ -77,7 +77,7 @@ if(BUILD_AUDIOINTERFACES)
       set(PA_UNICODE_BUILD ON)
     endif()
   
-    message(STATUS "Build of PortAudio is handled by asplib...")
+    message(STATUS "Build of PortAudio is handled by asplib")
     git_clone_project(PROJ                portaudio
                       GIT_REPOSITORY      https://github.com/kodi-adsp/portaudio_cmake
                       GIT_TAG             cmake)
@@ -123,7 +123,7 @@ if(BUILD_FFT OR BUILD_SPECTRUMVISPROCESSOR OR BUILD_CONVOLUTION)
   endif()
 
   if(${ASPLIB_KissFFT_BUILD})
-    message(STATUS "Build of KissFFT is handled by asplib...")
+    message(STATUS "Build of KissFFT is handled by asplib")
     git_clone_project(PROJ                KissFFT
                       GIT_REPOSITORY      https://github.com/AchimTuran/KissFFT
                       GIT_TAG             master)

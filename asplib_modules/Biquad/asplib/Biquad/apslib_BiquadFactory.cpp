@@ -27,6 +27,7 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <stdint.h>
 
 #include "Core/os/asplib_os.h"
 #include "Core/Constants_Typedefs/asplib_Constants.h"
@@ -57,17 +58,17 @@ ASPLIB_ERR CBiquadFactory::reset_Biquads(ASPLIB_BIQUAD_HANDLE *Biquads)
     return ASPLIB_ERR_NO_ERROR;
 }
 
-ASPLIB_ERR CBiquadFactory::destroy_Biquads(ASPLIB_BIQUAD_HANDLE **Biquads)
+ASPLIB_ERR CBiquadFactory::destroy_Biquads(ASPLIB_BIQUAD_HANDLE *&Biquads)
 {
     ASPLIB_ERR err = ASPLIB_ERR_NO_ERROR;
-    if(Biquads && (*Biquads))
+    if(Biquads)
     {
-        if((*Biquads)->Biquads)
+        if(Biquads->Biquads)
         {
-            switch((*Biquads)->optModule)
+            switch(Biquads->optModule)
             {
                 case ASPLIB_OPT_NATIVE:
-                    delete ((CBiquad_Native*)(*Biquads)->Biquads);
+                    delete ((CBiquad_Native*)Biquads->Biquads);
                 break;
 
                 default:
@@ -76,11 +77,11 @@ ASPLIB_ERR CBiquadFactory::destroy_Biquads(ASPLIB_BIQUAD_HANDLE **Biquads)
                 break;
             }
 
-            (*Biquads)->Biquads = NULL;
+            Biquads->Biquads = NULL;
         }
 
-        delete *Biquads;
-        *Biquads = NULL;
+        delete Biquads;
+        Biquads = NULL;
     }
 
     return err;
@@ -165,7 +166,7 @@ ASPLIB_ERR CBiquadFactory::calc_BiquadSample(ASPLIB_BIQUAD_HANDLE *Biquads, floa
     return ASPLIB_ERR_NO_ERROR;
 }
 
-ASPLIB_ERR CBiquadFactory::calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, float *In, float *Out, uint32_t FrameSize)
+ASPLIB_ERR CBiquadFactory::calc_BiquadSamples(ASPLIB_BIQUAD_HANDLE *Biquads, const float *In, float *Out, uint32_t FrameSize)
 {
     if(!Biquads)
     {
