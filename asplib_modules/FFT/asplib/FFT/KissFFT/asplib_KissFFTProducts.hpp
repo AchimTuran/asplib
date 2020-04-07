@@ -36,10 +36,10 @@
 namespace asplib
 {
 // complex Kiss FFT
-typedef TKissFFT <TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat> > CKissFFT_Cpx;
+typedef TKissFFT<TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
+                 TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
+                 TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
+                 TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>> CKissFFT_Cpx;
 CREATE_ASPLIB_FFT_CLASS(CKissFFT_NativeCPXFloat, ASPLIB_FFT_KISS_FFT_CPX, ASPLIB_FMT_NATIVE_CPX_FLOAT, ASPLIB_FMT_NATIVE_CPX_FLOAT, CKissFFT_Cpx)
 
 
@@ -47,24 +47,24 @@ CREATE_ASPLIB_FFT_CLASS(CKissFFT_NativeCPXFloat, ASPLIB_FFT_KISS_FFT_CPX, ASPLIB
 typedef TRKissFFT<TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat> > CKissFFT_Real;
+                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>> CKissFFT_Real;
 CREATE_ASPLIB_FFT_CLASS(CKissFFT_NativeFloat, ASPLIB_FFT_KISS_FFT_REAL, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NATIVE_CPX_FLOAT, CKissFFT_Real)
 
 typedef TRKissFFT<TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat> > CKissFFT_Real_SSE3;
+                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>> CKissFFT_Real_SSE3;
 CREATE_ASPLIB_FFT_CLASS(CKissFFT_SSE3Float, ASPLIB_FFT_KISS_FFT_REAL, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_SSE3_CPX_FLOAT, CKissFFT_Real_SSE3)
 
 typedef TRKissFFT<TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat> > CKissFFT_Real_AVX;
+                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>> CKissFFT_Real_AVX;
 CREATE_ASPLIB_FFT_CLASS(CKissFFT_AVXFloat, ASPLIB_FFT_KISS_FFT_REAL, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_AVX_CPX_FLOAT, CKissFFT_Real_AVX)
 
 typedef TRKissFFT<TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<float, float>,
                   TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>,
-                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat> > CKissFFT_Real_NEON;
+                  TZeroCpyConverter<kiss_fft_cpx, asplibFmt_NativeCPXFloat>> CKissFFT_Real_NEON;
 CREATE_ASPLIB_FFT_CLASS(CKissFFT_NEONFloat, ASPLIB_FFT_KISS_FFT_REAL, ASPLIB_FMT_NATIVE_FLOAT, ASPLIB_FMT_NEON_CPX_FLOAT, CKissFFT_Real_NEON)
 }
