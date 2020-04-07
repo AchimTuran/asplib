@@ -97,9 +97,11 @@ inline CComplexVector_NativeFloat operator*(const CComplexVector_NativeFloat& LH
 inline CComplexVector_NativeFloat& operator*(const CComplexVector_NativeFloat& LHS, const float& Val)
 {
   const asplibFmt_NativeCPXFloat &lhs = LHS;
+  const float r = lhs.r*Val;
+  const float i = lhs.i*Val;
 
-  return CComplexVector_NativeFloat(lhs.r*Val,
-                                    lhs.i*Val);
+  return CComplexVector_NativeFloat(r,
+                                    i);
 }
 
 inline CComplexVector_NativeFloat operator/(const CComplexVector_NativeFloat& LHS, const CComplexVector_NativeFloat& RHS)
